@@ -49,95 +49,98 @@ function yyflush()
 
 
 $yytranslate = array(
-      0,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    7,    8,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,    9,    1,    2,    3,    4,
-      5,    6,    9
+      0,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,    7,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,    8,    9,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
+     10,   10,   10,   10,   10,   10,    1,    2,    3,    4,
+      5,    6,   10
   );
 
-define('YYBADCH', 9);
+define('YYBADCH', 10);
 define('YYMAXLEX', 263);
-define('YYTERMS', 9);
-define('YYNONTERMS', 10);
+define('YYTERMS', 10);
+define('YYNONTERMS', 11);
 
 $yyaction = array(
-     23,   22,   24,    0,   -5,    7,    3,   20,   14,    0,
-     15,    0,    0,    0,    1
+     26,   25,   27,    4,    0,   15,    1,   18,    6,    8,
+      0,    0,    0,    0,  -13,    0,   23
   );
 
-define('YYLAST', 15);
+define('YYLAST', 17);
 
 $yycheck = array(
-      4,    5,    6,    0,    2,    4,    2,    8,    3,   -1,
-      4,   -1,   -1,   -1,    7
+      4,    5,    6,    2,    0,    3,    8,    4,    7,    4,
+     -1,   -1,   -1,   -1,    8,   -1,    9
   );
 
 $yybase = array(
-      0,   -4,    5,    1,    6,    3,    4,    2,    7,   -1,
-      0,    0,    1
+      0,   -4,    2,    1,    5,    3,    3,    4,    6,   -2,
+      7,    0,    0,    5
   );
 
 define('YY2TBLSTATE', 3);
 
 $yydefault = array(
-      2,32767,32767,32767,    1,32767,32767,   11,32767,32767
+      2,32767,32767,32767,32767,    1,32767,32767,    7,32767,
+  32767
   );
 
 
 
 $yygoto = array(
-     16,    0,   13
+     19,   17,   14
   );
 
 define('YYGLAST', 3);
 
 $yygcheck = array(
-      6,   -1,    3
+      7,    6,    3
   );
 
 $yygbase = array(
-      0,    0,    0,   -2,    0,    0,   -3,    0,    0,    0
+      0,    0,    0,   -3,    0,    0,   -5,   -4,    0,    0,
+      0
   );
 
 $yygdefault = array(
-  -32768,    5,    4,   19,    6,    2,   17,   18,    8,    9
+  -32768,    7,    5,   22,    3,    2,   16,   20,   21,    9,
+     10
   );
 
 $yylhs = array(
-      0,    1,    2,    2,    3,    4,    5,    5,    6,    6,
-      7,    8,    9,    9,    9
+      0,    1,    2,    2,    3,    4,    4,    6,    5,    5,
+      7,    7,    8,    9,   10,   10,   10
   );
 
 $yylen = array(
-      1,    1,    0,    2,    4,    1,    1,    2,    1,    1,
-      4,    1,    1,    1,    1
+      1,    1,    0,    2,    4,    1,    3,    1,    1,    2,
+      1,    1,    4,    1,    1,    1,    1
   );
 
-define('YYSTATES', 21);
-define('YYNLSTATES', 10);
+define('YYSTATES', 24);
+define('YYNLSTATES', 11);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
 define('YYDEFAULT', -32766);
@@ -226,20 +229,24 @@ function yyparse()
         case 4:
 { $yyval = Parser::getInstance()->addRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
         case 5:
-{ $yyval = Parser::getInstance()->addSelector($yyastk[$yysp-(1-1)]); } break;
-        case 6:
 { $yyval = $yyastk[$yysp-(1-1)]; } break;
+        case 6:
+{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
         case 7:
+{ $yyval = Parser::getInstance()->addSelector($yyastk[$yysp-(1-1)]); } break;
+        case 8:
+{ $yyval = $yyastk[$yysp-(1-1)]; } break;
+        case 9:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
-        case 10:
-{ $yyval = Parser::getInstance()->addDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
-        case 11:
-{ $yyval = Parser::getInstance()->addProperty($yyastk[$yysp-(1-1)]); } break;
         case 12:
-{ $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->addDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
         case 13:
-{ $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->addProperty($yyastk[$yysp-(1-1)]); } break;
         case 14:
+{ $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
+        case 15:
+{ $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
+        case 16:
 { $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */

@@ -3,10 +3,10 @@ p {
     padding:0;
     display:block;
 }
-    a {
-        display:inline-block;
-        text-decoration:none;
-    }
+a,span {
+    display:inline-block;
+    text-decoration:none;
+}
 div {
     margin:2em;
     padding:0;

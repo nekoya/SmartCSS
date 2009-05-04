@@ -8,10 +8,8 @@ $parser = Parser::getInstance();
 //$parser->debug = true;
 %}
 %token LBRACE RBRACE
-%token IDENT
-%token NUMBER
-%token LENGTH
-%token ':' ';'
+%token IDENT NUMBER LENGTH
+%token ',' ':' ';'
 %token S
 
 %%
@@ -24,7 +22,11 @@ rulesets
     | rulesets ruleset { $$ = Parser::getInstance()->catNode($1, $2); }
 
 ruleset
-    : selector LBRACE declarations RBRACE { $$ = Parser::getInstance()->addRuleset($1, $3); }
+    : selectors LBRACE declarations RBRACE { $$ = Parser::getInstance()->addRuleset($1, $3); }
+
+selectors
+    : selector               { $$ = $1; }
+    | selectors ',' selector { $$ = Parser::getInstance()->catNode($1, $3); }
 
 selector
     : IDENT { $$ = Parser::getInstance()->addSelector($1); }
