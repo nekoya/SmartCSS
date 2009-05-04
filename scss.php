@@ -227,27 +227,27 @@ function yyparse()
         case 3:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 4:
-{ $yyval = Parser::getInstance()->addRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
+{ $yyval = Parser::getInstance()->genRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
         case 5:
 { $yyval = $yyastk[$yysp-(1-1)]; } break;
         case 6:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
         case 7:
-{ $yyval = Parser::getInstance()->addSelector($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
         case 8:
 { $yyval = $yyastk[$yysp-(1-1)]; } break;
         case 9:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 12:
-{ $yyval = Parser::getInstance()->addDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
+{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
         case 13:
-{ $yyval = Parser::getInstance()->addProperty($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
         case 14:
-{ $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         case 15:
-{ $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         case 16:
-{ $yyval = Parser::getInstance()->addExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */
         $yysp -= $yyl;

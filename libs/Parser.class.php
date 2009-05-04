@@ -40,7 +40,7 @@ class Parser {
     /**
      *
      */
-    public function addRuleset($selector, $declarations) {
+    public function genRuleset($selector, $declarations) {
         $node = $this->createNode('ruleset');
         $node->items = array($selector, $declarations);
         $this->debug($selector->value);
@@ -50,14 +50,14 @@ class Parser {
     /**
      *
      */
-    public function addSelector($name) {
+    public function genSelector($name) {
         return $this->createNode('selector', $name);
     }
 
     /**
      *
      */
-    public function addDeclaration($property, $expr) {
+    public function genDeclaration($property, $expr) {
         $node = $this->createNode('declaration');
         $node->items = array($property, $expr);
         $this->debug($property->value);
@@ -67,14 +67,14 @@ class Parser {
     /**
      *
      */
-    public function addProperty($name) {
+    public function genProperty($name) {
         return $this->createNode('property', $name);
     }
 
     /**
      *
      */
-    public function addExpr($name) {
+    public function genExpr($name) {
         return $this->createNode('expr', $name);
     }
 

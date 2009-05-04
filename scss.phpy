@@ -22,14 +22,14 @@ rulesets
     | rulesets ruleset { $$ = Parser::getInstance()->catNode($1, $2); }
 
 ruleset
-    : selectors LBRACE declarations RBRACE { $$ = Parser::getInstance()->addRuleset($1, $3); }
+    : selectors LBRACE declarations RBRACE { $$ = Parser::getInstance()->genRuleset($1, $3); }
 
 selectors
     : selector               { $$ = $1; }
     | selectors ',' selector { $$ = Parser::getInstance()->catNode($1, $3); }
 
 selector
-    : IDENT { $$ = Parser::getInstance()->addSelector($1); }
+    : IDENT { $$ = Parser::getInstance()->genSelector($1); }
 
 declarations
     : decl              { $$ = $1; }
@@ -38,15 +38,15 @@ declarations
 decl : declaration | ruleset
 
 declaration
-    : property ':' expr ';' { $$ = Parser::getInstance()->addDeclaration($1, $3); }
+    : property ':' expr ';' { $$ = Parser::getInstance()->genDeclaration($1, $3); }
 
 property
-    : IDENT { $$ = Parser::getInstance()->addProperty($1); }
+    : IDENT { $$ = Parser::getInstance()->genProperty($1); }
 
 expr
-    : NUMBER { $$ = Parser::getInstance()->addExpr($1); }
-    | IDENT  { $$ = Parser::getInstance()->addExpr($1); }
-    | LENGTH { $$ = Parser::getInstance()->addExpr($1); }
+    : NUMBER { $$ = Parser::getInstance()->genExpr($1); }
+    | IDENT  { $$ = Parser::getInstance()->genExpr($1); }
+    | LENGTH { $$ = Parser::getInstance()->genExpr($1); }
 
 %%
 
