@@ -5,7 +5,7 @@
 %{
 //<?php
 $parser = Parser::getInstance();
-$parser->debug = true;
+//$parser->debug = true;
 %}
 %token LBRACE RBRACE
 %token IDENT
