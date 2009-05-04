@@ -2,7 +2,7 @@
 
 //<?php
 $parser = Parser::getInstance();
-$parser->debug = true;
+//$parser->debug = true;
 
 /* Prototype file of PHP parser.
  * Written by Masato Bito
