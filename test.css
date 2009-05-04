@@ -1,0 +1,14 @@
+p {
+    margin:0;
+    padding:0;
+    display:block;
+}
+    a {
+        display:inline-block;
+        text-decoration:none;
+    }
+div {
+    margin:2em;
+    padding:0;
+    background:none;
+}
