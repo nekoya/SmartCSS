@@ -1,8 +1,25 @@
+* {
+    margin:10px;
+}
+
 p {
     margin:0;
     padding:0;
     display:block;
 }
+
+.nav {
+    margin:1pt;
+}
+
+img.button {
+    display:block;
+}
+
+div.parent.child {
+    margin:0;
+}
+
 h2>a,h3+span {
     display:inline-block;
     text-decoration:none;

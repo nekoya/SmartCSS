@@ -9,7 +9,7 @@ $parser = Parser::getInstance();
 %}
 %token LBRACE RBRACE
 %token IDENT NUMBER LENGTH
-%token ',' ':' ';' '+' '>' ' '
+%token ',' ':' ';' '+' '>' ' ' '.' '*'
 
 %%
 
@@ -33,11 +33,23 @@ combinator
     | ' '
 
 selector
-    : simple_selector                     { $$ = $1; }
-    | selector combinator simple_selector { $$ = $1; $1->appendValue($2, $3); }
+    : simple_selector                     { $$ = Parser::getInstance()->genSelector($1); }
+    | selector combinator simple_selector { $$ = $1; $1->appendValue(chr($2), $3); }
 
 simple_selector
-    : IDENT { $$ = Parser::getInstance()->genSelector($1); }
+    : element_name
+    | attributes
+    | element_name attributes { $$ = $1 . $2; }
+
+element_name
+    : IDENT | '*'
+
+attributes
+    : attr
+    | attributes attr { $$ = $1 . $2; }
+
+attr       : class
+class      : '.' IDENT { $$ = chr($1) . $2; }
 
 declarations
     : decl              { $$ = $1; }

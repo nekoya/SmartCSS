@@ -72,9 +72,12 @@ class Parser {
      *
      */
     private function createNode($type, $value = null) {
+        //echo "[[$type]]\n";
         $className = 'YYNode_' . ucfirst($type);
         $node = new $className;
         $node->id = $this->lastInsertId++;
+        //echo "----\n";
+        //var_dump($node, $value);
         if (!is_null($value)) {
             $node->value = (string)$value;
         }

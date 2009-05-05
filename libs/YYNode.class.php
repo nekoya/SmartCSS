@@ -37,7 +37,7 @@ abstract class YYnode {
     public function appendValue() {
         $args = func_get_args();
         foreach ($args as $arg) {
-            $this->value .= (is_object($arg)) ? $arg->value : chr($arg);
+            $this->value .= (is_object($arg)) ? $arg->value : $arg;
         }
     }
 
