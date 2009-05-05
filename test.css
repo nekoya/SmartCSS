@@ -19,7 +19,8 @@ div#header {
 
 a.nav {
     margin:1pt;
-    color:#39f;
+    background:#efefef;
+    color:#333;
 }
 
 .button {

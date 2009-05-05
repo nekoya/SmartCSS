@@ -98,7 +98,7 @@ function yylex() {
             'RBRACE'   => '/^(\s*}\s*)/',
             'LENGTH'   => '/^((\d+)(em|ex|px|cm|mm|in|pt))/',
             'NUMBER'   => '/^(\d+)/',
-            'HEXCOLOR' => '/^(#[0-9a-f]{3})/',
+            'HEXCOLOR' => '/^(#([0-9a-f]{6}|[0-9a-f]{3}))/',
             'IDENT'    => '/^(-?[_a-z][_a-z0-9-]*)/',
             'HASH'     => '/^(#[_a-z0-9-]+)/',
         );
@@ -106,7 +106,7 @@ function yylex() {
             if (preg_match($regex, $lexbuf, $matches)) {
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
-                p($token);
+                p($token . ' ' . $yylval);
                 return constant($token);
             }
         }
