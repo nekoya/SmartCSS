@@ -7,9 +7,9 @@
 $parser = Parser::getInstance();
 //$parser->debug = true;
 %}
-%token LBRACE RBRACE SPACE PLUS GREATER
+%token LBRACE RBRACE SPACE PLUS GREATER ASTERISK
 %token IDENT NUMBER LENGTH HASH HEXCOLOR
-%token ',' ':' ';' '+' '>' '.' '*'
+%token ',' ':' ';' '.'
 
 %%
 
@@ -43,7 +43,7 @@ simple_selector
 
 element_name
     : IDENT
-    | '*'   { $$ = '*'; }
+    | ASTERISK
 
 attributes
     : attr
@@ -114,6 +114,7 @@ function yylex() {
             'SPACE'    => '/^(\s+)/',
             'PLUS'     => '/^(\+)/',
             'GREATER'  => '/^(\>)/',
+            'ASTERISK' => '/^(\*)/',
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {
