@@ -2,7 +2,7 @@
 
 //<?php
 $parser = Parser::getInstance();
-$parser->debug = true;
+//$parser->debug = true;
 
 /* Prototype file of PHP parser.
  * Written by Masato Bito
@@ -85,36 +85,36 @@ define('YYTERMS', 17);
 define('YYNONTERMS', 18);
 
 $yyaction = array(
-     47,   46,   48,    0,   49,   38,   25,   26,   22,   15,
-     27,    2,   13,   34,   15,   33,   39,    4,   44,-32766,
-      0,    0,    0,    7,  -27
+     49,   48,   50,   16,   51,   25,   26,   33,   22,   27,
+      0,    1,   39,   38,   34,    0,    2,    7,   34,    0,
+     14,    4,    0,  -29
   );
 
-define('YYLAST', 25);
+define('YYLAST', 24);
 
 $yycheck = array(
-      4,    5,    6,    0,    8,    7,   12,   13,    3,    4,
-     16,    2,   14,   15,    4,    4,    4,    9,   11,   15,
-     -1,   -1,   -1,   10,   10
+      4,    5,    6,    4,    8,   12,   13,    4,    3,   16,
+      0,    2,    4,    7,   15,   -1,   11,   10,   15,   -1,
+     14,    9,   -1,   10
   );
 
 $yybase = array(
-      0,    5,   10,   11,   11,   11,    8,   -4,   -6,    4,
-      4,    4,    3,   12,    9,   14,   13,    7,    0,   -2,
-     -2,   -2,   -2,   -2,   -6,    0,    0,   -2,   -2,   -2
+      0,   -1,   -1,    3,    3,    3,   12,   -4,   -7,    6,
+      6,    6,    5,   10,    8,    9,   13,    7,    0,    6,
+      6,    6,    6,    6,   -7
   );
 
-define('YY2TBLSTATE', 12);
+define('YY2TBLSTATE', 7);
 
 $yydefault = array(
-      2,32767,32767,    1,32767,32767,    5,32767,    6,   12,
-     13,   14,32767,32767,32767,   15,32767,32767
+      2,32767,   25,    1,32767,32767,    5,32767,    6,   12,
+     13,   14,32767,32767,32767,32767,   15,32767
   );
 
 
 
 $yygoto = array(
-     36,   36,   21,   40,   11,    0,    8,    0,   29
+     36,   36,   21,   42,   11,    0,    8,    0,   29
   );
 
 define('YYGLAST', 9);
@@ -129,25 +129,25 @@ $yygbase = array(
   );
 
 $yygdefault = array(
-  -32768,   12,    3,   43,   14,    1,    6,    5,   28,    9,
-     10,   35,   37,   41,   42,   16,   17,-32768
+  -32768,   13,    3,   45,   15,   12,    6,    5,   28,    9,
+     10,   35,   37,   40,   41,   44,   17,   46
   );
 
 $yylhs = array(
       0,    1,    2,    2,    3,    4,    4,    7,    7,    7,
       6,    6,    8,    8,    8,    9,    9,   10,   10,   11,
-     11,   12,    5,    5,   13,   13,   14,   15,   16,   16,
-     16,   16,   17,   17
+     11,   12,    5,    5,   14,   14,   13,   13,   15,   16,
+     17,   17,   17,   17
   );
 
 $yylen = array(
       1,    1,    0,    2,    4,    1,    3,    1,    1,    1,
       1,    3,    1,    1,    2,    1,    1,    1,    2,    1,
-      1,    2,    1,    2,    1,    1,    4,    1,    1,    1,
-      1,    1,    0,    1
+      1,    2,    1,    2,    2,    1,    1,    1,    3,    1,
+      1,    1,    1,    1
   );
 
-define('YYSTATES', 41);
+define('YYSTATES', 42);
 define('YYNLSTATES', 18);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
@@ -254,17 +254,19 @@ function yyparse()
 { $yyval = $yyastk[$yysp-(1-1)]; } break;
         case 23:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
-        case 26:
-{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
-        case 27:
-{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
+        case 24:
+{ $yyval = $yyastk[$yysp-(2-2)]; } break;
         case 28:
-{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
         case 29:
-{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
         case 30:
 { $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         case 31:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 32:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 33:
 { $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */
@@ -325,13 +327,17 @@ function yyparse()
 }
 
 
-$lexbuf = file_get_contents('test.css');
-$lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
-$lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
-yyparse();
-$parser = Parser::getInstance();
-echo "----\n";
-echo $parser->run();
+try {
+    $lexbuf = file_get_contents('test.css');
+    $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
+    $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
+    yyparse();
+    $parser = Parser::getInstance();
+    echo "----\n";
+    echo $parser->run();
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
 
 function __autoload($class) {
     $class = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);

@@ -90,6 +90,10 @@ class Parser {
      *
      */
     public function catNode($base, $newone, $combinator = null) {
+        if (!$newone instanceof YYNode) {
+            return $base;
+        }
+
         $node = $base;
         while ($node->hasNext()) {
             $node = $node->next;
