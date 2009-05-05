@@ -58,7 +58,7 @@ declarations
 decl : declaration | ruleset
 
 declaration
-    : property ':' expr ';' { $$ = Parser::getInstance()->genDeclaration($1, $3); }
+    : property ':' s expr ';' { $$ = Parser::getInstance()->genDeclaration($1, $3); }
 
 property
     : IDENT { $$ = Parser::getInstance()->genProperty($1); }
@@ -69,6 +69,7 @@ expr
     | LENGTH   { $$ = Parser::getInstance()->genExpr($1); }
     | HEXCOLOR { $$ = Parser::getInstance()->genExpr($1); }
 
+s : | ' '
 %%
 
 $lexbuf = file_get_contents('test.css');
