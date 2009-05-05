@@ -8,7 +8,8 @@ $parser = Parser::getInstance();
 //$parser->debug = true;
 %}
 %token LBRACE RBRACE SPACE PLUS GREATER ASTERISK
-%token IDENT NUMBER LENGTH HASH HEXCOLOR
+%token IDENT NUMBER HASH HEXCOLOR
+%token EMS EXS LENGTH ANGLE TIME FREQ
 %token ',' ':' ';' '.'
 
 %%
@@ -68,9 +69,14 @@ property
     : IDENT { $$ = Parser::getInstance()->genProperty($1); }
 
 expr
-    : NUMBER   { $$ = Parser::getInstance()->genExpr($1); }
-    | IDENT    { $$ = Parser::getInstance()->genExpr($1); }
+    : IDENT    { $$ = Parser::getInstance()->genExpr($1); }
+    | EMS      { $$ = Parser::getInstance()->genExpr($1); }
+    | EXS      { $$ = Parser::getInstance()->genExpr($1); }
     | LENGTH   { $$ = Parser::getInstance()->genExpr($1); }
+    | ANGLE    { $$ = Parser::getInstance()->genExpr($1); }
+    | TIME     { $$ = Parser::getInstance()->genExpr($1); }
+    | FREQ     { $$ = Parser::getInstance()->genExpr($1); }
+    | NUMBER   { $$ = Parser::getInstance()->genExpr($1); }
     | HEXCOLOR { $$ = Parser::getInstance()->genExpr($1); }
 
 s : | SPACE
@@ -106,11 +112,18 @@ function yylex() {
         $regexs = array(
             'LBRACE'   => '/^(\s*{\s*)/',
             'RBRACE'   => '/^(\s*}\s*)/',
-            'LENGTH'   => '/^((\d+)(em|ex|px|cm|mm|in|pt))/',
-            'NUMBER'   => '/^(\d+)/',
+
+            'EMS'      => '/^((\d+)em)/',
+            'EXS'      => '/^((\d+)ex)/',
+            'LENGTH'   => '/^((\d+)(px|cm|mm|in|pt|pc))/',
+            'ANGLE'    => '/^((\d+)(deg|rad|grad))/',
+            'TIME'     => '/^((\d+)(ms|s))/',
+            'FREQ'     => '/^((\d+)(hz|khz))/',
+
             'HEXCOLOR' => '/^(#([0-9a-f]{6}|[0-9a-f]{3}))/',
             'IDENT'    => '/^(-?[_a-z][_a-z0-9-]*)/',
             'HASH'     => '/^(#[_a-z0-9-]+)/',
+            'NUMBER'   => '/^(\d+)/',
             'SPACE'    => '/^(\s+)/',
             'PLUS'     => '/^(\+)/',
             'GREATER'  => '/^(\>)/',
