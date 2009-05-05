@@ -55,12 +55,13 @@ abstract class YYnode {
     /**
      *
      */
-    public function dump() {
+    public function dump($indent = 0) {
         $className = get_class($this);
         $name = strtolower(preg_replace('/^YYNode_/', '', $className));
-        $output = $name . ':' . $this->id . "\n";
+        $output  = str_repeat(' ', $indent);
+        $output .= $name . ':' . $this->id . "\n";
         if ($this->hasNext()) {
-            $output .= $this->next->dump();
+            $output .= $this->next->dump($indent + 1);
         }
         return $output;
     }
