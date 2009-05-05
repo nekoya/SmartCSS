@@ -100,7 +100,7 @@ class Parser {
         }
         $node->next = $newone;
         $node->combinator = $combinator;
-        $this->debug($base->id . '<-' . $newone->id);
+        $this->debug($node->id . '<-' . $newone->id);
         return $base;
     }
 
