@@ -7,6 +7,10 @@ class YYNode_Expr extends YYNode {
      *
      */
     public function publish() {
-        return $this->value;
+        $output = $this->value;
+        if ($this->hasNext()) {
+            $output .= $this->next->publish();
+        }
+        return $output;
     }
 }

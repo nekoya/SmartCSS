@@ -8,9 +8,12 @@ class YYNode_Ruleset extends YYNode {
      */
     public function publish() {
         list($selector, $declarations) = $this->items;
-        $output  = $selector->publish() . " {\n";
+        $output  = $selector->publish() . " {";
         $output .= $declarations->publish();
         $output .= "}\n";
+        if ($this->hasNext()) {
+            $output .= $this->next->publish();
+        }
         return $output;
     }
 
@@ -18,9 +21,9 @@ class YYNode_Ruleset extends YYNode {
      *
      */
     public function dump($indent) {
-        echo str_repeat(' ', $indent) . 'ruleset:' . $this->id . "\n";
+        echo str_repeat(' ', $indent*2) . 'ruleset:' . $this->id . "\n";
         foreach ($this->items as $node) {
-            $node->dump($indent + Parser::indent);
+            $node->dump($indent + 1);
         }
     }
 }

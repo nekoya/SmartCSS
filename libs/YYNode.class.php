@@ -45,7 +45,11 @@ abstract class YYnode {
      *
      */
     public function publish() {
-        return $this->value;
+        $output = $this->value;
+        if ($this->hasNext()) {
+            $output .= $this->next->publish();
+        }
+        return $output;
     }
 
     /**

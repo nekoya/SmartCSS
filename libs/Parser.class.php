@@ -4,7 +4,6 @@
  */
 
 class Parser {
-    const indent = 2;
     static private $instance;
     public $lastInsertId = 0;
     public $topNode;
