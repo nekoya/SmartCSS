@@ -17,11 +17,13 @@ define('YYERRTOK', 256);
 define('LBRACE', 257);
 define('RBRACE', 258);
 define('SPACE', 259);
-define('IDENT', 260);
-define('NUMBER', 261);
-define('LENGTH', 262);
-define('HASH', 263);
-define('HEXCOLOR', 264);
+define('PLUS', 260);
+define('GREATER', 261);
+define('IDENT', 262);
+define('NUMBER', 263);
+define('LENGTH', 264);
+define('HASH', 265);
+define('HEXCOLOR', 266);
 
   
 /*
@@ -55,9 +57,9 @@ $yytranslate = array(
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
-     17,   17,   16,   13,   10,   17,   15,   17,   17,   17,
-     17,   17,   17,   17,   17,   17,   17,   17,   11,   12,
-     17,   17,   14,   17,   17,   17,   17,   17,   17,   17,
+     17,   17,   16,   17,   12,   17,   15,   17,   17,   17,
+     17,   17,   17,   17,   17,   17,   17,   17,   13,   14,
+     17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
@@ -77,32 +79,32 @@ $yytranslate = array(
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
      17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
      17,   17,   17,   17,   17,   17,    1,    2,    3,    4,
-      5,    6,    7,    8,    9
+      5,    6,    7,    8,    9,   10,   11
   );
 
 define('YYBADCH', 17);
-define('YYMAXLEX', 265);
+define('YYMAXLEX', 267);
 define('YYTERMS', 17);
 define('YYNONTERMS', 19);
 
 $yyaction = array(
-     50,   49,   51,   28,   52,  -25,   54,    0,   17,   34,
-     40,    1,   26,   27,  -25,   23,   39,    7,    0,   35,
-     35,    4,    0,   15,    9,  -29
+     50,   49,   51,   17,   52,  -25,   54,   28,   26,   27,
+     23,   34,   35,    0,    1,    0,  -25,   40,   39,    7,
+     35,    9,  -29,   15,    0,    0,    4
   );
 
-define('YYLAST', 26);
+define('YYLAST', 27);
 
 $yycheck = array(
-      5,    6,    7,    4,    9,    3,    4,    0,    5,    5,
-      5,    2,   13,   14,   12,    3,    8,   11,   -1,   16,
-     16,   10,   -1,   15,   12,   11
+      7,    8,    9,    7,   11,    3,    4,    4,    5,    6,
+      3,    7,   16,    0,    2,   -1,   14,    7,   10,   13,
+     16,   14,   13,   15,   -1,   -1,   12
   );
 
 $yybase = array(
-      0,    3,    3,    4,    4,    4,   11,   -5,   -1,    2,
-      8,    8,    8,   12,    7,    5,    9,   14,    6,    0,
-      8,    8,    8,    8,    8,   -1
+      0,   -4,   -4,    4,    4,    4,   14,   -7,    3,    2,
+      8,    8,    8,    7,   13,   10,   12,    9,    6,    0,
+      8,    8,    8,    8,    8,    3
   );
 
 define('YY2TBLSTATE', 7);
@@ -244,7 +246,7 @@ function yyparse()
         case 10:
 { $yyval = Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
         case 11:
-{ $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue(chr($yyastk[$yysp-(3-2)]), $yyastk[$yysp-(3-3)]); } break;
+{ $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)]); } break;
         case 14:
 { $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
         case 16:
@@ -365,6 +367,8 @@ function yylex() {
             'IDENT'    => '/^(-?[_a-z][_a-z0-9-]*)/',
             'HASH'     => '/^(#[_a-z0-9-]+)/',
             'SPACE'    => '/^(\s+)/',
+            'PLUS'     => '/^(\+)/',
+            'GREATER'  => '/^(\>)/',
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {

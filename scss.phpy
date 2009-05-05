@@ -7,7 +7,7 @@
 $parser = Parser::getInstance();
 //$parser->debug = true;
 %}
-%token LBRACE RBRACE SPACE
+%token LBRACE RBRACE SPACE PLUS GREATER
 %token IDENT NUMBER LENGTH HASH HEXCOLOR
 %token ',' ':' ';' '+' '>' '.' '*'
 
@@ -28,13 +28,13 @@ selectors
     | selector ',' selector { $$ = Parser::getInstance()->catNode($1, $3); }
 
 combinator
-    : '+'
-    | '>'
+    : PLUS
+    | GREATER
     | SPACE
 
 selector
     : simple_selector                     { $$ = Parser::getInstance()->genSelector($1); }
-    | selector combinator simple_selector { $$ = $1; $1->appendValue(chr($2), $3); }
+    | selector combinator simple_selector { $$ = $1; $1->appendValue($2, $3); }
 
 simple_selector
     : element_name
@@ -112,6 +112,8 @@ function yylex() {
             'IDENT'    => '/^(-?[_a-z][_a-z0-9-]*)/',
             'HASH'     => '/^(#[_a-z0-9-]+)/',
             'SPACE'    => '/^(\s+)/',
+            'PLUS'     => '/^(\+)/',
+            'GREATER'  => '/^(\>)/',
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {
