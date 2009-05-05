@@ -42,7 +42,8 @@ simple_selector
     | element_name attributes { $$ = $1 . $2; }
 
 element_name
-    : IDENT | '*'
+    : IDENT
+    | '*'   { $$ = '*'; }
 
 attributes
     : attr

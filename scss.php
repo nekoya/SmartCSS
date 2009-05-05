@@ -246,6 +246,8 @@ function yyparse()
 { $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue(chr($yyastk[$yysp-(3-2)]), $yyastk[$yysp-(3-3)]); } break;
         case 14:
 { $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
+        case 16:
+{ $yyval = '*'; } break;
         case 18:
 { $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
         case 21:
