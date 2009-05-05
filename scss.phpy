@@ -7,7 +7,7 @@
 $parser = Parser::getInstance();
 //$parser->debug = true;
 %}
-%token LBRACE RBRACE
+%token LBRACE RBRACE SPACE
 %token IDENT NUMBER LENGTH HASH HEXCOLOR
 %token ',' ':' ';' '+' '>' '.' '*'
 
@@ -30,7 +30,7 @@ selectors
 combinator
     : '+'
     | '>'
-    | ' '
+    | SPACE
 
 selector
     : simple_selector                     { $$ = Parser::getInstance()->genSelector($1); }
@@ -73,7 +73,7 @@ expr
     | LENGTH   { $$ = Parser::getInstance()->genExpr($1); }
     | HEXCOLOR { $$ = Parser::getInstance()->genExpr($1); }
 
-s : | ' '
+s : | SPACE
 
 %%
 
@@ -111,6 +111,7 @@ function yylex() {
             'HEXCOLOR' => '/^(#([0-9a-f]{6}|[0-9a-f]{3}))/',
             'IDENT'    => '/^(-?[_a-z][_a-z0-9-]*)/',
             'HASH'     => '/^(#[_a-z0-9-]+)/',
+            'SPACE'    => '/^(\s+)/',
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {
