@@ -50,13 +50,6 @@ class Parser {
     /**
      *
      */
-    public function genSelector($name) {
-        return $this->createNode('selector', $name);
-    }
-
-    /**
-     *
-     */
     public function genDeclaration($property, $expr) {
         $node = $this->createNode('declaration');
         $node->items = array($property, $expr);
@@ -67,8 +60,22 @@ class Parser {
     /**
      *
      */
+    public function genSelector($name) {
+        return $this->createNode('selector', $name);
+    }
+
+    /**
+     *
+     */
     public function genProperty($name) {
         return $this->createNode('property', $name);
+    }
+
+    /**
+     *
+     */
+    public function genCombinator($name) {
+        return $this->createNode('combinator', $name);
     }
 
     /**
@@ -96,12 +103,13 @@ class Parser {
     /**
      *
      */
-    public function catNode($base, $newone) {
+    public function catNode($base, $newone, $combinator = null) {
         $node = $base;
         while ($node->hasNext()) {
             $node = $node->next;
         }
         $node->next = $newone;
+        $node->combinator = $combinator;
         $this->debug($base->id . '<-' . $newone->id);
         return $base;
     }

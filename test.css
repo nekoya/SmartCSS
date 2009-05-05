@@ -3,11 +3,11 @@ p {
     padding:0;
     display:block;
 }
-a,span {
+h2>a,h3+span {
     display:inline-block;
     text-decoration:none;
 }
-div {
+div img {
     margin:2em;
     padding:0;
     background:none;

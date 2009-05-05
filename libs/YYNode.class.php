@@ -7,6 +7,7 @@ abstract class YYnode {
     public $value;
     public $items;
     public $next;
+    public $combinator;
 
     /**
      *
@@ -33,7 +34,19 @@ abstract class YYnode {
     /**
      *
      */
-    abstract function publish();
+    public function appendValue() {
+        $args = func_get_args();
+        foreach ($args as $arg) {
+            $this->value .= (is_object($arg)) ? $arg->value : chr($arg);
+        }
+    }
+
+    /**
+     *
+     */
+    public function publish() {
+        return $this->value;
+    }
 
     /**
      *
