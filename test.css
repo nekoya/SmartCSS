@@ -10,17 +10,19 @@ p {
 
 #header {
     margin:0;
+    padding:0;
 }
 
 div#header {
     padding:1em;
 }
 
-.nav {
+a.nav {
     margin:1pt;
+    color:#39f;
 }
 
-img.button {
+.button {
     display:block;
 }
 
@@ -32,6 +34,7 @@ h2>a,h3+span {
     display:inline-block;
     text-decoration:none;
 }
+
 div img {
     margin:2em;
     padding:0;

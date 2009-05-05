@@ -5,11 +5,11 @@
 %{
 //<?php
 $parser = Parser::getInstance();
-//$parser->debug = true;
+$parser->debug = true;
 %}
 %token LBRACE RBRACE
-%token IDENT NUMBER LENGTH HASH
-%token ',' ':' ';' '+' '>' ' ' '.' '*'
+%token IDENT NUMBER LENGTH HASH HEXCOLOR
+%token ',' ':' ';' '+' '>' '.' '*'
 
 %%
 
@@ -64,9 +64,10 @@ property
     : IDENT { $$ = Parser::getInstance()->genProperty($1); }
 
 expr
-    : NUMBER { $$ = Parser::getInstance()->genExpr($1); }
-    | IDENT  { $$ = Parser::getInstance()->genExpr($1); }
-    | LENGTH { $$ = Parser::getInstance()->genExpr($1); }
+    : NUMBER   { $$ = Parser::getInstance()->genExpr($1); }
+    | IDENT    { $$ = Parser::getInstance()->genExpr($1); }
+    | LENGTH   { $$ = Parser::getInstance()->genExpr($1); }
+    | HEXCOLOR { $$ = Parser::getInstance()->genExpr($1); }
 
 %%
 
@@ -89,22 +90,24 @@ function yylex() {
 
     while ($lexbuf) {
         if (!empty($parser->debug)) {
-            var_dump($lexbuf);
+//            var_dump($lexbuf);
         }
 
         $regexs = array(
-            LBRACE => '/^(\s*{\s*)/',
-            RBRACE => '/^(\s*}\s*)/',
-            LENGTH => '/^((\d+)(em|ex|px|cm|mm|in|pt))/',
-            NUMBER => '/^(\d+)/',
-            IDENT  => '/^(-?[_a-z][_a-z0-9-]*)/',
-            HASH   => '/^(#[_a-z0-9-]+)/'
+            'LBRACE'   => '/^(\s*{\s*)/',
+            'RBRACE'   => '/^(\s*}\s*)/',
+            'LENGTH'   => '/^((\d+)(em|ex|px|cm|mm|in|pt))/',
+            'NUMBER'   => '/^(\d+)/',
+            'HEXCOLOR' => '/^(#[0-9a-f]{3})/',
+            'IDENT'    => '/^(-?[_a-z][_a-z0-9-]*)/',
+            'HASH'     => '/^(#[_a-z0-9-]+)/',
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
-                return $token;
+                p($token);
+                return constant($token);
             }
         }
         $yylval = ord($lexbuf);
@@ -114,7 +117,9 @@ function yylex() {
 }
 
 function yyerror($msg) {
-    echo "[error]$msg\n";
+    global $lexbuf;
+    var_dump($lexbuf);
+    die("[error]$msg\n");
 }
 
 function p($msg) {
