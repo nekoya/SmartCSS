@@ -2,21 +2,21 @@
 
 div , p { margin:0 }
 
-#header {
+#header { margin:0; padding:1em;background:none;  color:#000; }
+
+div#header {
     margin:0;
     padding:0;
 }
 
-div#header { margin:0; padding:1em;background:none;  color:#000; }
+.button {
+    display:block;
+}
 
 a.nav {
     margin:1pt;
     background:#efefef;
     color:#333;
-}
-
-.button {
-    display:block;
 }
 
 div.parent.child {
