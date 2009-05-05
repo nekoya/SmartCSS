@@ -58,6 +58,10 @@ abstract class YYnode {
     public function dump() {
         $className = get_class($this);
         $name = strtolower(preg_replace('/^YYNode_/', '', $className));
-        echo $name . ':' . $this->id . "\n";
+        $output = $name . ':' . $this->id . "\n";
+        if ($this->hasNext()) {
+            $output .= $this->next->dump();
+        }
+        return $output;
     }
 }

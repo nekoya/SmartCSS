@@ -21,9 +21,10 @@ class YYNode_Ruleset extends YYNode {
      *
      */
     public function dump($indent) {
-        echo str_repeat(' ', $indent*2) . 'ruleset:' . $this->id . "\n";
+        $output = str_repeat(' ', $indent*2) . 'ruleset:' . $this->id . "\n";
         foreach ($this->items as $node) {
-            $node->dump($indent + 1);
+            $output .= $node->dump($indent + 1);
         }
+        return $output;
     }
 }

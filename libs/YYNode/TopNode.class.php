@@ -7,10 +7,11 @@ class YYNode_TopNode extends YYNode {
      *
      */
     public function dump() {
-        echo 'topnode:' . $this->id . "\n";
+        $output = 'topnode:' . $this->id . "\n";
         $node = $this;
         while ($node = $node->next) {
-            $node->dump(1);
+            $output .= $node->dump(1);
         }
+        return $output;
     }
 }
