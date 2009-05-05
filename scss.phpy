@@ -63,7 +63,7 @@ follow_decl : ';' s decl { $$ = $3; }
 decl : declaration | ruleset
 
 declaration
-    : property ':' expr { $$ = Parser::getInstance()->genDeclaration($1, $3); }
+    : property ':' s expr { $$ = Parser::getInstance()->genDeclaration($1, $4); }
 
 property
     : IDENT { $$ = Parser::getInstance()->genProperty($1); }
