@@ -60,29 +60,12 @@ class Parser {
     /**
      *
      */
-    public function genSelector($name) {
-        return $this->createNode('selector', $name);
-    }
-
-    /**
-     *
-     */
-    public function genProperty($name) {
-        return $this->createNode('property', $name);
-    }
-
-    /**
-     *
-     */
-    public function genCombinator($name) {
-        return $this->createNode('combinator', $name);
-    }
-
-    /**
-     *
-     */
-    public function genExpr($name) {
-        return $this->createNode('expr', $name);
+    public function __call($method, $args) {
+        if (preg_match('/^gen([A-Z][a-z]*)$/', $method, $matches)) {
+            $type = strtolower($matches[1]);
+            return $this->createNode($type, $args[0]);
+        }
+        throw new Exception('Method not found.');
     }
 
     /**
