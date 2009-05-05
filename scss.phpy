@@ -58,7 +58,7 @@ declarations
 decl : declaration | ruleset
 
 declaration
-    : property ':' s expr ';' { $$ = Parser::getInstance()->genDeclaration($1, $3); }
+    : property ':' expr ';' { $$ = Parser::getInstance()->genDeclaration($1, $3); }
 
 property
     : IDENT { $$ = Parser::getInstance()->genProperty($1); }
