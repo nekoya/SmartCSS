@@ -85,70 +85,71 @@ define('YYTERMS', 17);
 define('YYNONTERMS', 18);
 
 $yyaction = array(
-     49,   48,   50,   16,   51,   25,   26,   33,   22,   27,
-      0,    1,   39,   38,   34,    0,    2,    7,   34,    0,
-     14,    4,    0,  -29
+     51,   50,   52,   17,   53,   39,   26,   27,   23,    0,
+     28,   17,   15,   35,    2,    3,    1,   34,   40,    5,
+      0,    8,    0,-32766,    0,  -30
   );
 
-define('YYLAST', 24);
+define('YYLAST', 26);
 
 $yycheck = array(
-      4,    5,    6,    4,    8,   12,   13,    4,    3,   16,
-      0,    2,    4,    7,   15,   -1,   11,   10,   15,   -1,
-     14,    9,   -1,   10
+      4,    5,    6,    4,    8,    7,   12,   13,    3,    0,
+     16,    4,   14,   15,    2,   16,   11,    4,    4,    9,
+     -1,   10,   -1,   15,   -1,   10
   );
 
 $yybase = array(
-      0,   -1,   -1,    3,    3,    3,   12,   -4,   -7,    6,
-      6,    6,    5,   10,    8,    9,   13,    7,    0,    6,
-      6,    6,    6,    6,   -7
+      0,   -1,    7,    7,   13,   13,   13,   10,   -4,   -6,
+      8,    8,    8,    5,    9,   14,   12,   15,   11,    0,
+     -2,   -2,   -2,   -2,   -2,   -2,   -6,    0,    0,   -2,
+     -2,   -2
   );
 
-define('YY2TBLSTATE', 7);
+define('YY2TBLSTATE', 13);
 
 $yydefault = array(
-      2,32767,   25,    1,32767,32767,    5,32767,    6,   12,
-     13,   14,32767,32767,32767,32767,   15,32767
+      2,   26,32767,32767,    1,32767,32767,    5,32767,    6,
+     12,   13,   14,32767,32767,32767,32767,   15,32767
   );
 
 
 
 $yygoto = array(
-     36,   36,   21,   42,   11,    0,    8,    0,   29
+     41,   43,   37,   37,    9,   22,   12,    0,   30
   );
 
 define('YYGLAST', 9);
 
 $yygcheck = array(
-     11,   11,    3,   13,   10,   -1,    6,   -1,    8
+     13,   13,   11,   11,    6,    3,   10,   -1,    8
   );
 
 $yygbase = array(
-      0,    0,    0,   -1,    0,    0,    2,    0,    3,    0,
-     -5,  -10,    0,    1,    0,    0,    0,    0
+      0,    0,    0,    1,    0,    0,   -1,    0,    2,    0,
+     -4,   -9,    0,   -2,    0,    0,    0,    0
   );
 
 $yygdefault = array(
-  -32768,   13,    3,   45,   15,   12,    6,    5,   28,    9,
-     10,   35,   37,   40,   41,   44,   17,   46
+  -32768,   14,    4,   47,   16,   13,    7,    6,   29,   10,
+     11,   36,   38,   44,   42,   46,   18,   48
   );
 
 $yylhs = array(
       0,    1,    2,    2,    3,    4,    4,    7,    7,    7,
       6,    6,    8,    8,    8,    9,    9,   10,   10,   11,
-     11,   12,    5,    5,   14,   14,   13,   13,   15,   16,
-     17,   17,   17,   17
+     11,   12,    5,    5,   14,   14,   14,   13,   13,   15,
+     16,   17,   17,   17,   17
   );
 
 $yylen = array(
       1,    1,    0,    2,    4,    1,    3,    1,    1,    1,
       1,    3,    1,    1,    2,    1,    1,    1,    2,    1,
-      1,    2,    1,    2,    2,    1,    1,    1,    3,    1,
-      1,    1,    1,    1
+      1,    2,    1,    2,    3,    2,    1,    1,    1,    3,
+      1,    1,    1,    1,    1
   );
 
-define('YYSTATES', 42);
-define('YYNLSTATES', 18);
+define('YYSTATES', 44);
+define('YYNLSTATES', 19);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
 define('YYDEFAULT', -32766);
@@ -257,18 +258,20 @@ function yyparse()
         case 23:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 24:
+{ $yyval = $yyastk[$yysp-(3-3)]; } break;
+        case 25:
 { $yyval = $yyastk[$yysp-(2-2)]; } break;
-        case 28:
-{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
         case 29:
-{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
         case 30:
-{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
         case 31:
 { $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         case 32:
 { $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         case 33:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 34:
 { $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */

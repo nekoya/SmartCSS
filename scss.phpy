@@ -56,7 +56,8 @@ declarations
     : decl                     { $$ = $1; }
     | declarations follow_decl { $$ = Parser::getInstance()->catNode($1, $2); }
 
-follow_decl : ';' decl { $$ = $2; }
+follow_decl : ';' ' ' decl { $$ = $3; }
+            | ';' decl     { $$ = $2; }
             | ';'
 
 decl : declaration | ruleset
