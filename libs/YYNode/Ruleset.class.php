@@ -25,6 +25,9 @@ class YYNode_Ruleset extends YYNode {
         foreach ($this->items as $node) {
             $output .= $node->dump($indent + 1);
         }
+        if ($this->hasNext()) {
+            $output .= $this->next->dump($indent);
+        }
         return $output;
     }
 }
