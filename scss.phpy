@@ -56,8 +56,7 @@ declarations
     : decl                     { $$ = $1; }
     | declarations follow_decl { $$ = Parser::getInstance()->catNode($1, $2); }
 
-follow_decl : ';' ' ' decl { $$ = $3; }
-            | ';' decl     { $$ = $2; }
+follow_decl : ';' s decl { $$ = $3; }
             | ';'
 
 decl : declaration | ruleset
@@ -73,6 +72,8 @@ expr
     | IDENT    { $$ = Parser::getInstance()->genExpr($1); }
     | LENGTH   { $$ = Parser::getInstance()->genExpr($1); }
     | HEXCOLOR { $$ = Parser::getInstance()->genExpr($1); }
+
+s : | ' '
 
 %%
 
