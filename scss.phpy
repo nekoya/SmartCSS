@@ -8,7 +8,7 @@ $parser = Parser::getInstance();
 //$parser->debug = true;
 %}
 %token LBRACE RBRACE
-%token IDENT NUMBER LENGTH
+%token IDENT NUMBER LENGTH HASH
 %token ',' ':' ';' '+' '>' ' ' '.' '*'
 
 %%
@@ -48,8 +48,8 @@ attributes
     : attr
     | attributes attr { $$ = $1 . $2; }
 
-attr       : class
-class      : '.' IDENT { $$ = chr($1) . $2; }
+attr  : class | HASH
+class : '.' IDENT { $$ = chr($1) . $2; }
 
 declarations
     : decl              { $$ = $1; }
@@ -97,7 +97,8 @@ function yylex() {
             RBRACE => '/^(\s*}\s*)/',
             LENGTH => '/^((\d+)(em|ex|px|cm|mm|in|pt))/',
             NUMBER => '/^(\d+)/',
-            IDENT  => '/^(-?[_a-z][_a-z0-9-]*)/'
+            IDENT  => '/^(-?[_a-z][_a-z0-9-]*)/',
+            HASH   => '/^(#[_a-z0-9-]+)/'
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {

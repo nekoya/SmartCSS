@@ -8,6 +8,14 @@ p {
     display:block;
 }
 
+#header {
+    margin:0;
+}
+
+div#header {
+    padding:1em;
+}
+
 .nav {
     margin:1pt;
 }
