@@ -247,7 +247,7 @@ function yyparse()
         case 5:
 { $yyval = $yyastk[$yysp-(1-1)]; } break;
         case 6:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-3)]); } break;
+{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
         case 10:
 { $yyval = Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
         case 11:
