@@ -28,8 +28,8 @@ selectors
     | selector s ',' s selector { $$ = Parser::getInstance()->catNode($1, $5); }
 
 combinator
-    : PLUS
-    | GREATER
+    : PLUS s
+    | GREATER s
     | SPACE
 
 selector
