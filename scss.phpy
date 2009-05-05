@@ -80,39 +80,23 @@ function yylex() {
             var_dump($lexbuf);
         }
 
-        if (preg_match('/^(\s*{\s*)/', $lexbuf, $matches)) {
-            $yylval = $matches[1];
-            $lexbuf = substr($lexbuf, strlen($yylval));
-            p("LBRACE:[$yylval]");
-            return LBRACE;
-        } else if (preg_match('/^(\s*}\s*)/', $lexbuf, $matches)) {
-            $yylval = $matches[1];
-            $lexbuf = substr($lexbuf, strlen($yylval));
-            p("RBRACE:[$yylval]");
-            return RBRACE;
-        } else if (preg_match('/^(\d+)(em|ex|px|cm|mm|in|pt)/', $lexbuf, $matches)) {
-            $yylval = $matches[1] . $matches[2];
-            $lexbuf = substr($lexbuf, strlen($yylval));
-            p("LENGTH:[$yylval]");
-            return LENGTH;
-        } else if (preg_match('/^(\d+)/', $lexbuf, $matches)) {
-            $yylval = (string)$matches[1];
-            $lexbuf = substr($lexbuf, strlen($yylval));
-            p("NUMBER:[$yylval]");
-            return NUMBER;
-        } else if (preg_match('/^(-?[_a-z][_a-z0-9-]*)/', $lexbuf, $matches)) {
-            $yylval = $matches[1];
-            $lexbuf = substr($lexbuf, strlen($yylval));
-            p("IDENT:[$yylval]");
-            return IDENT;
-        } else {
-            $yylval = ord($lexbuf);
-            $lexbuf = substr($lexbuf, 1);
-            p($yylval);
-            switch ($yylval) {
-                default: return $yylval;
+        $regexs = array(
+            LBRACE => '/^(\s*{\s*)/',
+            RBRACE => '/^(\s*}\s*)/',
+            LENGTH => '/^((\d+)(em|ex|px|cm|mm|in|pt))/',
+            NUMBER => '/^(\d+)/',
+            IDENT  => '/^(-?[_a-z][_a-z0-9-]*)/'
+        );
+        foreach ($regexs as $token => $regex) {
+            if (preg_match($regex, $lexbuf, $matches)) {
+                $yylval = (string)$matches[1];
+                $lexbuf = substr($lexbuf, strlen($yylval));
+                return $token;
             }
         }
+        $yylval = ord($lexbuf);
+        $lexbuf = substr($lexbuf, 1);
+        return $yylval;
     }
 }
 
