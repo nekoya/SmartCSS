@@ -27,6 +27,13 @@ abstract class YYnode {
     /**
      *
      */
+    public function hasItem() {
+        return (empty($this->items)) ? false : true;
+    }
+
+    /**
+     *
+     */
     public function hasNext() {
         return (empty($this->next)) ? false : true;
     }

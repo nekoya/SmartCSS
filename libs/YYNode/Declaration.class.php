@@ -7,8 +7,10 @@ class YYNode_Declaration extends YYNode {
      *
      */
     public function publish() {
-        list($property, $expr) = $this->items;
-        $output = $property->publish() . ':' . $expr->publish() . ";";
+        if ($this->hasItem()) {
+            list($property, $expr) = $this->items;
+            $output = $property->publish() . ':' . $expr->publish() . ";";
+        }
         if ($this->hasNext()) {
             $output .= $this->next->publish();
         }

@@ -108,7 +108,7 @@ class Parser {
      *
      */
     public function run() {
-        echo $this->topNode->dump();
+        echo $this->topNode->publish();
     }
 
     /**
