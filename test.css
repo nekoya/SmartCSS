@@ -1,9 +1,10 @@
-/* comment */
-/**
- *
- **/
+/* comment1 */
 *{margin:5px 10px;}
+/* comment2 */
 
+/**
+ * comment3
+ **/
 div , p { margin:0 }
 
 p {

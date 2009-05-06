@@ -114,7 +114,7 @@ function yylex() {
 
     while ($lexbuf) {
         if (!empty($parser->debug)) {
-//            var_dump($lexbuf);
+            //var_dump($lexbuf);
         }
 
         $regexs = array(
@@ -128,7 +128,7 @@ function yylex() {
             'TIME'       => '/^((\d+)(ms|s))/',
             'FREQ'       => '/^((\d+)(hz|khz))/',
 
-            'COMMENT'    => '/(\/\*.*\*\/)/',
+            'COMMENT'    => '/^(\s*\/\*.*?\*\/\s*)/',
             'HEXCOLOR'   => '/^(#([0-9a-f]{6}|[0-9a-f]{3}))/',
             'IDENT'      => '/^(-?[_a-z][_a-z0-9-]*)/',
             'HASH'       => '/^(#[_a-z0-9-]+)/',
@@ -144,13 +144,18 @@ function yylex() {
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
                 p($token . ' ' . $yylval);
-                if ($token === 'COMMENT') continue; /* ignore comment */
+                if ($token === 'COMMENT') {
+                    /* ignore comment */
+                    break;
+                }
                 return constant($token);
             }
         }
-        $yylval = ord($lexbuf);
-        $lexbuf = substr($lexbuf, 1);
-        return $yylval;
+        if ($token !== 'COMMENT') {
+            $yylval = ord($lexbuf);
+            $lexbuf = substr($lexbuf, 1);
+            return $yylval;
+        }
     }
 }
 
