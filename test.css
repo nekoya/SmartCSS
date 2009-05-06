@@ -21,7 +21,7 @@ div , p { margin:0 }
 }
 
 #maincol {
-    width:640px;
+    width:100%;
     margin:10px 20px;
     div.section {
         padding:10px;
