@@ -97,7 +97,6 @@ try {
     $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
     yyparse();
     $parser = Parser::getInstance();
-    echo "----\n";
     echo $parser->run();
 } catch (Exception $e) {
     echo $e->getMessage() . "\n";

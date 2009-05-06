@@ -90,6 +90,7 @@ class Parser {
      */
     public function catNode($base, $newone, $combinator = null) {
         if (!$newone instanceof YYNode) {
+            // skip $newone (ex: catNode(decl, ';'))
             return $base;
         }
 

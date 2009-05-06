@@ -278,10 +278,26 @@ function yyparse()
 { $yyval = $yyastk[$yysp-(3-3)]; } break;
         case 29:
 { $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-4)]); } break;
-        case 30:
-{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         case 31:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
+        case 32:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 33:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 34:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 35:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 36:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 37:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 38:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 39:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 40:
+{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */
         $yysp -= $yyl;
@@ -347,7 +363,6 @@ try {
     $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
     yyparse();
     $parser = Parser::getInstance();
-    echo "----\n";
     echo $parser->run();
 } catch (Exception $e) {
     echo $e->getMessage() . "\n";
