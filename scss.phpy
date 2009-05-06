@@ -73,19 +73,19 @@ declaration
     : property ':' s expr { $$ = Parser::getInstance()->genDeclaration($1, $4); }
 
 expr
-    : term        { $$ = Parser::getInstance()->genExpr($1); }
+    : term
     | expr s term { $$ = Parser::getInstance()->catNode($1, $3); }
 
 term
-    : IDENT
-    | EMS
-    | EXS
-    | LENGTH
-    | ANGLE
-    | TIME
-    | FREQ
-    | NUMBER
-    | HEXCOLOR
+    : IDENT    { $$ = Parser::getInstance()->genExpr($1); }
+    | EMS      { $$ = Parser::getInstance()->genExpr($1); }
+    | EXS      { $$ = Parser::getInstance()->genExpr($1); }
+    | LENGTH   { $$ = Parser::getInstance()->genExpr($1); }
+    | ANGLE    { $$ = Parser::getInstance()->genExpr($1); }
+    | TIME     { $$ = Parser::getInstance()->genExpr($1); }
+    | FREQ     { $$ = Parser::getInstance()->genExpr($1); }
+    | NUMBER   { $$ = Parser::getInstance()->genExpr($1); }
+    | HEXCOLOR { $$ = Parser::getInstance()->genExpr($1); }
 
 s : | SPACE
 
