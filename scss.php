@@ -400,6 +400,7 @@ function yylex() {
             'TIME'       => '/^((\d+)(ms|s))/',
             'FREQ'       => '/^((\d+)(hz|khz))/',
 
+            'COMMENT'    => '/(\/\*.*?\*\/)/',
             'HEXCOLOR'   => '/^(#([0-9a-f]{6}|[0-9a-f]{3}))/',
             'IDENT'      => '/^(-?[_a-z][_a-z0-9-]*)/',
             'HASH'       => '/^(#[_a-z0-9-]+)/',
@@ -415,6 +416,7 @@ function yylex() {
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
                 p($token . ' ' . $yylval);
+                if ($token === 'COMMENT') continue; /* ignore comment */
                 return constant($token);
             }
         }
