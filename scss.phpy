@@ -10,6 +10,7 @@ $parser = Parser::getInstance();
 %token LBRACE RBRACE SPACE PLUS GREATER ASTERISK
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
 %token EMS EXS LENGTH ANGLE TIME FREQ
+%token IMPORTANT_SYM
 %token ',' ':' ';' '.'
 
 %%
@@ -70,7 +71,10 @@ follow_decl : ';' s decl { $$ = $3; }
 decl : declaration | ruleset
 
 declaration
-    : property ':' s expr { $$ = Parser::getInstance()->genDeclaration($1, $4); }
+    : property ':' s expr        { $$ = Parser::getInstance()->genDeclaration($1, $4); }
+    | property ':' s expr s prio { $$ = Parser::getInstance()->genDeclaration($1, $4, $6); }
+
+prio : IMPORTANT_SYM { $$ = Parser::getInstance()->genPrio($1); }
 
 expr
     : term
@@ -91,6 +95,8 @@ term
     | URI        { $$ = Parser::getInstance()->genExpr($1); }
 
 s : | SPACE
+
+//pseudo : ':' IDENT { $$ = $1 . $2; }
 
 %%
 
@@ -126,6 +132,7 @@ function yylex() {
             'COMMENT'    => '/^(\s*\/\*.*?\*\/\s*)/',
             'STRING'     => '/^(\s*(".*?"|\'.*?\'))/',
             'URI'        => '/^(url\((\s*(".*?"|\'.*?\'))\s*\))/',
+            'IMPORTANT_SYM' => '/^(!important\s*)/',
 
             'EMS'        => '/^((\d+)em)/',
             'EXS'        => '/^((\d+)ex)/',

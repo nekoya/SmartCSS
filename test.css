@@ -54,7 +54,7 @@ div#header {
 }
 
 .button {
-    display:block;
+    display:block !important;
 }
 
 a.nav {

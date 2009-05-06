@@ -49,9 +49,12 @@ class Parser {
     /**
      *
      */
-    public function genDeclaration($property, $expr) {
+    public function genDeclaration($property, $expr, $prio = null) {
         $node = $this->createNode('declaration');
         $node->children = array($property, $expr);
+        if ($prio instanceof YYNode) {
+            $this->catNode($expr, $prio);
+        }
         $this->debug($property->value);
         return $node;
     }
@@ -88,7 +91,7 @@ class Parser {
     /**
      *
      */
-    public function catNode($base, $newone, $combinator = null) {
+    public function catNode($base, $newone) {
         if (!$newone instanceof YYNode) {
             // skip $newone (ex: catNode(decl, ';'))
             return $base;
