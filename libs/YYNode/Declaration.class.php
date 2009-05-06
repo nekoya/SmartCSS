@@ -11,9 +11,6 @@ class YYNode_Declaration extends YYNode {
             list($property, $expr) = $this->children;
             $output = $property->publish() . ':' . $expr->publish() . ";";
         }
-        if ($this->hasNext()) {
-            $output .= $this->next->publish();
-        }
         return $output;
     }
 
@@ -25,9 +22,6 @@ class YYNode_Declaration extends YYNode {
         $output = str_repeat(' ', $indent*2) . 'declaration:' . $this->id . "\n";
         //echo str_repeat(' ', $indent + Parser::indent) . 'property:' . $property->id . ':' . $property->value . "\n";
         //echo str_repeat(' ', $indent + Parser::indent) . 'expr:' . $expr->id . ':' . $expr->value . "\n";
-        if ($this->hasNext()) {
-            $output .= $this->next->dump($indent);
-        }
         return $output;
     }
 }
