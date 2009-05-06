@@ -5,7 +5,7 @@
 abstract class YYnode {
     public $id;
     public $value;
-    public $child;
+    public $children;
     public $next;
 
     /**
@@ -26,8 +26,8 @@ abstract class YYnode {
     /**
      *
      */
-    public function hasChild() {
-        return (empty($this->child)) ? false : true;
+    public function hasChildren() {
+        return (empty($this->children)) ? false : true;
     }
 
     /**

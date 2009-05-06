@@ -2,6 +2,12 @@
 
 div , p { margin:0 }
 
+#main,#sub {
+    dt {
+        margin:0;
+    }
+}
+
 #header { margin:0; padding:1em;background:none;  color:#000; }
 
 div#header {

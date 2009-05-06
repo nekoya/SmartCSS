@@ -41,8 +41,8 @@ class Parser {
      */
     public function genRuleset($selector, $declarations) {
         $node = $this->createNode('ruleset');
-        $node->child = $selector;
-        $selector->child = $declarations;
+        $node->children = $selector;
+        $selector->children = $declarations;
         $this->debug($selector->value);
         return $node;
     }
@@ -52,7 +52,7 @@ class Parser {
      */
     public function genDeclaration($property, $expr) {
         $node = $this->createNode('declaration');
-        $node->child = array($property, $expr);
+        $node->children = array($property, $expr);
         $this->debug($property->value);
         return $node;
     }
