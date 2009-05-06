@@ -7,7 +7,7 @@ class YYNode_Ruleset extends YYNode {
      *
      */
     public function publish($prefix = '') {
-        $output = $prefix;
+        $output = '';
         if ($this->hasChildren()) {
             $selectors    = $this->findSelectors();
             $declarations = $this->findDeclarations();
@@ -15,7 +15,7 @@ class YYNode_Ruleset extends YYNode {
             if ($declarations) {
                 $values = array();
                 foreach ($selectors as $selector) {
-                    array_push($values, $selector->value);
+                    array_push($values, $prefix . $selector->value);
                 }
                 $output .= join(', ', $values) . " { ";
                 foreach ($declarations as $declaration) {

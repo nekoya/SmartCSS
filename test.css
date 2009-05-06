@@ -8,6 +8,18 @@ div , p { margin:0 }
     }
 }
 
+#main {
+    sup,sub {
+        color:red;
+    }
+}
+
+#main,#sub {
+    sup,sub {
+        font-weight:bold;
+    }
+}
+
 #header { margin:0; padding:1em;background:none;  color:#000; }
 
 div#header {
