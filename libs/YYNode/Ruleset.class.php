@@ -6,7 +6,10 @@ class YYNode_Ruleset extends YYNode {
     /**
      *
      */
-    public function publish($prefix = '') {
+    public function publish($prefixes = array('')) {
+        if (!is_array($prefixes)) {
+            throw new Exception('Prefixes allowed only array.');
+        }
         $output = '';
         if ($this->hasChildren()) {
             $selectors    = $this->findSelectors();
@@ -14,21 +17,25 @@ class YYNode_Ruleset extends YYNode {
             $rulesets     = $this->findRulesets();
             if ($declarations) {
                 $values = array();
-                foreach ($selectors as $selector) {
-                    array_push($values, $prefix . $selector->value);
+                foreach ($prefixes as $prefix) {
+                    if ($prefix !== '') {
+                        $prefix .= ' ';
+                    }
+                    foreach ($selectors as $selector) {
+                        array_push($values, $prefix . $selector->value);
+                    }
                 }
-                $output .= join(', ', $values) . " { ";
+                $output .= join(', ', $values);
+                $output .= " { ";
                 foreach ($declarations as $declaration) {
                     $output .= $declaration->publish();
                 }
                 $output .= " }\n";
             }
             if ($rulesets) {
-                foreach ($selectors as $selector) {
-                    $prefix = $selector->value . ' ';
-                    foreach ($rulesets as $ruleset) {
-                        $output .= $ruleset->publish($prefix);
-                    }
+                $prefixes = $this->getValues($selectors);
+                foreach ($rulesets as $ruleset) {
+                    $output .= $ruleset->publish($prefixes);
                 }
             }
         }
