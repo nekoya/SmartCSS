@@ -6,6 +6,14 @@
 
 div , p { margin:0 }
 
+p {
+    line-height:1.5;
+}
+
+p {
+    line-height:.5;
+}
+
 #main,#sub {
     dt {
         margin:0;
