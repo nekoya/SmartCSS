@@ -5,9 +5,8 @@
 abstract class YYnode {
     public $id;
     public $value;
-    public $items;
+    public $child;
     public $next;
-    public $combinator;
 
     /**
      *
@@ -27,8 +26,8 @@ abstract class YYnode {
     /**
      *
      */
-    public function hasItem() {
-        return (empty($this->items)) ? false : true;
+    public function hasChild() {
+        return (empty($this->child)) ? false : true;
     }
 
     /**

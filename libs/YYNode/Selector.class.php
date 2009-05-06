@@ -12,8 +12,8 @@ class YYNode_Selector extends YYNode {
             $output .= ',' . $this->next->value;
         }
         $output .= ' { ';
-        if ($this->hasItem()) {
-            $output .= $this->items->publish();
+        if ($this->hasChild()) {
+            $output .= $this->child->publish();
         }
         $output .= " }\n";
         return $output;
@@ -24,8 +24,8 @@ class YYNode_Selector extends YYNode {
      */
     public function dump($indent) {
         $output = str_repeat(' ', $indent * 2) . 'selector:' . $this->id . ':' . $this->value . "\n";
-        if ($this->hasItem()) {
-            $output .= $this->items->dump($indent + 1);
+        if ($this->hasChild()) {
+            $output .= $this->child->dump($indent + 1);
         }
         if ($this->hasNext()) {
             $output .= $this->next->dump($indent);
