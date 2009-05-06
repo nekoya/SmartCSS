@@ -71,4 +71,21 @@ abstract class YYnode {
         }
         return $output;
     }
+
+    /**
+     *
+     */
+    protected function getValues($nodes) {
+        if (!is_array($nodes)) {
+            throw new Exception('getValues() needs nodes array.');
+        }
+        $values = array();
+        foreach ($nodes as $node) {
+            if (!$node instanceof YYNode) {
+                throw new Exception('Found invalid node.');
+            }
+            array_push($values, $node->value);
+        }
+        return $values;
+    }
 }
