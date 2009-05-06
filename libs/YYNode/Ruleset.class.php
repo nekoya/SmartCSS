@@ -28,9 +28,9 @@ class YYNode_Ruleset extends YYNode {
                 $output .= join(', ', $values);
                 $output .= " { ";
                 foreach ($declarations as $declaration) {
-                    $output .= $declaration->publish();
+                    $output .= $declaration->publish() . ' ';
                 }
-                $output .= " }\n";
+                $output .= "}\n";
             }
             if ($rulesets) {
                 $prefixes = $this->getValues($selectors);
