@@ -18,8 +18,8 @@ stylesheet
     : rulesets
 
 combinator
-    : PLUS s
-    | GREATER s
+    : PLUS s    { $$ = '+'; }
+    | GREATER s { $$ = '>'; }
     | SPACE
 
 property
@@ -133,10 +133,10 @@ function yylex() {
             'HASH'       => '/^(#[_a-z0-9-]+)/',
             'PERCENTAGE' => '/^(\d+%)/',
             'NUMBER'     => '/^(\d+)/',
-            'SPACE'      => '/^(\s+)/',
-            'PLUS'       => '/^(\+)/',
-            'GREATER'    => '/^(\>)/',
+            'PLUS'       => '/^(\s*\+)/',
+            'GREATER'    => '/^(\s*\>)/',
             'ASTERISK'   => '/^(\*)/',
+            'SPACE'      => '/^(\s+)/',
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {

@@ -59,7 +59,7 @@ h2>a,h3+span {
     text-decoration:none;
 }
 
-h2> a,h3+ span { background-color:transparent }
+h2 > a,h3 + span { background-color:transparent }
 
 div p,
 img {

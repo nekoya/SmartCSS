@@ -249,6 +249,10 @@ function yyparse()
         $yyval = isset($yyastk[$n]) ? $yyastk[$n] : null;
         /* Following line will be replaced by reduce actions */
         switch($yyn) {
+        case 2:
+{ $yyval = '+'; } break;
+        case 3:
+{ $yyval = '>'; } break;
         case 5:
 { $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
         case 6:
@@ -401,10 +405,10 @@ function yylex() {
             'HASH'       => '/^(#[_a-z0-9-]+)/',
             'PERCENTAGE' => '/^(\d+%)/',
             'NUMBER'     => '/^(\d+)/',
-            'SPACE'      => '/^(\s+)/',
-            'PLUS'       => '/^(\+)/',
-            'GREATER'    => '/^(\>)/',
+            'PLUS'       => '/^(\s*\+)/',
+            'GREATER'    => '/^(\s*\>)/',
             'ASTERISK'   => '/^(\*)/',
+            'SPACE'      => '/^(\s+)/',
         );
         foreach ($regexs as $token => $regex) {
             if (preg_match($regex, $lexbuf, $matches)) {
