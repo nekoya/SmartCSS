@@ -96,8 +96,6 @@ term
 
 s : | SPACE
 
-//pseudo : ':' IDENT { $$ = $1 . $2; }
-
 %%
 
 try {

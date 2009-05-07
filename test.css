@@ -13,6 +13,9 @@ p {
 
 p {
     line-height:.5;
+    a {
+        color:red;
+    }
 }
 
 #main,#sub {
