@@ -15,6 +15,7 @@ p {
     line-height:.5;
     a {
         color:red;
+        text-indent:-1em;
     }
 }
 
