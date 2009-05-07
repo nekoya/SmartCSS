@@ -165,30 +165,34 @@ function defineRegexs() {
         'RBRACE'        => '\s*}\s*',
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',
-        'STRING'        => '\s*(".*?"|\'.*?\')',
-        'URI'           => 'url\(({{STRING}})\s*\)',
+        'STRING'        => '{{string}}',
+        'URI'           => 'url\(({{string}})\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
 
-        'EMS'           => '{{NUMBER}}em',
-        'EXS'           => '{{NUMBER}}ex',
-        'LENGTH'        => '{{NUMBER}}(px|cm|mm|in|pt|pc)',
-        'ANGLE'         => '{{NUMBER}}(deg|rad|grad)',
-        'TIME'          => '{{NUMBER}}(ms|s)',
-        'FREQ'          => '{{NUMBER}}(hz|khz)',
+        'EMS'           => '{{num}}em',
+        'EXS'           => '{{num}}ex',
+        'LENGTH'        => '{{num}}(px|cm|mm|in|pt|pc)',
+        'ANGLE'         => '{{num}}(deg|rad|grad)',
+        'TIME'          => '{{num}}(ms|s)',
+        'FREQ'          => '{{num}}(hz|khz)',
 
         'HEXCOLOR'      => '#([0-9a-f]{6}|[0-9a-f]{3})',
         'IDENT'         => '-?[_a-z][_a-z0-9-]*',
         'HASH'          => '#[_a-z0-9-]+',
-        'PERCENTAGE'    => '{{NUMBER}}+%',
-        'NUMBER'        => '\d*\.{0,1}\d+',
+        'PERCENTAGE'    => '{{num}}+%',
+        'NUMBER'        => '{{num}}',
         'PLUS'          => '\s*\+',
         'GREATER'       => '\s*\>',
         'ASTERISK'      => '\*',
         'SPACE'         => '\s+',
     );
+    $rules = array(
+        'num'    => '\d*\.{0,1}\d+',
+        'string' => '\s*(".*?"|\'.*?\')',
+    );
     foreach ($regexs as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
-            $regex = preg_replace("/$matches[1]/", $regexs[$matches[2]], $regex);
+            $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
         }
     }
     //var_dump($regexs);
