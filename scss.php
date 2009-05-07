@@ -483,7 +483,15 @@ function defineRegexs() {
     }
     foreach ($regexs as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
-            $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
+            $key = $matches[2];
+            if (array_key_exists($key, $rules)) {
+                $replace = $rules;
+            } else if (array_key_exists($key, $regexs)) {
+                $replace = $regexs;
+            } else {
+                throw new Exception("$key is not defined in lexer.");
+            }
+            $regex = preg_replace("/$matches[1]/", $replace[$key], $regex);
         }
     }
     //var_dump($regexs);
