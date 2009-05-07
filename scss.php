@@ -2,7 +2,7 @@
 
 //<?php
 $parser = Parser::getInstance();
-//$parser->debug = true;
+$parser->debug = true;
 
 /* Prototype file of PHP parser.
  * Written by Masato Bito
@@ -34,7 +34,11 @@ define('ANGLE', 273);
 define('TIME', 274);
 define('FREQ', 275);
 define('IMPORTANT_SYM', 276);
-define('EXPRESSION', 277);
+define('CHARSET', 277);
+define('IMPORT_SYM', 278);
+define('MEDIA_SYM', 279);
+define('PAGE_SYM', 280);
+define('EXPRESSION', 281);
 
   
 /*
@@ -64,110 +68,116 @@ function yyflush()
 
 
 $yytranslate = array(
-      0,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   11,   15,   14,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   12,   13,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,    1,    2,    3,    4,
-      5,    6,    7,   15,    8,   15,    9,   15,   15,   15,
-     15,   15,   15,   15,   15,   15,   15,   10
+      0,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   12,   16,   15,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   13,   14,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,    1,    2,    3,    4,
+      5,    6,    7,   16,    8,   16,    9,   16,   16,   16,
+     16,   16,   16,   16,   16,   16,   16,   10,   16,   16,
+     16,   11
   );
 
-define('YYBADCH', 15);
-define('YYMAXLEX', 278);
-define('YYTERMS', 15);
-define('YYNONTERMS', 19);
+define('YYBADCH', 16);
+define('YYMAXLEX', 282);
+define('YYTERMS', 16);
+define('YYNONTERMS', 21);
 
 $yyaction = array(
-     33,  -26,   47,   -9,    0,   21,   57,   19,   13,   14,
-      7,  -26,   43,   42,   43,   23,    1,   29,   41,   55,
-     16,    0,  -32,   15,    0,    0,    0,   -5
+     49,    0,   53,   16,   17,   39,  -30,    2,   21,   48,
+    -13,   32,   23,   63,   35,   48,   10,  -30,-32766,   19,
+     47,   25,    0,    0,    0,   61,    0,   18,  -36,    0,
+     -9
   );
 
-define('YYLAST', 28);
+define('YYLAST', 31);
 
 $yycheck = array(
-      3,    3,    9,    2,    0,    4,    4,   14,    5,    6,
-     13,   13,    7,    8,    7,    8,    2,    4,    8,   10,
-     12,   -1,   11,   11,   -1,   -1,   -1,   12
+      7,    0,    9,    5,    6,    3,    3,    2,   15,    8,
+      2,   10,    4,    4,    4,    8,   14,   14,    7,   13,
+      8,    8,   -1,   -1,   -1,   11,   -1,   12,   12,   -1,
+     13
   );
 
 $yybase = array(
-      0,    7,    7,    5,    5,    5,    1,   -2,   13,   -7,
-     -7,   -7,   -3,    2,    2,    2,    2,    9,    4,   10,
-     14,   11,   12,   15,    8,    0,   -7,   -7,   -7,   -7,
-     -7,    3,    2,    3
+      0,    1,   13,   13,    7,    7,    7,    7,    7,    8,
+      3,   10,   11,   11,   11,    2,    9,    9,    9,    9,
+     14,   12,    5,   16,   15,   17,    6,    0,   -7,   -7,
+     -7,   -7,   -7,   -7,   -7,   -7,   -2,    9,   -2,   -7,
+     -7,   -7
   );
 
-define('YY2TBLSTATE', 9);
+define('YY2TBLSTATE', 15);
 
 $yydefault = array(
-      6,32767,32767,    1,32767,32767,   31,   31,   10,   13,
-     14,   15,32767,   31,   31,   31,   31,32767,32767,32767,
-  32767,    4,32767,   17,32767
+      1,32767,32767,32767,32767,    3,    4,32767,32767,   35,
+     35,   14,   17,   18,   19,32767,   35,   35,   35,   35,
+  32767,32767,32767,    8,32767,   21,32767
   );
 
 
 
 $yygoto = array(
-      2,   45,   45,   50,   37,   32,   27,   28,    4,   17,
-      8,    0,   11
+      3,   51,   51,    6,   56,   11,   33,   34,    7,   20,
+     37,   43,    0,   37,   38,   38,   14
   );
 
-define('YYGLAST', 13);
+define('YYGLAST', 17);
 
 $yygcheck = array(
-      4,   14,   14,   15,   10,    6,    4,    4,    4,    4,
-      9,   -1,   12
+      6,   16,   16,    3,   17,   11,    6,    6,    6,    6,
+      8,   12,   -1,    8,    8,    8,   14
   );
 
 $yygbase = array(
-      0,    0,    0,    0,   -7,    0,    2,    0,    0,    6,
-     -1,    0,    3,    0,   -9,    1,    0,    0,    0
+      0,    0,    0,   -1,    0,    0,  -10,    0,    9,    0,
+      0,   -2,    3,    0,    4,    0,  -12,    1,    0,    0,
+      0
   );
 
 $yygdefault = array(
-  -32768,   18,    3,    5,   22,   24,   53,   20,   12,    6,
-     36,    9,   10,   46,   44,   48,   49,   52,   54
+  -32768,    1,   29,    5,    4,    8,   24,   26,   59,   22,
+     15,    9,   42,   12,   13,   52,   50,   54,   55,   58,
+     60
   );
 
 $yylhs = array(
-      0,    1,    3,    3,    3,    5,    2,    2,    6,    7,
-      7,    9,    9,   10,   10,   10,   13,   11,   11,   12,
-     12,   14,   14,    8,    8,   16,   16,   15,   15,   17,
-     18,    4,    4
+      0,    1,    1,    2,    2,    4,    5,    5,    5,    7,
+      3,    3,    8,    9,    9,   11,   11,   12,   12,   12,
+     15,   13,   13,   14,   14,   16,   16,   10,   10,   18,
+     18,   17,   17,   19,   20,    6,    6
   );
 
 $yylen = array(
-      1,    1,    2,    2,    1,    1,    0,    2,    4,    1,
-      5,    1,    3,    1,    1,    2,    2,    1,    1,    1,
-      2,    1,    1,    1,    2,    3,    1,    1,    1,    4,
-      1,    0,    1
+      1,    0,    2,    1,    2,    1,    2,    2,    1,    1,
+      1,    2,    4,    1,    5,    1,    3,    1,    1,    2,
+      2,    1,    1,    1,    2,    1,    1,    1,    2,    3,
+      1,    1,    1,    4,    1,    0,    1
   );
 
-define('YYSTATES', 47);
-define('YYNLSTATES', 25);
+define('YYSTATES', 52);
+define('YYNLSTATES', 27);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
 define('YYDEFAULT', -32766);
@@ -249,41 +259,43 @@ function yyparse()
         $yyval = isset($yyastk[$n]) ? $yyastk[$n] : null;
         /* Following line will be replaced by reduce actions */
         switch($yyn) {
+        case 1:
+{ $yyval = Parser::getInstance()->genTopNode(); } break;
         case 2:
-{ $yyval = '+'; } break;
-        case 3:
-{ $yyval = '>'; } break;
+{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+        case 4:
+{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 5:
-{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = Parser::getInstance()->genCharset($yyastk[$yysp-(1-1)]); } break;
         case 6:
-{ $yyval = Parser::getInstance()->setTopNode(); } break;
+{ $yyval = '+'; } break;
         case 7:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
-        case 8:
-{ $yyval = Parser::getInstance()->genRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
+{ $yyval = '>'; } break;
         case 9:
-{ $yyval = $yyastk[$yysp-(1-1)]; } break;
-        case 10:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
+{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
         case 11:
-{ $yyval = Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
-        case 12:
-{ $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)]); } break;
-        case 15:
-{ $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
-        case 16:
-{ $yyval = chr($yyastk[$yysp-(2-1)]) . $yyastk[$yysp-(2-2)]; } break;
-        case 20:
-{ $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
-        case 23:
-{ $yyval = $yyastk[$yysp-(1-1)]; } break;
-        case 24:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
-        case 25:
-{ $yyval = $yyastk[$yysp-(3-3)]; } break;
+        case 12:
+{ $yyval = Parser::getInstance()->genRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
+        case 14:
+{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
+        case 15:
+{ $yyval = Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
+        case 16:
+{ $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)]); } break;
+        case 19:
+{ $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
+        case 20:
+{ $yyval = chr($yyastk[$yysp-(2-1)]) . $yyastk[$yysp-(2-2)]; } break;
+        case 24:
+{ $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
+        case 28:
+{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 29:
+{ $yyval = $yyastk[$yysp-(3-3)]; } break;
+        case 33:
 { $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-4)]); } break;
-        case 30:
+        case 34:
 { $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */
@@ -435,6 +447,10 @@ function defineRegexs() {
         'STRING'        => '{{string}}',
         'URI'           => 'url\(\s*{{string}}\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
+        'CHARSET'       => '@charset\s*{{string}};',
+        'IMPORT_SYM'    => '@import\s*',
+        'MEDIA_SYM'     => '@media\s*',
+        'PAGE_SYM'      => '@page\s*',
 
         'EMS'           => '{{num}}em',
         'EXS'           => '{{num}}ex',
@@ -444,8 +460,8 @@ function defineRegexs() {
         'FREQ'          => '{{num}}(hz|khz)',
 
         'HEXCOLOR'      => '#(?:{{h}}{6}|{{h}}{3})',
-        'IDENT'         => '{{ident}}',
         'HASH'          => '#{{name}}+',
+        'IDENT'         => '{{ident}}',
         'PERCENTAGE'    => '{{num}}+%',
         'NUMBER'        => '{{num}}',
         'PLUS'          => '\s*\+',

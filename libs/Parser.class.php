@@ -30,7 +30,7 @@ class Parser {
     /**
      *
      */
-    public function setTopNode() {
+    public function genTopNode() {
         $node = $this->createNode('topnode');
         $this->topNode = $node;
         return $node;
@@ -96,8 +96,10 @@ class Parser {
             // skip $newone (ex: catNode(decl, ';'))
             return $base;
         }
-
         $node = $base;
+        if (!is_object($node) || !$node instanceof YYNode) {
+            throw new Exception('Additional node is not YYNode object');
+        }
         while ($node->hasNext()) {
             $node = $node->next;
         }

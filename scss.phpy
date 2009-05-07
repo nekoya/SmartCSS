@@ -5,20 +5,27 @@
 %{
 //<?php
 $parser = Parser::getInstance();
-//$parser->debug = true;
+$parser->debug = true;
 %}
 %token LBRACE RBRACE SPACE PLUS GREATER ASTERISK
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
 %token EMS EXS LENGTH ANGLE TIME FREQ
 %token IMPORTANT_SYM
-%token CHARSET_SYM IMPORT_SYM MEDIA_SYM PAGE_SYM
+%token CHARSET IMPORT MEDIA PAGE
 %token EXPRESSION
 %token ',' ':' ';' '.'
 
 %%
+root
+    : /* empty */     { $$ = Parser::getInstance()->genTopNode(); }
+    | root stylesheet { $$ = Parser::getInstance()->catNode($1, $2); }
 
 stylesheet
     : rulesets
+    | charset rulesets { $$ = Parser::getInstance()->catNode($1, $2); }
+
+charset
+    : CHARSET { $$ = Parser::getInstance()->genCharset($2); }
 
 combinator
     : PLUS s    { $$ = '+'; }
@@ -29,7 +36,7 @@ property
     : IDENT { $$ = Parser::getInstance()->genProperty($1); }
 
 rulesets
-    : /* empty */      { $$ = Parser::getInstance()->setTopNode(); }
+    : ruleset
     | rulesets ruleset { $$ = Parser::getInstance()->catNode($1, $2); }
 
 ruleset
@@ -173,6 +180,10 @@ function defineRegexs() {
         'STRING'        => '{{string}}',
         'URI'           => 'url\(\s*{{string}}\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
+        'CHARSET'       => '@charset\s*{{string}};',
+        'IMPORT_SYM'    => '@import\s*',
+        'MEDIA_SYM'     => '@media\s*',
+        'PAGE_SYM'      => '@page\s*',
 
         'EMS'           => '{{num}}em',
         'EXS'           => '{{num}}ex',
