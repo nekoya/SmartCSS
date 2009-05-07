@@ -447,7 +447,7 @@ function defineRegexs() {
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',
         'STRING'        => '{{string}}',
-        'URI'           => 'url\(({{string}})\s*\)',
+        'URI'           => 'url\(\s*{{string}}\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
 
         'EMS'           => '{{num}}em',
@@ -457,9 +457,9 @@ function defineRegexs() {
         'TIME'          => '{{num}}(ms|s)',
         'FREQ'          => '{{num}}(hz|khz)',
 
-        'HEXCOLOR'      => '#([0-9a-f]{6}|[0-9a-f]{3})',
-        'IDENT'         => '-?[_a-z][_a-z0-9-]*',
-        'HASH'          => '#[_a-z0-9-]+',
+        'HEXCOLOR'      => '#(?:{{h}}{6}|{{h}}{3})',
+        'IDENT'         => '{{ident}}',
+        'HASH'          => '#{{name}}+',
         'PERCENTAGE'    => '{{num}}+%',
         'NUMBER'        => '{{num}}',
         'PLUS'          => '\s*\+',
@@ -468,18 +468,19 @@ function defineRegexs() {
         'SPACE'         => '\s+',
     );
     $rules = array(
+        'h'       => '[0-9a-f]',
+        'ident'   => '-?{{nmstart}}{{nmchar}}*',
         'nmstart' => '[_a-z]',
         'nmchar'  => '[_a-z0-9-]',
         'name'    => '{{nmchar}}+',
         'num'     => '\d*\.{0,1}\d+',
-        'string'  => '\s*(".*?"|\'.*?\')',
+        'string'  => '(?:".*?"|\'.*?\')',
     );
     foreach ($rules as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
             $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
         }
     }
-    var_dump($rules);
     foreach ($regexs as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
             $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
