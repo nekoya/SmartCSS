@@ -36,7 +36,7 @@ ruleset
     : selectors LBRACE declarations RBRACE { $$ = Parser::getInstance()->genRuleset($1, $3); }
 
 selectors
-    : selector                  { $$ = $1; }
+    : selector
     | selector s ',' s selector { $$ = Parser::getInstance()->catNode($1, $5); }
 
 selector
@@ -64,7 +64,7 @@ attrib
     | HASH
 
 declarations
-    : decl                     { $$ = $1; }
+    : decl
     | declarations follow_decl { $$ = Parser::getInstance()->catNode($1, $2); }
 
 follow_decl : ';' s decl { $$ = $3; }
