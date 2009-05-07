@@ -11,6 +11,7 @@ $parser = Parser::getInstance();
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
 %token EMS EXS LENGTH ANGLE TIME FREQ
 %token IMPORTANT_SYM
+%token CHARSET_SYM IMPORT_SYM MEDIA_SYM PAGE_SYM
 %token EXPRESSION
 %token ',' ':' ';' '.'
 
@@ -181,8 +182,8 @@ function defineRegexs() {
         'FREQ'          => '{{num}}(hz|khz)',
 
         'HEXCOLOR'      => '#(?:{{h}}{6}|{{h}}{3})',
-        'IDENT'         => '{{ident}}',
         'HASH'          => '#{{name}}+',
+        'IDENT'         => '{{ident}}',
         'PERCENTAGE'    => '{{num}}+%',
         'NUMBER'        => '{{num}}',
         'PLUS'          => '\s*\+',
