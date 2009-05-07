@@ -373,7 +373,7 @@ function yylex() {
         foreach ($regexs as $token => $regex) {
             $regex = '/^('.$regex.')/i';
             if (preg_match($regex, $lexbuf, $matches)) {
-                //var_dump($matches);
+                var_dump($matches);
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
                 p($token . ' ' . $yylval);
@@ -412,7 +412,6 @@ function defineRegexs() {
         'RBRACE'        => '\s*}\s*',
 
         'EXPRESSION'    =>
-        '?:('.
             '(?:'.
                 '(?:'.
                     '{{unary_operator}}{{PERCENTAGE}}|'.
@@ -430,7 +429,7 @@ function defineRegexs() {
                 ')'.
             '\s*)+'.
             '({{IMPORTANT_SYM}})?'.
-        ')[;}]',
+        '(?=[;}])',
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',
         'STRING'        => '{{string}}',
