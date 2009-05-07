@@ -447,7 +447,7 @@ function defineRegexs() {
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',
         'STRING'        => '\s*(".*?"|\'.*?\')',
-        'URI'           => 'url\((\s*(".*?"|\'.*?\'))\s*\)',
+        'URI'           => 'url\(({{STRING}})\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
 
         'EMS'           => '{{NUMBER}}em',
@@ -460,7 +460,7 @@ function defineRegexs() {
         'HEXCOLOR'      => '#([0-9a-f]{6}|[0-9a-f]{3})',
         'IDENT'         => '-?[_a-z][_a-z0-9-]*',
         'HASH'          => '#[_a-z0-9-]+',
-        'PERCENTAGE'    => '\d+%',
+        'PERCENTAGE'    => '{{NUMBER}}+%',
         'NUMBER'        => '\d*\.{0,1}\d+',
         'PLUS'          => '\s*\+',
         'GREATER'       => '\s*\>',
