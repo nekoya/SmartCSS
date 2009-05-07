@@ -373,7 +373,7 @@ function yylex() {
         foreach ($regexs as $token => $regex) {
             $regex = '/^('.$regex.')/i';
             if (preg_match($regex, $lexbuf, $matches)) {
-                var_dump($matches);
+                //var_dump($matches);
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
                 p($token . ' ' . $yylval);
@@ -412,23 +412,23 @@ function defineRegexs() {
         'RBRACE'        => '\s*}\s*',
 
         'EXPRESSION'    =>
+        '(?:'.
             '(?:'.
-                '(?:'.
-                    '{{unary_operator}}{{PERCENTAGE}}|'.
-                    '{{unary_operator}}{{LENGTH}}|'.
-                    '{{unary_operator}}{{EMS}}|'.
-                    '{{unary_operator}}{{EXS}}|'.
-                    '{{unary_operator}}{{ANGLE}}|'.
-                    '{{unary_operator}}{{TIME}}|'.
-                    '{{unary_operator}}{{FREQ}}|'.
-                    '{{unary_operator}}{{NUMBER}}|'.
-                    '{{URI}}|'.
-                    '{{HEXCOLOR}}|'.
-                    '{{IDENT}}|'.
-                    '{{STRING}}'.
-                ')'.
-            '\s*)+'.
-            '({{IMPORTANT_SYM}})?'.
+                '{{unary_operator}}{{PERCENTAGE}}|'.
+                '{{unary_operator}}{{LENGTH}}|'.
+                '{{unary_operator}}{{EMS}}|'.
+                '{{unary_operator}}{{EXS}}|'.
+                '{{unary_operator}}{{ANGLE}}|'.
+                '{{unary_operator}}{{TIME}}|'.
+                '{{unary_operator}}{{FREQ}}|'.
+                '{{unary_operator}}{{NUMBER}}|'.
+                '{{URI}}|'.
+                '{{HEXCOLOR}}|'.
+                '{{IDENT}}|'.
+                '{{STRING}}'.
+            ')'.
+        '\s*)+'.
+        '({{IMPORTANT_SYM}})?'.
         '(?=[;}])',
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',

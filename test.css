@@ -15,7 +15,9 @@ p {
     line-height:.5;
     a {
         color:red;
-        text-indent:-1em;
+        span {
+            text-indent:-1em;
+        }
     }
 }
 
@@ -32,8 +34,12 @@ p {
 }
 
 #main,#sub {
-    sup,sub {
-        font-family:"Helvatica, Verdana, 'sans-serif'";
+    ul, ol {
+        margin:0;
+        sup,sub {
+            font-family:"Helvatica, Verdana, 'sans-serif'";
+            fint-weight:bold;
+        }
     }
 }
 

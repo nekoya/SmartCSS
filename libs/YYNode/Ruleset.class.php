@@ -15,17 +15,9 @@ class YYNode_Ruleset extends YYNode {
             $selectors    = $this->findSelectors();
             $declarations = $this->findDeclarations();
             $rulesets     = $this->findRulesets();
+            $myPrefixes   = $this->parsePrefixes($prefixes, $selectors);
             if ($declarations) {
-                $values = array();
-                foreach ($prefixes as $prefix) {
-                    if ($prefix !== '') {
-                        $prefix .= ' ';
-                    }
-                    foreach ($selectors as $selector) {
-                        array_push($values, $prefix . $selector->value);
-                    }
-                }
-                $output .= join(', ', $values);
+                $output .= join(', ', $myPrefixes);
                 $output .= " { ";
                 foreach ($declarations as $declaration) {
                     $output .= $declaration->publish() . ' ';
@@ -33,9 +25,8 @@ class YYNode_Ruleset extends YYNode {
                 $output .= "}\n";
             }
             if ($rulesets) {
-                $prefixes = $this->getValues($selectors);
                 foreach ($rulesets as $ruleset) {
-                    $output .= $ruleset->publish($prefixes);
+                    $output .= $ruleset->publish($myPrefixes);
                 }
             }
         }
@@ -76,6 +67,22 @@ class YYNode_Ruleset extends YYNode {
             $output .= $this->next->dump($indent);
         }
         return $output;
+    }
+
+    /**
+     *
+     */
+    protected function parsePrefixes($prefixes, $selectors) {
+        $values = array();
+        foreach ($prefixes as $prefix) {
+            if ($prefix !== '') {
+                $prefix .= ' ';
+            }
+            foreach ($selectors as $selector) {
+                array_push($values, $prefix . $selector->value);
+            }
+        }
+        return $values;
     }
 
     /**
