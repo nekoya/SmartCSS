@@ -124,32 +124,33 @@ function yylex() {
         }
 
         $regexs = array(
-            'LBRACE'        => '/^(\s*{\s*)/',
-            'RBRACE'        => '/^(\s*}\s*)/',
+            'LBRACE'        => '\s*{\s*',
+            'RBRACE'        => '\s*}\s*',
 
-            'COMMENT'       => '/^(\s*\/\*.*?\*\/\s*)/',
-            'STRING'        => '/^(\s*(".*?"|\'.*?\'))/',
-            'URI'           => '/^(url\((\s*(".*?"|\'.*?\'))\s*\))/',
-            'IMPORTANT_SYM' => '/^(!important\s*)/',
+            'COMMENT'       => '\s*\/\*.*?\*\/\s*',
+            'STRING'        => '\s*(".*?"|\'.*?\')',
+            'URI'           => 'url\((\s*(".*?"|\'.*?\'))\s*\)',
+            'IMPORTANT_SYM' => '!important\s*',
 
-            'EMS'           => '/^((\d+)em)/',
-            'EXS'           => '/^((\d+)ex)/',
-            'LENGTH'        => '/^((\d+)(px|cm|mm|in|pt|pc))/',
-            'ANGLE'         => '/^((\d+)(deg|rad|grad))/',
-            'TIME'          => '/^((\d+)(ms|s))/',
-            'FREQ'          => '/^((\d+)(hz|khz))/',
+            'EMS'           => '(\d+)em',
+            'EXS'           => '(\d+)ex',
+            'LENGTH'        => '(\d+)(px|cm|mm|in|pt|pc)',
+            'ANGLE'         => '(\d+)(deg|rad|grad)',
+            'TIME'          => '(\d+)(ms|s)',
+            'FREQ'          => '(\d+)(hz|khz)',
 
-            'HEXCOLOR'      => '/^(#([0-9a-f]{6}|[0-9a-f]{3}))/',
-            'IDENT'         => '/^(-?[_a-z][_a-z0-9-]*)/',
-            'HASH'          => '/^(#[_a-z0-9-]+)/',
-            'PERCENTAGE'    => '/^(\d+%)/',
-            'NUMBER'        => '/^(\d*\.{0,1}\d+)/',
-            'PLUS'          => '/^(\s*\+)/',
-            'GREATER'       => '/^(\s*\>)/',
-            'ASTERISK'      => '/^(\*)/',
-            'SPACE'         => '/^(\s+)/',
+            'HEXCOLOR'      => '#([0-9a-f]{6}|[0-9a-f]{3})',
+            'IDENT'         => '-?[_a-z][_a-z0-9-]*',
+            'HASH'          => '#[_a-z0-9-]+',
+            'PERCENTAGE'    => '\d+%',
+            'NUMBER'        => '\d*\.{0,1}\d+',
+            'PLUS'          => '\s*\+',
+            'GREATER'       => '\s*\>',
+            'ASTERISK'      => '\*',
+            'SPACE'         => '\s+',
         );
         foreach ($regexs as $token => $regex) {
+            $regex = '/^('.$regex.')/';
             if (preg_match($regex, $lexbuf, $matches)) {
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
