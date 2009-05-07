@@ -431,7 +431,7 @@ function yylex() {
             'SPACE'         => '\s+',
         );
         foreach ($regexs as $token => $regex) {
-            $regex = '/^('.$regex.')/';
+            $regex = '/^('.$regex.')/i';
             if (preg_match($regex, $lexbuf, $matches)) {
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
