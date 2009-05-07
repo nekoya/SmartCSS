@@ -5,7 +5,7 @@
 /**
  * comment3
  **/
-div , p { margin:0 }
+div , p { margin:0.5cm; }
 
 p {
     line-height:1.5;

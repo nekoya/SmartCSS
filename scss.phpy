@@ -102,6 +102,7 @@ try {
     $lexbuf = file_get_contents('test.css');
     $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
     $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
+    defineRegexs();
     yyparse();
     $parser = Parser::getInstance();
     echo $parser->run();
@@ -115,7 +116,7 @@ function __autoload($class) {
 }
 
 function yylex() {
-    global $lexbuf, $yylval;
+    global $lexbuf, $yylval, $regexs;
     $parser = Parser::getInstance();
 
     while ($lexbuf) {
@@ -123,32 +124,6 @@ function yylex() {
             //var_dump($lexbuf);
         }
 
-        $regexs = array(
-            'LBRACE'        => '\s*{\s*',
-            'RBRACE'        => '\s*}\s*',
-
-            'COMMENT'       => '\s*\/\*.*?\*\/\s*',
-            'STRING'        => '\s*(".*?"|\'.*?\')',
-            'URI'           => 'url\((\s*(".*?"|\'.*?\'))\s*\)',
-            'IMPORTANT_SYM' => '!important\s*',
-
-            'EMS'           => '(\d+)em',
-            'EXS'           => '(\d+)ex',
-            'LENGTH'        => '(\d+)(px|cm|mm|in|pt|pc)',
-            'ANGLE'         => '(\d+)(deg|rad|grad)',
-            'TIME'          => '(\d+)(ms|s)',
-            'FREQ'          => '(\d+)(hz|khz)',
-
-            'HEXCOLOR'      => '#([0-9a-f]{6}|[0-9a-f]{3})',
-            'IDENT'         => '-?[_a-z][_a-z0-9-]*',
-            'HASH'          => '#[_a-z0-9-]+',
-            'PERCENTAGE'    => '\d+%',
-            'NUMBER'        => '\d*\.{0,1}\d+',
-            'PLUS'          => '\s*\+',
-            'GREATER'       => '\s*\>',
-            'ASTERISK'      => '\*',
-            'SPACE'         => '\s+',
-        );
         foreach ($regexs as $token => $regex) {
             $regex = '/^('.$regex.')/i';
             if (preg_match($regex, $lexbuf, $matches)) {
@@ -181,4 +156,40 @@ function p($msg) {
     if (!empty($parser->debug)) {
         echo $msg . "\n";
     }
+}
+
+function defineRegexs() {
+    global $regexs;
+    $regexs = array(
+        'LBRACE'        => '\s*{\s*',
+        'RBRACE'        => '\s*}\s*',
+
+        'COMMENT'       => '\s*\/\*.*?\*\/\s*',
+        'STRING'        => '\s*(".*?"|\'.*?\')',
+        'URI'           => 'url\((\s*(".*?"|\'.*?\'))\s*\)',
+        'IMPORTANT_SYM' => '!important\s*',
+
+        'EMS'           => '{{NUMBER}}em',
+        'EXS'           => '{{NUMBER}}ex',
+        'LENGTH'        => '{{NUMBER}}(px|cm|mm|in|pt|pc)',
+        'ANGLE'         => '{{NUMBER}}(deg|rad|grad)',
+        'TIME'          => '{{NUMBER}}(ms|s)',
+        'FREQ'          => '{{NUMBER}}(hz|khz)',
+
+        'HEXCOLOR'      => '#([0-9a-f]{6}|[0-9a-f]{3})',
+        'IDENT'         => '-?[_a-z][_a-z0-9-]*',
+        'HASH'          => '#[_a-z0-9-]+',
+        'PERCENTAGE'    => '\d+%',
+        'NUMBER'        => '\d*\.{0,1}\d+',
+        'PLUS'          => '\s*\+',
+        'GREATER'       => '\s*\>',
+        'ASTERISK'      => '\*',
+        'SPACE'         => '\s+',
+    );
+    foreach ($regexs as $token => &$regex) {
+        while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
+            $regex = preg_replace("/$matches[1]/", $regexs[$matches[2]], $regex);
+        }
+    }
+    var_dump($regexs);
 }
