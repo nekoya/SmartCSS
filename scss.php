@@ -468,9 +468,18 @@ function defineRegexs() {
         'SPACE'         => '\s+',
     );
     $rules = array(
-        'num'    => '\d*\.{0,1}\d+',
-        'string' => '\s*(".*?"|\'.*?\')',
+        'nmstart' => '[_a-z]',
+        'nmchar'  => '[_a-z0-9-]',
+        'name'    => '{{nmchar}}+',
+        'num'     => '\d*\.{0,1}\d+',
+        'string'  => '\s*(".*?"|\'.*?\')',
     );
+    foreach ($rules as $token => &$regex) {
+        while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
+            $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
+        }
+    }
+    var_dump($rules);
     foreach ($regexs as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
             $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
