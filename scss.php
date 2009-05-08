@@ -344,10 +344,8 @@ function __autoload($class) {
     require "libs/$class.class.php";
 }
 
-$lexer = new SCSS_Lexer();
-
 function yylex() {
-    global $lexer;
+    $lexer = SCSS_Lexer::getInstance();
     return $lexer->yylex();
 }
 
