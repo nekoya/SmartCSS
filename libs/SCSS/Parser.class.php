@@ -63,7 +63,7 @@ class SCSS_Parser {
             $type = strtolower($matches[1]);
             return $this->createNode($type, $args[0]);
         }
-        throw new Exception('Method not found.');
+        throw new Exception("Method $method not found.");
     }
 
     /**
