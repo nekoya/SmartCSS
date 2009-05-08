@@ -30,10 +30,16 @@ class Parser {
     /**
      *
      */
-    public function genCharset($value) {
-        $node = $this->createNode('charset');
+    public function setTopNode($node) {
         $this->topNode = $node;
         return $node;
+    }
+
+    /**
+     *
+     */
+    public function genImport($target) {
+        return $this->createNode('import', $target);
     }
 
     /**
@@ -92,13 +98,20 @@ class Parser {
      *
      */
     public function catNode($base, $newone) {
+        if (is_array($newone)) {
+            foreach ($newone as $node) {
+                $this->catNode($base, $node);
+            }
+        }
+
         if (!$newone instanceof YYNode) {
             // skip $newone (ex: catNode(decl, ';'))
             return $base;
         }
         $node = $base;
         if (!is_object($node) || !$node instanceof YYNode) {
-            throw new Exception('Additional node is not YYNode object');
+            var_dump($base, $node);
+            throw new Exception('Node is not YYNode object');
         }
         while ($node->hasNext()) {
             $node = $node->next;
