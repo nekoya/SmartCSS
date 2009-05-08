@@ -1,7 +1,7 @@
 @charset 'utf-8';
+@import 'base.css';
 @import 'forall.css' all;
 @import 'multimedia.css'print, tv;
-@import 'base.css';
 @import url('http://www.example.com/foreign.css');
 @import url('http://www.example.com/print.css') print ;
 
@@ -12,7 +12,7 @@
 /**
  * comment3
  **/
-div , p { margin:0.5cm; }
+div , p { margin:0.5cm }
 
 p {
     line-height:1.5;

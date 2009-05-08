@@ -38,14 +38,6 @@ class Parser {
     /**
      *
      */
-    public function genImport($target, $media) {
-        $value = $target . ($media ? " $media" : '') . ';';
-        return $this->createNode('import', $value);
-    }
-
-    /**
-     *
-     */
     public function genRuleset($selector, $declarations) {
         $node = $this->createNode('ruleset');
         $node->children = array($selector, $declarations);
@@ -56,13 +48,10 @@ class Parser {
     /**
      *
      */
-    public function genDeclaration($property, $expr, $prio = null) {
+    public function genDeclaration($value) {
         $node = $this->createNode('declaration');
-        $node->children = array($property, $expr);
-        if ($prio instanceof YYNode) {
-            $this->catNode($expr, $prio);
-        }
-        $this->debug($property->value);
+        preg_match('/(.+?)\s*:\s*([^;]*)\s*/', trim($value), $matches);
+        $node->value = $matches[1] . ':' . $matches[2] . ';';
         return $node;
     }
 

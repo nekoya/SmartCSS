@@ -34,9 +34,11 @@ define('ANGLE', 273);
 define('TIME', 274);
 define('FREQ', 275);
 define('IMPORTANT_SYM', 276);
-define('CHARSET_SYM', 277);
-define('IMPORT_SYM', 278);
+define('CHARSET', 277);
+define('IMPORT', 278);
 define('EXPRESSION', 279);
+define('SELECTOR', 280);
+define('DECLARATION', 281);
 
   
 /*
@@ -66,124 +68,105 @@ function yyflush()
 
 
 $yytranslate = array(
-      0,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   15,   19,   18,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   16,   17,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-     19,   19,   19,   19,   19,   19,    1,    2,    3,    4,
-      5,    6,    7,    8,    9,   19,   10,   19,   19,   11,
-     19,   19,   19,   19,   19,   19,   19,   12,   13,   14
+      0,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   11,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,    1,    2,    3,    4,
+      5,    6,   12,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,    7,    8,   12,
+      9,   10
   );
 
-define('YYBADCH', 19);
-define('YYMAXLEX', 280);
-define('YYTERMS', 19);
-define('YYNONTERMS', 24);
+define('YYBADCH', 12);
+define('YYMAXLEX', 282);
+define('YYTERMS', 12);
+define('YYNONTERMS', 15);
 
 $yyaction = array(
-     69,  -36,   59,   73,   68,  -19,    0,   35,   17,   20,
-     32,   33,   21,   18,   19,  -36,    8,    2,   55,-32766,
-     83,   30,   37,   25,   81,    0,   68,   29,   26,   67,
-      0,    0,    0,    0,    0,    0,   28,  -42,   22,    0,
-    -15,    0,   49,   48,   45
+     30,  -14,    0,   13,   24,   41,    4,   39,    7,    8,
+     27,    0,   21,    0,    0,    0,   33,   34,  -10,    0,
+     39,    0,    9
   );
 
-define('YYLAST', 45);
+define('YYLAST', 23);
 
 $yycheck = array(
-      7,    3,    3,   10,    9,    2,    0,    4,   13,    8,
-      8,   18,   11,    5,    6,   17,   17,    2,    4,    7,
-      4,   12,    9,   16,   14,   -1,    9,    9,    9,    9,
-     -1,   -1,   -1,   -1,   -1,   -1,   15,   15,   15,   -1,
-     16,   -1,   17,   17,   17
+      3,    2,    0,    4,    8,    4,    2,   10,    5,    6,
+      4,   -1,    7,   -1,   -1,   -1,    9,    9,    9,   -1,
+     10,   -1,   11
   );
 
 $yybase = array(
-      9,   -5,   13,   13,   17,   17,   17,    3,   -2,   14,
-     12,   12,   12,   -1,    1,   26,   25,   16,   16,   16,
-     16,   16,   16,   19,   19,   16,   16,   10,   16,   16,
-      2,    6,   27,   20,   15,   22,   23,   24,    7,   18,
-      0,    0,   -7,   -7,   -7,   -7,   -7,   -7,    8,   16,
-      8,   -7,   -7,   -7,    0,    0,   21,   21
+      5,   -1,   -3,    6,   10,   -4,    7,    1,    1,    1,
+      7,    2,    4,    9,    8,   11,    0,    0,    3,    7,
+      3,    7,    7
   );
 
-define('YY2TBLSTATE', 17);
+define('YY2TBLSTATE', 6);
 
 $yydefault = array(
-      3,32767,32767,32767,    2,32767,32767,   41,   41,   20,
-     23,   24,   25,32767,32767,32767,32767,   41,   41,   41,
-     41,   41,   41,    9,    9,   41,   41,32767,   41,   41,
-  32767,32767,32767,32767,32767,   14,32767,   27,32767,32767,
-      5
+      3,   23,32767,   15,32767,32767,    2,   23,   23,   23,
+  32767,32767,32767,   24,32767,32767,    5
   );
 
 
 
 $yygoto = array(
-      3,   76,   57,   63,    9,   58,   71,   71,   16,   14,
-     53,   54,   23,   24,    5,   12,    0,   27,   51,    0,
-     39,   52
+     25,   26,   10,   28,   29,   35,    3
   );
 
-define('YYGLAST', 22);
+define('YYGLAST', 7);
 
 $yygcheck = array(
-      7,   20,   11,   15,   14,   11,   19,   19,    8,    7,
-      7,    7,    7,    7,    7,   17,   -1,    7,    7,   -1,
-      7,    7
+      8,    8,    8,    9,    9,   13,   12
   );
 
 $yygbase = array(
-      0,    0,    0,    0,    0,    0,    0,   -8,  -16,    0,
-      0,    1,    0,    0,   -1,   -3,    0,    5,    0,   -5,
-     -2,    0,    0,    0
+      0,    0,    0,    0,    0,    0,    0,    0,   -7,   -2,
+      0,    0,   -4,    1,    0
   );
 
 $yygdefault = array(
-  -32768,   31,   42,   40,    1,    4,   47,   36,   15,    6,
-     38,   79,   34,   13,    7,   62,   10,   11,   72,   70,
-     74,   75,   78,   80
+  -32768,   11,   18,   16,    5,    6,   23,   14,   15,   38,
+     12,    2,    1,   36,   37
   );
 
 $yylhs = array(
-      0,    1,    2,    3,    3,    4,    4,    6,    6,    8,
-      8,    8,    9,    9,    9,   10,    5,    5,   11,   12,
-     12,   14,   14,   15,   15,   15,   18,   16,   16,   17,
-     17,   19,   19,   13,   13,   21,   21,   20,   20,   22,
-     23,    7,    7
+      0,    1,    2,    3,    3,    4,    4,    6,    7,    7,
+      7,    5,    5,    9,   10,   10,   12,   12,   11,   11,
+     13,   13,   14,    8,    8
   );
 
 $yylen = array(
-      1,    1,    3,    0,    3,    0,    2,    6,    6,    0,
-      2,    5,    2,    2,    1,    1,    1,    2,    4,    1,
-      5,    1,    3,    1,    1,    2,    2,    1,    1,    1,
-      2,    1,    1,    1,    2,    3,    1,    1,    1,    4,
-      1,    0,    1
+      1,    1,    3,    0,    1,    0,    2,    1,    2,    2,
+      1,    1,    2,    4,    1,    5,    1,    3,    1,    2,
+      1,    1,    1,    0,    1
   );
 
-define('YYSTATES', 71);
-define('YYNLSTATES', 41);
+define('YYSTATES', 35);
+define('YYNLSTATES', 17);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
 define('YYDEFAULT', -32766);
@@ -272,51 +255,31 @@ function yyparse()
         case 3:
 { $yyval = Parser::getInstance()->genEmpty(''); } break;
         case 4:
-{ $yyval = Parser::getInstance()->genCharset($yyastk[$yysp-(3-2)]); } break;
+{ $yyval = Parser::getInstance()->genCharset($yyastk[$yysp-(1-1)]); } break;
         case 5:
 { $yyval = Parser::getInstance()->genEmpty(''); } break;
         case 6:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 7:
-{ $yyval = Parser::getInstance()->genImport($yyastk[$yysp-(6-3)], $yyastk[$yysp-(6-5)]); } break;
+{ $yyval = Parser::getInstance()->genImport($yyastk[$yysp-(1-1)]); } break;
         case 8:
-{ $yyval = Parser::getInstance()->genImport($yyastk[$yysp-(6-3)], $yyastk[$yysp-(6-5)]); } break;
-        case 9:
-{ $yyval = null; } break;
-        case 10:
-{ $yyval = $yyastk[$yysp-(2-1)]; } break;
-        case 11:
-{ $yyval = $yyastk[$yysp-(5-1)] . ', ' . $yyastk[$yysp-(5-4)]; } break;
-        case 12:
 { $yyval = '+'; } break;
-        case 13:
+        case 9:
 { $yyval = '>'; } break;
-        case 15:
-{ $yyval = Parser::getInstance()->genProperty($yyastk[$yysp-(1-1)]); } break;
-        case 17:
+        case 12:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
-        case 18:
+        case 13:
 { $yyval = Parser::getInstance()->genRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
-        case 20:
+        case 15:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
-        case 21:
+        case 16:
 { $yyval = Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
-        case 22:
+        case 17:
 { $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)]); } break;
-        case 25:
-{ $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
-        case 26:
-{ $yyval = chr($yyastk[$yysp-(2-1)]) . $yyastk[$yysp-(2-2)]; } break;
-        case 30:
-{ $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
-        case 34:
+        case 19:
 { $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
-        case 35:
-{ $yyval = $yyastk[$yysp-(3-3)]; } break;
-        case 39:
-{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-4)]); } break;
-        case 40:
-{ $yyval = Parser::getInstance()->genExpr($yyastk[$yysp-(1-1)]); } break;
+        case 22:
+{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */
         $yysp -= $yyl;
@@ -396,7 +359,7 @@ function __autoload($class) {
 function initialize() {
     defineRegexs();
     global $state_ruleset;
-    $state_ruleset = false;
+    $state_ruleset = 0;
 }
 
 function yylex() {
@@ -411,20 +374,21 @@ function yylex() {
         foreach ($regexs as $token => $regex) {
             $regex = '/^('.$regex.')/i';
             if (preg_match($regex, $lexbuf, $matches)) {
-                //var_dump($matches);
+                if (!empty($parser->debug)) {
+                    var_dump($matches);
+                }
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
-                p($token . ' ' . $yylval);
                 switch ($token) {
                 case 'COMMENT':
                     continue 3;
 
                 case 'LBRACE':
-                    $state_ruleset = true;
+                    $state_ruleset++;
                     break;
 
                 case 'RBRACE':
-                    $state_ruleset = false;
+                    $state_ruleset--;
                     break;
 
                 case 'EXPRESSION':
@@ -434,10 +398,12 @@ function yylex() {
                     }
                     break;
                 }
+                p($token . ' ' . $yylval);
                 return constant($token);
             }
         }
         // unmatched regexs
+        p('token unmatched');
         $yylval = ord($lexbuf);
         $lexbuf = substr($lexbuf, 1);
         return $yylval;
@@ -482,16 +448,18 @@ function defineRegexs() {
             ')'.
         '\s*)+'.
         '({{IMPORTANT_SYM}})?'.
-        '(?=[;}])',
+        '(?:;\s*|(?=}))',
+
+        'DECLARATION'   => '{{ident}}\s*:\s*{{EXPRESSION}}',
+
+        'SELECTOR'      => '(?:(?:{{ident}}|\*)(?:#{{name}}+|\.{{ident}})*|(?:#{{name}}+|\.{{ident}})+)',
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',
         'STRING'        => '{{string}}',
         'URI'           => 'url\(\s*{{string}}\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
-        'CHARSET_SYM'   => '@charset ',
-        'IMPORT_SYM'    => '@import\s*',
-        'MEDIA_SYM'     => '@media\s*',
-        'PAGE_SYM'      => '@page\s*',
+        'CHARSET'       => '@charset {{string}};',
+        'IMPORT'        => '@import\s*(?:{{string}}|{{URI}})\s*{{media_types}};',
 
         'EMS'           => '{{num}}em',
         'EXS'           => '{{num}}ex',
@@ -517,8 +485,9 @@ function defineRegexs() {
         'nmchar'  => '[_a-z0-9-]',
         'name'    => '{{nmchar}}+',
         'num'     => '\d*\.{0,1}\d+',
-        'string'  => '(?:".*?"|\'.*?\')',
+        'string'  => '(?:".*?"|' . "'.*?')",
         'unary_operator' => '(?:\+|\-)?',
+        'media_types'    => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
     );
     foreach ($rules as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {

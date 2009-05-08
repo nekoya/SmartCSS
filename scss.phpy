@@ -11,8 +11,10 @@ $parser = Parser::getInstance();
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
 %token EMS EXS LENGTH ANGLE TIME FREQ
 %token IMPORTANT_SYM
-%token CHARSET_SYM IMPORT_SYM
+%token CHARSET IMPORT
 %token EXPRESSION
+%token SELECTOR
+%token DECLARATION
 %token ',' ':' ';' '.'
 
 %%
@@ -22,29 +24,20 @@ stylesheet
     : charset imports rulesets { $$ = Parser::getInstance()->catNode($1, array($2, $3)); }
 
 charset
-    : /* empty */            { $$ = Parser::getInstance()->genEmpty(''); }
-    | CHARSET_SYM STRING ';' { $$ = Parser::getInstance()->genCharset($2); }
+    : /* empty */ { $$ = Parser::getInstance()->genEmpty(''); }
+    | CHARSET     { $$ = Parser::getInstance()->genCharset($1); }
 
 imports
     : /* empty */    { $$ = Parser::getInstance()->genEmpty(''); }
     | imports import { $$ = Parser::getInstance()->catNode($1, $2); }
 
 import
-    : IMPORT_SYM s STRING s media_types ';' { $$ = Parser::getInstance()->genImport($3, $5); }
-    | IMPORT_SYM s URI    s media_types ';' { $$ = Parser::getInstance()->genImport($3, $5); }
-
-media_types
-    : /* empty */               { $$ = null; }
-    | IDENT s                   { $$ = $1; }
-    | media_types ',' s IDENT s { $$ = $1 . ', ' . $4; }
+    : IMPORT { $$ = Parser::getInstance()->genImport($1); }
 
 combinator
     : PLUS s    { $$ = '+'; }
     | GREATER s { $$ = '>'; }
     | SPACE
-
-property
-    : IDENT { $$ = Parser::getInstance()->genProperty($1); }
 
 rulesets
     : ruleset
@@ -58,43 +51,17 @@ selectors
     | selector s ',' s selector { $$ = Parser::getInstance()->catNode($1, $5); }
 
 selector
-    : simple_selector                     { $$ = Parser::getInstance()->genSelector($1); }
-    | selector combinator simple_selector { $$ = $1; $1->appendValue($2, $3); }
-
-simple_selector
-    : element_name
-    | attributes
-    | element_name attributes { $$ = $1 . $2; }
-
-class
-    : '.' IDENT { $$ = chr($1) . $2; }
-
-element_name
-    : IDENT
-    | ASTERISK
-
-attributes
-    : attrib
-    | attributes attrib { $$ = $1 . $2; }
-
-attrib
-    : class
-    | HASH
+    : SELECTOR                     { $$ = Parser::getInstance()->genSelector($1); }
+    | selector combinator SELECTOR { $$ = $1; $1->appendValue($2, $3); }
 
 declarations
     : decl
-    | declarations follow_decl { $$ = Parser::getInstance()->catNode($1, $2); }
-
-follow_decl : ';' s decl { $$ = $3; }
-            | ';'
+    | declarations decl { $$ = Parser::getInstance()->catNode($1, $2); }
 
 decl : declaration | ruleset
 
 declaration
-    : property ':' s expr { $$ = Parser::getInstance()->genDeclaration($1, $4); }
-
-expr
-    : EXPRESSION { $$ = Parser::getInstance()->genExpr($1); }
+    : DECLARATION { $$ = Parser::getInstance()->genDeclaration($1); }
 
 s : | SPACE
 
@@ -120,7 +87,7 @@ function __autoload($class) {
 function initialize() {
     defineRegexs();
     global $state_ruleset;
-    $state_ruleset = false;
+    $state_ruleset = 0;
 }
 
 function yylex() {
@@ -135,20 +102,21 @@ function yylex() {
         foreach ($regexs as $token => $regex) {
             $regex = '/^('.$regex.')/i';
             if (preg_match($regex, $lexbuf, $matches)) {
-                //var_dump($matches);
+                if (!empty($parser->debug)) {
+                    var_dump($matches);
+                }
                 $yylval = (string)$matches[1];
                 $lexbuf = substr($lexbuf, strlen($yylval));
-                p($token . ' ' . $yylval);
                 switch ($token) {
                 case 'COMMENT':
                     continue 3;
 
                 case 'LBRACE':
-                    $state_ruleset = true;
+                    $state_ruleset++;
                     break;
 
                 case 'RBRACE':
-                    $state_ruleset = false;
+                    $state_ruleset--;
                     break;
 
                 case 'EXPRESSION':
@@ -158,10 +126,12 @@ function yylex() {
                     }
                     break;
                 }
+                p($token . ' ' . $yylval);
                 return constant($token);
             }
         }
         // unmatched regexs
+        p('token unmatched');
         $yylval = ord($lexbuf);
         $lexbuf = substr($lexbuf, 1);
         return $yylval;
@@ -206,16 +176,18 @@ function defineRegexs() {
             ')'.
         '\s*)+'.
         '({{IMPORTANT_SYM}})?'.
-        '(?=[;}])',
+        '(?:;\s*|(?=}))',
+
+        'DECLARATION'   => '{{ident}}\s*:\s*{{EXPRESSION}}',
+
+        'SELECTOR'      => '(?:(?:{{ident}}|\*)(?:#{{name}}+|\.{{ident}})*|(?:#{{name}}+|\.{{ident}})+)',
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',
         'STRING'        => '{{string}}',
         'URI'           => 'url\(\s*{{string}}\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
-        'CHARSET_SYM'   => '@charset ',
-        'IMPORT_SYM'    => '@import\s*',
-        'MEDIA_SYM'     => '@media\s*',
-        'PAGE_SYM'      => '@page\s*',
+        'CHARSET'       => '@charset {{string}};',
+        'IMPORT'        => '@import\s*(?:{{string}}|{{URI}})\s*{{media_types}};',
 
         'EMS'           => '{{num}}em',
         'EXS'           => '{{num}}ex',
@@ -241,8 +213,9 @@ function defineRegexs() {
         'nmchar'  => '[_a-z0-9-]',
         'name'    => '{{nmchar}}+',
         'num'     => '\d*\.{0,1}\d+',
-        'string'  => '(?:".*?"|\'.*?\')',
+        'string'  => '(?:".*?"|' . "'.*?')",
         'unary_operator' => '(?:\+|\-)?',
+        'media_types'    => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
     );
     foreach ($rules as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {

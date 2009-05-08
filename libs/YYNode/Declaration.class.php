@@ -7,11 +7,7 @@ class YYNode_Declaration extends YYNode {
      *
      */
     public function publish() {
-        if ($this->hasChildren()) {
-            list($property, $expr) = $this->children;
-            $output = $property->publish() . ':' . $expr->publish() . ";";
-        }
-        return $output;
+        return $this->value;
     }
 
     /**

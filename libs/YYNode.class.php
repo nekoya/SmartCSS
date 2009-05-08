@@ -7,6 +7,8 @@ abstract class YYnode {
     public $value;
     public $children;
     public $next;
+    protected $prefixValue;
+    protected $suffixValue;
 
     /**
      *
@@ -51,7 +53,7 @@ abstract class YYnode {
      *
      */
     public function publish() {
-        $output = $this->value;
+        $output = $this->prefixValue . $this->value . $this->suffixValue;
         if ($this->hasNext()) {
             $output .= $this->next->publish();
         }
