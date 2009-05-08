@@ -91,7 +91,7 @@ class Parser {
             $node->value = (string)$value;
         }
         array_push($this->nodes, $node);
-        $this->debug("create $type:" . $node->id);
+        $this->debug("create $type:" . $node->id . ':' . $node->value);
         return $node;
     }
 
