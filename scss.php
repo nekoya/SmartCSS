@@ -346,7 +346,8 @@ function __autoload($class) {
 
 function yylex() {
     $lexer = SCSS_Lexer::getInstance();
-    return $lexer->yylex();
+    $token = $lexer->yylex();
+    return (defined($token)) ? constant($token) : $token;
 }
 
 function yyerror($msg) {
