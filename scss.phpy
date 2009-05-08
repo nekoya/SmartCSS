@@ -180,7 +180,7 @@ function defineRegexs() {
 
         'DECLARATION'   => '{{ident}}\s*:\s*{{EXPRESSION}}',
 
-        'SELECTOR'      => '(?:(?:{{ident}}|\*)(?:#{{name}}+|\.{{ident}})*|(?:#{{name}}+|\.{{ident}})+)',
+        'SELECTOR'      => '(?:(?:{{ident}}|\*){{selector_suffix}}*|{{selector_suffix}}+)',
 
         'COMMENT'       => '\s*\/\*.*?\*\/\s*',
         'STRING'        => '{{string}}',
@@ -207,15 +207,21 @@ function defineRegexs() {
         'SPACE'         => '\s+',
     );
     $rules = array(
-        'h'       => '[0-9a-f]',
-        'ident'   => '-?{{nmstart}}{{nmchar}}*',
-        'nmstart' => '[_a-z]',
-        'nmchar'  => '[_a-z0-9-]',
-        'name'    => '{{nmchar}}+',
-        'num'     => '\d*\.{0,1}\d+',
-        'string'  => '(?:".*?"|' . "'.*?')",
-        'unary_operator' => '(?:\+|\-)?',
-        'media_types'    => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
+        'h'               => '[0-9a-f]',
+        'ident'           => '-?{{nmstart}}{{nmchar}}*',
+        'nmstart'         => '[_a-z]',
+        'nmchar'          => '[_a-z0-9-]',
+        'name'            => '{{nmchar}}+',
+        'num'             => '\d*\.{0,1}\d+',
+        'string'          => '(?:".*?"|' . "'.*?')",
+        'unary_operator'  => '(?:\+|\-)?',
+
+        'media_types'     => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
+
+        'hash'            => '#{{name}}',
+        'pseudo'          => ':{{ident}}',
+        'class'           => '\.{{ident}}',
+        'selector_suffix' => '(?:{{hash}}|{{class}}|{{pseudo}})'
     );
     foreach ($rules as $token => &$regex) {
         while (preg_match('/({{(.+?)}})/', $regex, $matches)) {

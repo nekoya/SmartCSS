@@ -20,7 +20,7 @@ p {
 
 p {
     line-height:.5;
-    a {
+    a:hover {
         color:red;
         span {
             text-indent:-1em;
