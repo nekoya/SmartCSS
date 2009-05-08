@@ -339,31 +339,18 @@ function yyparse()
 }
 
 
-try {
-    $lexbuf = file_get_contents('test.css');
-    $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
-    $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
-    initialize();
-    yyparse();
-    $parser = Parser::getInstance();
-    echo $parser->run();
-} catch (Exception $e) {
-    echo $e->getMessage() . "\n";
-}
-
 function __autoload($class) {
     $class = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);
     require "libs/$class.class.php";
 }
 
-function initialize() {
-    defineRegexs();
-    global $state_ruleset;
-    $state_ruleset = 0;
-}
+defineRegexs();
+$states = array(
+    'ruleset' => 0,
+);
 
 function yylex() {
-    global $lexbuf, $yylval, $regexs, $state_ruleset;
+    global $lexbuf, $yylval, $regexs, $states;
     $parser = Parser::getInstance();
 
     while ($lexbuf) {
@@ -384,15 +371,15 @@ function yylex() {
                     continue 3;
 
                 case 'LBRACE':
-                    $state_ruleset++;
+                    $states['ruleset']++;
                     break;
 
                 case 'RBRACE':
-                    $state_ruleset--;
+                    $states['ruleset']--;
                     break;
 
                 case 'EXPRESSION':
-                    if (!$state_ruleset) {
+                    if (!$states['ruleset']) {
                         $lexbuf = $yylval . $lexbuf;
                         continue 2;
                     }
@@ -463,10 +450,10 @@ function defineRegexs() {
 
         'EMS'           => '{{num}}em',
         'EXS'           => '{{num}}ex',
-        'LENGTH'        => '{{num}}(px|cm|mm|in|pt|pc)',
-        'ANGLE'         => '{{num}}(deg|rad|grad)',
-        'TIME'          => '{{num}}(ms|s)',
-        'FREQ'          => '{{num}}(hz|khz)',
+        'LENGTH'        => '{{num}}(?:px|cm|mm|in|pt|pc)',
+        'ANGLE'         => '{{num}}(?:deg|rad|grad)',
+        'TIME'          => '{{num}}(?:ms|s)',
+        'FREQ'          => '{{num}}(?:hz|khz)',
 
         'HEXCOLOR'      => '#(?:{{h}}{6}|{{h}}{3})',
         'HASH'          => '#{{name}}+',
@@ -513,4 +500,15 @@ function defineRegexs() {
             $regex = preg_replace("/$matches[1]/", $replace[$key], $regex);
         }
     }
+}
+
+try {
+    $lexbuf = file_get_contents('test.css');
+    $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
+    $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
+    yyparse();
+    $parser = Parser::getInstance();
+    echo $parser->run();
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
 }
