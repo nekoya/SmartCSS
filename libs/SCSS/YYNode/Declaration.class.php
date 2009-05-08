@@ -2,7 +2,7 @@
 /**
  *
  */
-class YYNode_Declaration extends YYNode {
+class SCSS_YYNode_Declaration extends SCSS_YYNode {
     /**
      *
      */

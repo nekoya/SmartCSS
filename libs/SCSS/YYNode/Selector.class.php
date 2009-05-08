@@ -2,7 +2,7 @@
 /**
  *
  */
-class YYNode_Selector extends YYNode {
+class SCSS_YYNode_Selector extends SCSS_YYNode {
     /**
      *
      */

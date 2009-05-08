@@ -1,7 +1,7 @@
 <?php
 
 //<?php
-$parser = Parser::getInstance();
+$parser = SCSS_Parser::getInstance();
 //$parser->debug = true;
 
 /* Prototype file of PHP parser.
@@ -249,37 +249,37 @@ function yyparse()
         /* Following line will be replaced by reduce actions */
         switch($yyn) {
         case 1:
-{ $yyval = Parser::getInstance()->setTopNode($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->setTopNode($yyastk[$yysp-(1-1)]); } break;
         case 2:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(3-1)], array($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)])); } break;
+{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(3-1)], array($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)])); } break;
         case 3:
-{ $yyval = Parser::getInstance()->genEmpty(''); } break;
+{ $yyval = SCSS_Parser::getInstance()->genEmpty(''); } break;
         case 4:
-{ $yyval = Parser::getInstance()->genCharset($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->genCharset($yyastk[$yysp-(1-1)]); } break;
         case 5:
-{ $yyval = Parser::getInstance()->genEmpty(''); } break;
+{ $yyval = SCSS_Parser::getInstance()->genEmpty(''); } break;
         case 6:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 7:
-{ $yyval = Parser::getInstance()->genImport($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->genImport($yyastk[$yysp-(1-1)]); } break;
         case 8:
 { $yyval = '+'; } break;
         case 9:
 { $yyval = '>'; } break;
         case 12:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 13:
-{ $yyval = Parser::getInstance()->genRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->genRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
         case 15:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
         case 16:
-{ $yyval = Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
         case 17:
 { $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)]); } break;
         case 19:
-{ $yyval = Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 22:
-{ $yyval = Parser::getInstance()->genDeclaration($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = SCSS_Parser::getInstance()->genDeclaration($yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */
         $yysp -= $yyl;
@@ -344,57 +344,15 @@ function __autoload($class) {
     require "libs/$class.class.php";
 }
 
-defineRegexs();
+require 'libs/SCSS/Lexer.class.php';
+$lexer = new ScssLexer();
 $states = array(
     'ruleset' => 0,
 );
 
 function yylex() {
-    global $lexbuf, $yylval, $regexs, $states;
-    $parser = Parser::getInstance();
-
-    while ($lexbuf) {
-        if (!empty($parser->debug)) {
-            //var_dump($lexbuf);
-        }
-
-        foreach ($regexs as $token => $regex) {
-            $regex = '/^('.$regex.')/i';
-            if (preg_match($regex, $lexbuf, $matches)) {
-                if (!empty($parser->debug)) {
-                    var_dump($matches);
-                }
-                $yylval = (string)$matches[1];
-                $lexbuf = substr($lexbuf, strlen($yylval));
-                switch ($token) {
-                case 'COMMENT':
-                    continue 3;
-
-                case 'LBRACE':
-                    $states['ruleset']++;
-                    break;
-
-                case 'RBRACE':
-                    $states['ruleset']--;
-                    break;
-
-                case 'EXPRESSION':
-                    if (!$states['ruleset']) {
-                        $lexbuf = $yylval . $lexbuf;
-                        continue 2;
-                    }
-                    break;
-                }
-                p($token . ' ' . $yylval);
-                return constant($token);
-            }
-        }
-        // unmatched regexs
-        p('token unmatched');
-        $yylval = ord($lexbuf);
-        $lexbuf = substr($lexbuf, 1);
-        return $yylval;
-    }
+    global $lexer;
+    return $lexer->yylex();
 }
 
 function yyerror($msg) {
@@ -404,111 +362,8 @@ function yyerror($msg) {
 }
 
 function p($msg) {
-    $parser = Parser::getInstance();
+    $parser = SCSS_Parser::getInstance();
     if (!empty($parser->debug)) {
         echo $msg . "\n";
     }
-}
-
-function defineRegexs() {
-    global $regexs;
-    $regexs = array(
-        'LBRACE'        => '\s*{\s*',
-        'RBRACE'        => '\s*}\s*',
-
-        // only enable between LBRACE and RBRACE
-        'EXPRESSION'    =>
-        '(?:'.
-            '(?:'.
-                '{{unary_operator}}{{PERCENTAGE}}|'.
-                '{{unary_operator}}{{LENGTH}}|'.
-                '{{unary_operator}}{{EMS}}|'.
-                '{{unary_operator}}{{EXS}}|'.
-                '{{unary_operator}}{{ANGLE}}|'.
-                '{{unary_operator}}{{TIME}}|'.
-                '{{unary_operator}}{{FREQ}}|'.
-                '{{unary_operator}}{{NUMBER}}|'.
-                '{{URI}}|'.
-                '{{HEXCOLOR}}|'.
-                '{{IDENT}}|'.
-                '{{STRING}}'.
-            ')'.
-        '\s*)+'.
-        '({{IMPORTANT_SYM}})?'.
-        '(?:;\s*|(?=}))',
-
-        'DECLARATION'   => '{{ident}}\s*:\s*{{EXPRESSION}}',
-
-        'SELECTOR'      => '(?:(?:{{ident}}|\*){{selector_suffix}}*|{{selector_suffix}}+)',
-
-        'COMMENT'       => '\s*\/\*.*?\*\/\s*',
-        'STRING'        => '{{string}}',
-        'URI'           => 'url\(\s*{{string}}\s*\)',
-        'IMPORTANT_SYM' => '!important\s*',
-        'CHARSET'       => '@charset {{string}};',
-        'IMPORT'        => '@import\s*(?:{{string}}|{{URI}})\s*{{media_types}};',
-
-        'EMS'           => '{{num}}em',
-        'EXS'           => '{{num}}ex',
-        'LENGTH'        => '{{num}}(?:px|cm|mm|in|pt|pc)',
-        'ANGLE'         => '{{num}}(?:deg|rad|grad)',
-        'TIME'          => '{{num}}(?:ms|s)',
-        'FREQ'          => '{{num}}(?:hz|khz)',
-
-        'HEXCOLOR'      => '#(?:{{h}}{6}|{{h}}{3})',
-        'HASH'          => '#{{name}}+',
-        'IDENT'         => '{{ident}}',
-        'PERCENTAGE'    => '{{num}}+%',
-        'NUMBER'        => '{{num}}',
-        'PLUS'          => '\s*\+',
-        'GREATER'       => '\s*\>',
-        'ASTERISK'      => '\*',
-        'SPACE'         => '\s+',
-    );
-    $rules = array(
-        'h'               => '[0-9a-f]',
-        'ident'           => '-?{{nmstart}}{{nmchar}}*',
-        'nmstart'         => '[_a-z]',
-        'nmchar'          => '[_a-z0-9-]',
-        'name'            => '{{nmchar}}+',
-        'num'             => '\d*\.{0,1}\d+',
-        'string'          => '(?:".*?"|' . "'.*?')",
-        'unary_operator'  => '(?:\+|\-)?',
-
-        'media_types'     => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
-
-        'hash'            => '#{{name}}',
-        'pseudo'          => ':{{ident}}',
-        'class'           => '\.{{ident}}',
-        'selector_suffix' => '(?:{{hash}}|{{class}}|{{pseudo}})'
-    );
-    foreach ($rules as $token => &$regex) {
-        while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
-            $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
-        }
-    }
-    foreach ($regexs as $token => &$regex) {
-        while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
-            $key = $matches[2];
-            if (array_key_exists($key, $rules)) {
-                $replace = $rules;
-            } else if (array_key_exists($key, $regexs)) {
-                $replace = $regexs;
-            } else {
-                throw new Exception("$key is not defined in lexer.");
-            }
-            $regex = preg_replace("/$matches[1]/", $replace[$key], $regex);
-        }
-    }
-}
-
-try {
-    $lexbuf = file_get_contents('test.css');
-    $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
-    $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
-    yyparse();
-    $parser = Parser::getInstance();
-    echo $parser->run();
-} catch (Exception $e) {
-    echo $e->getMessage() . "\n";
 }

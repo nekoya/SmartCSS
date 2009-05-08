@@ -3,7 +3,7 @@
  *
  */
 
-class Parser {
+class SCSS_Parser {
     static private $instance;
     public $lastInsertId = 0;
     public $topNode;
@@ -71,7 +71,7 @@ class Parser {
      */
     private function createNode($type, $value = null) {
         //echo "[[$type]]\n";
-        $className = 'YYNode_' . ucfirst($type);
+        $className = 'SCSS_YYNode_' . ucfirst($type);
         $node = new $className;
         $node->id = $this->lastInsertId++;
         //echo "----\n";
@@ -94,14 +94,14 @@ class Parser {
             }
         }
 
-        if (!$newone instanceof YYNode) {
+        if (!$newone instanceof SCSS_YYNode) {
             // skip $newone (ex: catNode(decl, ';'))
             return $base;
         }
         $node = $base;
-        if (!is_object($node) || !$node instanceof YYNode) {
+        if (!is_object($node) || !$node instanceof SCSS_YYNode) {
             var_dump($base, $node);
-            throw new Exception('Node is not YYNode object');
+            throw new Exception('Is not node object');
         }
         while ($node->hasNext()) {
             $node = $node->next;

@@ -2,7 +2,7 @@
 /**
  *
  */
-abstract class YYnode {
+abstract class SCSS_YYnode {
     public $id;
     public $value;
     public $children;
@@ -21,7 +21,7 @@ abstract class YYnode {
      */
     public function getType() {
         $className = get_class($this);
-        $type = preg_replace('/^YYNode_/', '', $className);
+        $type = preg_replace('/^SCSS_YYNode_/', '', $className);
         return strtolower($type);
     }
 
@@ -65,7 +65,7 @@ abstract class YYnode {
      */
     public function dump($indent = 0) {
         $className = get_class($this);
-        $name = strtolower(preg_replace('/^YYNode_/', '', $className));
+        $name = strtolower(preg_replace('/^SCSS_YYNode_/', '', $className));
         $output  = str_repeat(' ', $indent);
         $output .= $name . ':' . $this->id . "\n";
         if ($this->hasNext()) {

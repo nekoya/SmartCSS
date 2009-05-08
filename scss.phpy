@@ -4,7 +4,7 @@
 
 %{
 //<?php
-$parser = Parser::getInstance();
+$parser = SCSS_Parser::getInstance();
 //$parser->debug = true;
 %}
 %token LBRACE RBRACE SPACE PLUS GREATER ASTERISK
@@ -18,21 +18,21 @@ $parser = Parser::getInstance();
 %token ','
 
 %%
-root : stylesheet { $$ = Parser::getInstance()->setTopNode($1); }
+root : stylesheet { $$ = SCSS_Parser::getInstance()->setTopNode($1); }
 
 stylesheet
-    : charset imports rulesets { $$ = Parser::getInstance()->catNode($1, array($2, $3)); }
+    : charset imports rulesets { $$ = SCSS_Parser::getInstance()->catNode($1, array($2, $3)); }
 
 charset
-    : /* empty */ { $$ = Parser::getInstance()->genEmpty(''); }
-    | CHARSET     { $$ = Parser::getInstance()->genCharset($1); }
+    : /* empty */ { $$ = SCSS_Parser::getInstance()->genEmpty(''); }
+    | CHARSET     { $$ = SCSS_Parser::getInstance()->genCharset($1); }
 
 imports
-    : /* empty */    { $$ = Parser::getInstance()->genEmpty(''); }
-    | imports import { $$ = Parser::getInstance()->catNode($1, $2); }
+    : /* empty */    { $$ = SCSS_Parser::getInstance()->genEmpty(''); }
+    | imports import { $$ = SCSS_Parser::getInstance()->catNode($1, $2); }
 
 import
-    : IMPORT { $$ = Parser::getInstance()->genImport($1); }
+    : IMPORT { $$ = SCSS_Parser::getInstance()->genImport($1); }
 
 combinator
     : PLUS s    { $$ = '+'; }
@@ -41,27 +41,27 @@ combinator
 
 rulesets
     : ruleset
-    | rulesets ruleset { $$ = Parser::getInstance()->catNode($1, $2); }
+    | rulesets ruleset { $$ = SCSS_Parser::getInstance()->catNode($1, $2); }
 
 ruleset
-    : selectors LBRACE declarations RBRACE { $$ = Parser::getInstance()->genRuleset($1, $3); }
+    : selectors LBRACE declarations RBRACE { $$ = SCSS_Parser::getInstance()->genRuleset($1, $3); }
 
 selectors
     : selector
-    | selector s ',' s selector { $$ = Parser::getInstance()->catNode($1, $5); }
+    | selector s ',' s selector { $$ = SCSS_Parser::getInstance()->catNode($1, $5); }
 
 selector
-    : SELECTOR                     { $$ = Parser::getInstance()->genSelector($1); }
+    : SELECTOR                     { $$ = SCSS_Parser::getInstance()->genSelector($1); }
     | selector combinator SELECTOR { $$ = $1; $1->appendValue($2, $3); }
 
 declarations
     : decl
-    | declarations decl { $$ = Parser::getInstance()->catNode($1, $2); }
+    | declarations decl { $$ = SCSS_Parser::getInstance()->catNode($1, $2); }
 
 decl : declaration | ruleset
 
 declaration
-    : DECLARATION { $$ = Parser::getInstance()->genDeclaration($1); }
+    : DECLARATION { $$ = SCSS_Parser::getInstance()->genDeclaration($1); }
 
 s : | SPACE
 
@@ -72,57 +72,15 @@ function __autoload($class) {
     require "libs/$class.class.php";
 }
 
-defineRegexs();
+require 'libs/SCSS/Lexer.class.php';
+$lexer = new ScssLexer();
 $states = array(
     'ruleset' => 0,
 );
 
 function yylex() {
-    global $lexbuf, $yylval, $regexs, $states;
-    $parser = Parser::getInstance();
-
-    while ($lexbuf) {
-        if (!empty($parser->debug)) {
-            //var_dump($lexbuf);
-        }
-
-        foreach ($regexs as $token => $regex) {
-            $regex = '/^('.$regex.')/i';
-            if (preg_match($regex, $lexbuf, $matches)) {
-                if (!empty($parser->debug)) {
-                    var_dump($matches);
-                }
-                $yylval = (string)$matches[1];
-                $lexbuf = substr($lexbuf, strlen($yylval));
-                switch ($token) {
-                case 'COMMENT':
-                    continue 3;
-
-                case 'LBRACE':
-                    $states['ruleset']++;
-                    break;
-
-                case 'RBRACE':
-                    $states['ruleset']--;
-                    break;
-
-                case 'EXPRESSION':
-                    if (!$states['ruleset']) {
-                        $lexbuf = $yylval . $lexbuf;
-                        continue 2;
-                    }
-                    break;
-                }
-                p($token . ' ' . $yylval);
-                return constant($token);
-            }
-        }
-        // unmatched regexs
-        p('token unmatched');
-        $yylval = ord($lexbuf);
-        $lexbuf = substr($lexbuf, 1);
-        return $yylval;
-    }
+    global $lexer;
+    return $lexer->yylex();
 }
 
 function yyerror($msg) {
@@ -132,111 +90,8 @@ function yyerror($msg) {
 }
 
 function p($msg) {
-    $parser = Parser::getInstance();
+    $parser = SCSS_Parser::getInstance();
     if (!empty($parser->debug)) {
         echo $msg . "\n";
     }
-}
-
-function defineRegexs() {
-    global $regexs;
-    $regexs = array(
-        'LBRACE'        => '\s*{\s*',
-        'RBRACE'        => '\s*}\s*',
-
-        // only enable between LBRACE and RBRACE
-        'EXPRESSION'    =>
-        '(?:'.
-            '(?:'.
-                '{{unary_operator}}{{PERCENTAGE}}|'.
-                '{{unary_operator}}{{LENGTH}}|'.
-                '{{unary_operator}}{{EMS}}|'.
-                '{{unary_operator}}{{EXS}}|'.
-                '{{unary_operator}}{{ANGLE}}|'.
-                '{{unary_operator}}{{TIME}}|'.
-                '{{unary_operator}}{{FREQ}}|'.
-                '{{unary_operator}}{{NUMBER}}|'.
-                '{{URI}}|'.
-                '{{HEXCOLOR}}|'.
-                '{{IDENT}}|'.
-                '{{STRING}}'.
-            ')'.
-        '\s*)+'.
-        '({{IMPORTANT_SYM}})?'.
-        '(?:;\s*|(?=}))',
-
-        'DECLARATION'   => '{{ident}}\s*:\s*{{EXPRESSION}}',
-
-        'SELECTOR'      => '(?:(?:{{ident}}|\*){{selector_suffix}}*|{{selector_suffix}}+)',
-
-        'COMMENT'       => '\s*\/\*.*?\*\/\s*',
-        'STRING'        => '{{string}}',
-        'URI'           => 'url\(\s*{{string}}\s*\)',
-        'IMPORTANT_SYM' => '!important\s*',
-        'CHARSET'       => '@charset {{string}};',
-        'IMPORT'        => '@import\s*(?:{{string}}|{{URI}})\s*{{media_types}};',
-
-        'EMS'           => '{{num}}em',
-        'EXS'           => '{{num}}ex',
-        'LENGTH'        => '{{num}}(?:px|cm|mm|in|pt|pc)',
-        'ANGLE'         => '{{num}}(?:deg|rad|grad)',
-        'TIME'          => '{{num}}(?:ms|s)',
-        'FREQ'          => '{{num}}(?:hz|khz)',
-
-        'HEXCOLOR'      => '#(?:{{h}}{6}|{{h}}{3})',
-        'HASH'          => '#{{name}}+',
-        'IDENT'         => '{{ident}}',
-        'PERCENTAGE'    => '{{num}}+%',
-        'NUMBER'        => '{{num}}',
-        'PLUS'          => '\s*\+',
-        'GREATER'       => '\s*\>',
-        'ASTERISK'      => '\*',
-        'SPACE'         => '\s+',
-    );
-    $rules = array(
-        'h'               => '[0-9a-f]',
-        'ident'           => '-?{{nmstart}}{{nmchar}}*',
-        'nmstart'         => '[_a-z]',
-        'nmchar'          => '[_a-z0-9-]',
-        'name'            => '{{nmchar}}+',
-        'num'             => '\d*\.{0,1}\d+',
-        'string'          => '(?:".*?"|' . "'.*?')",
-        'unary_operator'  => '(?:\+|\-)?',
-
-        'media_types'     => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
-
-        'hash'            => '#{{name}}',
-        'pseudo'          => ':{{ident}}',
-        'class'           => '\.{{ident}}',
-        'selector_suffix' => '(?:{{hash}}|{{class}}|{{pseudo}})'
-    );
-    foreach ($rules as $token => &$regex) {
-        while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
-            $regex = preg_replace("/$matches[1]/", $rules[$matches[2]], $regex);
-        }
-    }
-    foreach ($regexs as $token => &$regex) {
-        while (preg_match('/({{(.+?)}})/', $regex, $matches)) {
-            $key = $matches[2];
-            if (array_key_exists($key, $rules)) {
-                $replace = $rules;
-            } else if (array_key_exists($key, $regexs)) {
-                $replace = $regexs;
-            } else {
-                throw new Exception("$key is not defined in lexer.");
-            }
-            $regex = preg_replace("/$matches[1]/", $replace[$key], $regex);
-        }
-    }
-}
-
-try {
-    $lexbuf = file_get_contents('test.css');
-    $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
-    $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
-    yyparse();
-    $parser = Parser::getInstance();
-    echo $parser->run();
-} catch (Exception $e) {
-    echo $e->getMessage() . "\n";
 }

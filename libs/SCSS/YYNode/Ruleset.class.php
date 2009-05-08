@@ -2,7 +2,7 @@
 /**
  *
  */
-class YYNode_Ruleset extends YYNode {
+class SCSS_YYNode_Ruleset extends SCSS_YYNode {
     /**
      *
      */
@@ -95,7 +95,7 @@ class YYNode_Ruleset extends YYNode {
         $nodes = array();
         $node = $this->children[0];
         do {
-            if (!$node instanceof YYNode_Selector) {
+            if (!$node instanceof SCSS_YYNode_Selector) {
                 throw new Exception('Invalid selector node.');
             }
             array_push($nodes, $node);
@@ -113,9 +113,9 @@ class YYNode_Ruleset extends YYNode {
         $nodes = array();
         $node = $this->children[1];
         do {
-            if ($node instanceof YYNode_Declaration) {
+            if ($node instanceof SCSS_YYNode_Declaration) {
                 array_push($nodes, $node);
-            } else if (!$node instanceof YYNode_Ruleset) {
+            } else if (!$node instanceof SCSS_YYNode_Ruleset) {
                 throw new Exception('Found invalid node in ruleset.');
             }
         } while ($node = $node->next);
@@ -132,9 +132,9 @@ class YYNode_Ruleset extends YYNode {
         $nodes = array();
         $node = $this->children[1];
         do {
-            if ($node instanceof YYNode_Ruleset) {
+            if ($node instanceof SCSS_YYNode_Ruleset) {
                 array_push($nodes, $node);
-            } else if (!$node instanceof YYNode_Declaration) {
+            } else if (!$node instanceof SCSS_YYNode_Declaration) {
                 throw new Exception('Found invalid node in ruleset.');
             }
         } while ($node = $node->next);
