@@ -5,7 +5,7 @@
 %{
 //<?php
 $parser = Parser::getInstance();
-$parser->debug = true;
+//$parser->debug = true;
 %}
 %token LBRACE RBRACE SPACE PLUS GREATER ASTERISK
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
@@ -16,16 +16,12 @@ $parser->debug = true;
 %token ',' ':' ';' '.'
 
 %%
-root
-    : /* empty */     { $$ = Parser::getInstance()->genTopNode(); }
-    | root stylesheet { $$ = Parser::getInstance()->catNode($1, $2); }
-
 stylesheet
-    : rulesets
-    | charset rulesets { $$ = Parser::getInstance()->catNode($1, $2); }
+    : charset rulesets { $$ = Parser::getInstance()->catNode($1, $2); }
 
 charset
-    : CHARSET { $$ = Parser::getInstance()->genCharset($2); }
+    : /* empty */ { $$ = Parser::getInstance()->genCharset(''); }
+    | CHARSET     { $$ = Parser::getInstance()->genCharset($1); }
 
 combinator
     : PLUS s    { $$ = '+'; }
@@ -181,7 +177,7 @@ function defineRegexs() {
         'URI'           => 'url\(\s*{{string}}\s*\)',
         'IMPORTANT_SYM' => '!important\s*',
         'CHARSET'       => '@charset\s*{{string}};',
-        'IMPORT_SYM'    => '@import\s*',
+        'IMPORT'        => '@import\s*',
         'MEDIA_SYM'     => '@media\s*',
         'PAGE_SYM'      => '@page\s*',
 

@@ -30,8 +30,8 @@ class Parser {
     /**
      *
      */
-    public function genTopNode() {
-        $node = $this->createNode('topnode');
+    public function genCharset($value) {
+        $node = $this->createNode('charset');
         $this->topNode = $node;
         return $node;
     }
