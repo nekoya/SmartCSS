@@ -5,16 +5,10 @@
 
 class SCSS_Parser {
     static private $instance;
-    public $lastInsertId = 0;
-    public $topNode;
-    public $nodes = array();
-    public $debug;
-
-    /**
-     *
-     */
-    protected function __construct() {
-    }
+    protected $lastInsertId = 0;
+    protected $topNode;
+    protected $nodes = array();
+    protected $debug;
 
     /**
      *
@@ -25,6 +19,12 @@ class SCSS_Parser {
             self::$instance = new $className();
         }
         return self::$instance;
+    }
+
+    /**
+     *
+     */
+    protected function __construct() {
     }
 
     /**
