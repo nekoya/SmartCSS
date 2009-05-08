@@ -344,8 +344,7 @@ function __autoload($class) {
     require "libs/$class.class.php";
 }
 
-require 'libs/SCSS/Lexer.class.php';
-$lexer = new ScssLexer();
+$lexer = new SCSS_Lexer();
 $states = array(
     'ruleset' => 0,
 );
