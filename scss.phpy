@@ -18,21 +18,21 @@ $parser = SCSS_Parser::getInstance();
 %token ','
 
 %%
-root : stylesheet { $$ = SCSS_Parser::getInstance()->setTopNode($1); }
+root : stylesheet { $$ = topnode($1); }
 
 stylesheet
-    : charset imports rulesets { $$ = SCSS_Parser::getInstance()->catNode($1, array($2, $3)); }
+    : charset imports rulesets { $$ = cat($1, array($2, $3)); }
 
 charset
-    : /* empty */ { $$ = SCSS_Parser::getInstance()->genEmpty(''); }
-    | CHARSET     { $$ = SCSS_Parser::getInstance()->genCharset($1); }
+    : /* empty */ { $$ = gen('empty'); }
+    | CHARSET     { $$ = gen('charset', $1); }
 
 imports
-    : /* empty */    { $$ = SCSS_Parser::getInstance()->genEmpty(''); }
-    | imports import { $$ = SCSS_Parser::getInstance()->catNode($1, $2); }
+    : /* empty */    { $$ = gen('empty'); }
+    | imports import { $$ = cat($1, $2); }
 
 import
-    : IMPORT { $$ = SCSS_Parser::getInstance()->genImport($1); }
+    : IMPORT { $$ = gen('import', $1); }
 
 combinator
     : PLUS s    { $$ = '+'; }
@@ -41,27 +41,27 @@ combinator
 
 rulesets
     : ruleset
-    | rulesets ruleset { $$ = SCSS_Parser::getInstance()->catNode($1, $2); }
+    | rulesets ruleset { $$ = cat($1, $2); }
 
 ruleset
-    : selectors LBRACE declarations RBRACE { $$ = SCSS_Parser::getInstance()->genRuleset($1, $3); }
+    : selectors LBRACE declarations RBRACE { $$ = gen('ruleset', $1, $3); }
 
 selectors
     : selector
-    | selector s ',' s selector { $$ = SCSS_Parser::getInstance()->catNode($1, $5); }
+    | selector s ',' s selector { $$ = cat($1, $5); }
 
 selector
-    : SELECTOR                     { $$ = SCSS_Parser::getInstance()->genSelector($1); }
+    : SELECTOR                     { $$ = gen('selector', $1); }
     | selector combinator SELECTOR { $$ = $1; $1->appendValue($2, $3); }
 
 declarations
     : decl
-    | declarations decl { $$ = SCSS_Parser::getInstance()->catNode($1, $2); }
+    | declarations decl { $$ = cat($1, $2); }
 
 decl : declaration | ruleset
 
 declaration
-    : DECLARATION { $$ = SCSS_Parser::getInstance()->genDeclaration($1); }
+    : DECLARATION { $$ = gen('declaration', $1); }
 
 s : | SPACE
 
@@ -73,9 +73,6 @@ function __autoload($class) {
 }
 
 $lexer = new SCSS_Lexer();
-$states = array(
-    'ruleset' => 0,
-);
 
 function yylex() {
     global $lexer;
@@ -88,9 +85,18 @@ function yyerror($msg) {
     die("[error]$msg\n");
 }
 
-function p($msg) {
+function gen($type, $val1 = null, $val2 = null) {
     $parser = SCSS_Parser::getInstance();
-    if (!empty($parser->debug)) {
-        echo $msg . "\n";
-    }
+    $method = 'gen' . ucfirst($type);
+    return $parser->$method($val1, $val2);
+}
+
+function cat($base, $newone) {
+    $parser = SCSS_Parser::getInstance();
+    return $parser->catNode($base, $newone);
+}
+
+function topnode($node) {
+    $parser = SCSS_Parser::getInstance();
+    return $parser->setTopNode($node);
 }

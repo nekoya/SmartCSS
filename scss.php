@@ -249,37 +249,37 @@ function yyparse()
         /* Following line will be replaced by reduce actions */
         switch($yyn) {
         case 1:
-{ $yyval = SCSS_Parser::getInstance()->setTopNode($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = topnode($yyastk[$yysp-(1-1)]); } break;
         case 2:
-{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(3-1)], array($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)])); } break;
+{ $yyval = cat($yyastk[$yysp-(3-1)], array($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)])); } break;
         case 3:
-{ $yyval = SCSS_Parser::getInstance()->genEmpty(''); } break;
+{ $yyval = gen('empty'); } break;
         case 4:
-{ $yyval = SCSS_Parser::getInstance()->genCharset($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = gen('charset', $yyastk[$yysp-(1-1)]); } break;
         case 5:
-{ $yyval = SCSS_Parser::getInstance()->genEmpty(''); } break;
+{ $yyval = gen('empty'); } break;
         case 6:
-{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 7:
-{ $yyval = SCSS_Parser::getInstance()->genImport($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = gen('import', $yyastk[$yysp-(1-1)]); } break;
         case 8:
 { $yyval = '+'; } break;
         case 9:
 { $yyval = '>'; } break;
         case 12:
-{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 13:
-{ $yyval = SCSS_Parser::getInstance()->genRuleset($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
+{ $yyval = gen('ruleset', $yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
         case 15:
-{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
+{ $yyval = cat($yyastk[$yysp-(5-1)], $yyastk[$yysp-(5-5)]); } break;
         case 16:
-{ $yyval = SCSS_Parser::getInstance()->genSelector($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = gen('selector', $yyastk[$yysp-(1-1)]); } break;
         case 17:
 { $yyval = $yyastk[$yysp-(3-1)]; $yyastk[$yysp-(3-1)]->appendValue($yyastk[$yysp-(3-2)], $yyastk[$yysp-(3-3)]); } break;
         case 19:
-{ $yyval = SCSS_Parser::getInstance()->catNode($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 22:
-{ $yyval = SCSS_Parser::getInstance()->genDeclaration($yyastk[$yysp-(1-1)]); } break;
+{ $yyval = gen('declaration', $yyastk[$yysp-(1-1)]); } break;
         }
         /* Goto - shift nonterminal */
         $yysp -= $yyl;
@@ -345,9 +345,6 @@ function __autoload($class) {
 }
 
 $lexer = new SCSS_Lexer();
-$states = array(
-    'ruleset' => 0,
-);
 
 function yylex() {
     global $lexer;
@@ -360,9 +357,18 @@ function yyerror($msg) {
     die("[error]$msg\n");
 }
 
-function p($msg) {
+function gen($type, $val1 = null, $val2 = null) {
     $parser = SCSS_Parser::getInstance();
-    if (!empty($parser->debug)) {
-        echo $msg . "\n";
-    }
+    $method = 'gen' . ucfirst($type);
+    return $parser->$method($val1, $val2);
+}
+
+function cat($base, $newone) {
+    $parser = SCSS_Parser::getInstance();
+    return $parser->catNode($base, $newone);
+}
+
+function topnode($node) {
+    $parser = SCSS_Parser::getInstance();
+    return $parser->setTopNode($node);
 }
