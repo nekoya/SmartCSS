@@ -15,7 +15,7 @@ $parser = Parser::getInstance();
 %token EXPRESSION
 %token SELECTOR
 %token DECLARATION
-%token ',' ':' ';' '.'
+%token ','
 
 %%
 root : stylesheet { $$ = Parser::getInstance()->setTopNode($1); }
@@ -191,10 +191,10 @@ function defineRegexs() {
 
         'EMS'           => '{{num}}em',
         'EXS'           => '{{num}}ex',
-        'LENGTH'        => '{{num}}(px|cm|mm|in|pt|pc)',
-        'ANGLE'         => '{{num}}(deg|rad|grad)',
-        'TIME'          => '{{num}}(ms|s)',
-        'FREQ'          => '{{num}}(hz|khz)',
+        'LENGTH'        => '{{num}}(?:px|cm|mm|in|pt|pc)',
+        'ANGLE'         => '{{num}}(?:deg|rad|grad)',
+        'TIME'          => '{{num}}(?:ms|s)',
+        'FREQ'          => '{{num}}(?:hz|khz)',
 
         'HEXCOLOR'      => '#(?:{{h}}{6}|{{h}}{3})',
         'HASH'          => '#{{name}}+',
