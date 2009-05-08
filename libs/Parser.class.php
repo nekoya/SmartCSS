@@ -38,8 +38,9 @@ class Parser {
     /**
      *
      */
-    public function genImport($target) {
-        return $this->createNode('import', $target);
+    public function genImport($target, $media) {
+        $value = $target . ($media ? " $media" : '') . ';';
+        return $this->createNode('import', $value);
     }
 
     /**

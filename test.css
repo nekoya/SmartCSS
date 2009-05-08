@@ -1,5 +1,9 @@
 @charset 'utf-8';
-@import 'hoge.css';
+@import 'forall.css' all;
+@import 'multimedia.css'print, tv;
+@import 'base.css';
+@import url('http://www.example.com/foreign.css');
+@import url('http://www.example.com/print.css') print ;
 
 /* comment1 */
 *{margin:5px 10px;}

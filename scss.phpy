@@ -30,8 +30,13 @@ imports
     | imports import { $$ = Parser::getInstance()->catNode($1, $2); }
 
 import
-    : IMPORT_SYM s STRING s ';' { $$ = Parser::getInstance()->genImport($3); }
-    | IMPORT_SYM s URI s ';'    { $$ = Parser::getInstance()->genImport($3); }
+    : IMPORT_SYM s STRING s media_types ';' { $$ = Parser::getInstance()->genImport($3, $5); }
+    | IMPORT_SYM s URI    s media_types ';' { $$ = Parser::getInstance()->genImport($3, $5); }
+
+media_types
+    : /* empty */               { $$ = null; }
+    | IDENT s                   { $$ = $1; }
+    | media_types ',' s IDENT s { $$ = $1 . ', ' . $4; }
 
 combinator
     : PLUS s    { $$ = '+'; }
