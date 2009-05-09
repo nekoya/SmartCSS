@@ -115,7 +115,7 @@ class SCSS_Parser {
      *
      */
     public function run() {
-        echo $this->topNode->publish();
+        return $this->topNode->publish();
     }
 
     /**
