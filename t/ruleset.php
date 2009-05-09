@@ -41,3 +41,16 @@ $t->is( $parentRule->publish(), "div { margin:0; padding:0; }\ndiv p { line-heig
 $childDecl2 = $parser->genDeclaration('font-weight:bold');
 $t->ok( $parser->catNode($childDecl, $childDecl2), 'Added declaration to child ruleset' );
 $t->is( $parentRule->publish(), "div { margin:0; padding:0; }\ndiv p { line-height:1.5; font-weight:bold; }\n", 'publish parent:2 , child:2' );
+
+$sel1  = $parser->genSelector('#nav');
+$sel2  = $parser->genSelector('ul');
+$sel3  = $parser->genSelector('li');
+$dec1  = $parser->genDeclaration('margin:0');
+$dec2  = $parser->genDeclaration('width:100%');
+$dec3  = $parser->genDeclaration('display:inline');
+$rule1 = $parser->genRuleset($sel1, $dec1);
+$rule2 = $parser->genRuleset($sel2, $dec2);
+$rule3 = $parser->genRuleset($sel3, $dec3);
+$parser->catNode($dec1, $rule2);
+$parser->catNode($dec2, $rule3);
+$t->is( $rule1->publish(), "#nav { margin:0; }\n#nav ul { width:100%; }\n#nav ul li { display:inline; }\n", 'publish depth 3' );
