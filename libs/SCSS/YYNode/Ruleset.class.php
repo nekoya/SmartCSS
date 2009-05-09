@@ -30,9 +30,6 @@ class SCSS_YYNode_Ruleset extends SCSS_YYNode {
                 }
             }
         }
-        if ($this->hasNext()) {
-            $output .= $this->next->publish();
-        }
         return $output;
     }
 
