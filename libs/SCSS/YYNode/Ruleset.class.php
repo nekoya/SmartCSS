@@ -6,9 +6,11 @@ class SCSS_YYNode_Ruleset extends SCSS_YYNode {
     /**
      *
      */
-    public function publish($prefixes = array('')) {
-        if (!is_array($prefixes)) {
-            throw new Exception('Prefixes allowed only array.');
+    public function publish($prefixes = null) {
+        $isChild = true;
+        if (is_null($prefixes)) {
+            $prefixes = array('');
+            $isChild = false;
         }
         $output = '';
         if ($this->hasChildren()) {
@@ -29,6 +31,10 @@ class SCSS_YYNode_Ruleset extends SCSS_YYNode {
                     $output .= $ruleset->publish($myPrefixes);
                 }
             }
+        }
+        // child rulesets published by parent node
+        if (!$isChild && $this->hasNext()) {
+            $output .= $this->next->publish();
         }
         return $output;
     }
