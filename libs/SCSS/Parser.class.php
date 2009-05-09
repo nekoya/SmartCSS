@@ -69,7 +69,7 @@ class SCSS_Parser {
     /**
      *
      */
-    private function createNode($type, $value = null) {
+    protected function createNode($type, $value = null) {
         //echo "[[$type]]\n";
         $className = 'SCSS_YYNode_' . ucfirst($type);
         $node = new $className;
