@@ -4,50 +4,35 @@ $t->comment( 'test parser instance' );
 $t->ok( $parser = SCSS_Parser::getInstance(), 'get parser instance' );
 $t->isa_ok( $parser, SCSS_Parser, 'parser instance isa SCSS_Parser' );
 
-$t->comment( 'test charset node' );
-$t->ok( $charset = $parser->genCharset("@charset 'utf-8';"), 'generate charset node' );
-$t->isa_ok( $charset, SCSS_YYNode_Charset, 'charset node isa SCSS_YYNode_Charset' );
+$t->comment( 'generate charset node' );
+$charset = $parser->genCharset("@charset 'utf-8';");
 $t->ok( $charset->id === 0, 'id of first node is 0' );
-$t->is( $charset->getType(), 'charset', 'get node type' );
-$t->ok( $charset->hasChildren() === false, 'has not child nodes' );
-$t->ok( $charset->hasNext() === false, 'has not next node' );
-$t->is( $charset->publish(), "@charset 'utf-8';\n", 'publish charset' );
 
-$t->comment( 'test empty node' );
-$t->ok( $empty = $parser->genEmpty(''), 'generate empty node' );
-$t->isa_ok( $empty, SCSS_YYNode_Empty, 'empty node isa SCSS_YYNode_Empty' );
-$t->is( $empty->id, 1, 'id incremented' );
-$t->is( $empty->getType(), 'empty', 'get node type' );
-$t->ok( $empty->value === '', 'node value is empty' );
-$t->is( $empty->getType(), 'empty', 'get node type' );
-$t->ok( $empty->publish() === '', 'publish empty node' );
-$empty->appendValue('append');
-$t->is( $empty->value, 'append', 'node value is appended' );
-$t->ok( $empty->publish() === '', 'publish empty regardless of node value' );
-
-$t->is( $parser->catNode($empty, $charset), $empty, 'cat node' );
-$t->ok( $empty->hasNext() === true, 'empty has next node' );
-$t->is( $empty->publish(), "@charset 'utf-8';\n", 'publish contains next node value' );
-
-$t->comment( 'test import node' );
-$t->ok( $import = $parser->genImport('@import "base.css";'), 'generate import node' );
-$t->isa_ok( $import, SCSS_YYNode_Import, 'import node isa SCSS_YYNode_Import' );
-$t->is( $import->id, 2, 'id incremented' );
-$t->is( $import->getType(), 'import', 'get node type' );
-$t->is( $import->publish(), '@import "base.css";' . "\n", 'publish import' );
-$t->ok( $import_print = $parser->genImport('@import    "print.css"    print  ;'), 'generate import node' );
-$t->isa_ok( $import_print, SCSS_YYNode_Import, 'import node isa SCSS_YYNode_Import' );
-$t->is( $import_print->publish(), '@import    "print.css"    print  ;'."\n", 'generate import node' );
-
-$t->is( $parser->catNode($charset, array($import, $import_print)), $charset, 'cat node $import and $import_print to $charset' );
+$t->comment( 'generate import node' );
+$import = $parser->genImport('@import "base.css";');
+$t->is( $import->id, 1, 'id incremented' );
+$t->is( $parser->catNode($charset, $import), $charset, 'cat node $import to $charset' );
 $t->ok( $charset->hasNext() === true, 'charset has next node' );
-$t->ok( $import->hasNext() === true, 'import has next node' );
-$t->is( $charset->next, $import, 'next of charset is import' );
-$t->is( $import->next, $import_print, 'next of import is import_print' );
+$t->is( $charset->next, $import, 'next of charset is import node' );
 
-$t->is( $parser->setTopNode($empty), $empty, 'empty set as top node' );
+$t->comment( 'generate ruleset nodes' );
+$sel1  = $parser->genSelector('body');
+$dec1  = $parser->genDeclaration('height:100%');
+$rule1 = $parser->genRuleset($sel1, $dec1);
+$sel2  = $parser->genSelector('div');
+$dec2  = $parser->genDeclaration('margin:0');
+$rule2 = $parser->genRuleset($sel2, $dec2);
+$t->is( $parser->catNode($import, array($rule1, $rule2)), $import, 'cat nodes by array' );
+$t->ok( $import->hasNext() === true, 'import has next node' );
+$t->ok( $rule1->hasNext()  === true, 'rule1 has next node' );
+$t->is( $import->next, $rule1, 'next of import is rule1 node' );
+$t->is( $rule1->next,  $rule2, 'next of rule1 is rule2 node' );
+
+$t->comment( 'publish all nodes' );
+$t->is( $parser->setTopNode($charset), $charset, 'charset set as top node' );
 $content =
     "@charset 'utf-8';\n" .
     "@import \"base.css\";\n".
-    "@import    \"print.css\"    print  ;\n";
+    "body { height:100%; }\n".
+    "div { margin:0; }\n";
 $t->is( $parser->run(), $content, 'publish all nodes' );
