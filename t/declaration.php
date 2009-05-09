@@ -3,11 +3,11 @@ require 'utils.php';
 
 $t->comment( 'prepare parser instance' );
 $t->ok( $parser = SCSS_Parser::getInstance(), 'get parser instance' );
-$t->isa_ok( $parser, SCSS_Parser, 'parser instance isa SCSS_Parser' );
+$t->isa_ok( $parser, 'SCSS_Parser', 'parser instance isa SCSS_Parser' );
 
 $t->comment( 'create declaration node' );
 $t->ok( $decl = $parser->genDeclaration('margin:0;'), 'generate node' );
-$t->isa_ok( $decl, SCSS_YYNode_Declaration, 'node isa SCSS_YYNode_Declaration' );
+$t->isa_ok( $decl, 'SCSS_YYNode_Declaration', 'node isa SCSS_YYNode_Declaration' );
 $t->ok( $decl->id === 0, 'id of first node is 0' );
 $t->is( $decl->getType(), 'declaration', 'get node type' );
 $t->ok( $decl->hasChildren() === false, 'has not child nodes' );

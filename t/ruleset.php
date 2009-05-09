@@ -2,7 +2,7 @@
 require 'utils.php';
 $t->comment( 'prepare parser instance' );
 $t->ok( $parser = SCSS_Parser::getInstance(), 'get parser instance' );
-$t->isa_ok( $parser, SCSS_Parser, 'parser instance isa SCSS_Parser' );
+$t->isa_ok( $parser, 'SCSS_Parser', 'parser instance isa SCSS_Parser' );
 
 $t->comment( 'simple ruleset' );
 $t->ok( $sel  = $parser->genSelector('div'), 'generate selector node' );
