@@ -6,7 +6,8 @@ class SCSS_Lexer {
     static private $instance;
     protected $regexs;
     protected $states;
-    protected $debug;
+    public $debug;
+    public $lexbuf;
 
     /**
      *
@@ -39,25 +40,37 @@ class SCSS_Lexer {
     /**
      *
      */
+    public function setBuffer($lexbuf) {
+        $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
+        $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
+        $this->lexbuf = $lexbuf;
+    }
+
+    /**
+     *
+     */
     public function yylex() {
-        global $lexbuf, $yylval;
+        global $yylval;
         $parser = SCSS_Parser::getInstance();
 
-        while ($lexbuf) {
+        while ($this->lexbuf) {
             if ($this->debug) {
-                //var_dump($lexbuf);
+                //var_dump($this->lexbuf);
             }
 
             foreach ($this->regexs as $token => $regex) {
                 $regex = '/^('.$regex.')/i';
-                if (preg_match($regex, $lexbuf, $matches)) {
+                if (preg_match($regex, $this->lexbuf, $matches)) {
                     if ($this->debug) {
-                        var_dump($matches);
+                        //var_dump($matches);
                     }
                     $yylval = (string)$matches[1];
-                    $lexbuf = substr($lexbuf, strlen($yylval));
+                    $this->lexbuf = substr($this->lexbuf, strlen($yylval));
                     switch ($token) {
                     case 'COMMENT':
+                        if ($this->debug) {
+                            echo "SKIP COMMENT\n";
+                        }
                         continue 3;
 
                     case 'LBRACE':
@@ -70,7 +83,7 @@ class SCSS_Lexer {
 
                     case 'EXPRESSION':
                         if (!$this->states['ruleset']) {
-                            $lexbuf = $yylval . $lexbuf;
+                            $this->lexbuf = $yylval . $this->lexbuf;
                             continue 2;
                         }
                         break;
@@ -81,8 +94,8 @@ class SCSS_Lexer {
             }
             // unmatched regexs
             $this->debug('token unmatched');
-            $yylval = ord($lexbuf);
-            $lexbuf = substr($lexbuf, 1);
+            $yylval = ord($this->lexbuf);
+            $this->lexbuf = substr($this->lexbuf, 1);
             return $yylval;
         }
     }

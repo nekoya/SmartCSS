@@ -1,9 +1,8 @@
 <?php
 require 'scss.php';
 try {
-    $lexbuf = file_get_contents('test.css');
-    $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
-    $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
+    $lexer = SCSS_Lexer::getInstance();
+    $lexer->setBuffer(file_get_contents('test.css'));
     yyparse();
     $parser = SCSS_Parser::getInstance();
     echo $parser->run();

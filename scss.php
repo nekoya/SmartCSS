@@ -351,8 +351,8 @@ function yylex() {
 }
 
 function yyerror($msg) {
-    global $lexbuf;
-    var_dump($lexbuf);
+    $lexer = SCSS_Lexer::getInstance();
+    var_dump($lexer->lexbuf);
     die("[error]$msg\n");
 }
 
