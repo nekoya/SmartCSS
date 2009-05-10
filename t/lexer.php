@@ -17,7 +17,11 @@ function isToken($buffer, $token, $diag = null) {
         );
     }
     if (is_null($diag)) {
-        $diag = 'token(s): ' . join(' ', $token);
+        if (is_array($token)) {
+            $diag = 'tokens: ' . join(' ', $token);
+        } else {
+            $diag = "token: $token";
+        }
     }
     if (count($results) < 2) {
         $t->is( $results[0], $token, $diag );
@@ -39,7 +43,7 @@ isToken('@charset "utf-8";', 'CHARSET');
 $lexbuf = <<<__CSS__
 /* import */
 @import "base.css";
-@import 'print.css' print;
+@import url('http://www.example.com/print.css') print;
 __CSS__;
 isToken($lexbuf, array('IMPORT', 'IMPORT'));
 
@@ -62,7 +66,7 @@ isToken(
 );
 
 isToken(
-    'div { margin:0; p { font-size:120%; } }',
+    'div { width:100%; p { color:#3399ff; } }',
     array(
         'SELECTOR', 'LBRACE', 'DECLARATION',
         'SELECTOR', 'LBRACE', 'DECLARATION', 'RBRACE',
