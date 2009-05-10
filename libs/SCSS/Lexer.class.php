@@ -152,9 +152,10 @@ class SCSS_Lexer {
             'IDENT'         => '{{ident}}',
             'PERCENTAGE'    => '{{num}}+%',
             'NUMBER'        => '{{num}}',
-            'PLUS'          => '\s*\+',
-            'GREATER'       => '\s*\>',
+            'PLUS'          => '\s*\+\s*',
+            'GREATER'       => '\s*\>\s*',
             'ASTERISK'      => '\*',
+            'COMMA'         => '\s*,\s*',
             'SPACE'         => '\s+',
         );
         $rules = array(

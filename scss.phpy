@@ -15,7 +15,7 @@ $parser = SCSS_Parser::getInstance();
 %token EXPRESSION
 %token SELECTOR
 %token DECLARATION
-%token ','
+%token COMMA
 
 %%
 root : stylesheet { $$ = topnode($1); }
@@ -35,8 +35,8 @@ import
     : IMPORT { $$ = gen('import', $1); }
 
 combinator
-    : PLUS s    { $$ = '+'; }
-    | GREATER s { $$ = '>'; }
+    : PLUS    { $$ = '+'; }
+    | GREATER { $$ = '>'; }
     | SPACE
 
 rulesets
@@ -48,7 +48,7 @@ ruleset
 
 selectors
     : selector
-    | selector s ',' s selector { $$ = cat($1, $5); }
+    | selector COMMA selector { $$ = cat($1, $3); }
 
 selector
     : SELECTOR                     { $$ = gen('selector', $1); }
@@ -63,7 +63,7 @@ decl : declaration | ruleset
 declaration
     : DECLARATION { $$ = gen('declaration', $1); }
 
-s : | SPACE
+//s : | SPACE
 
 %%
 
