@@ -338,8 +338,10 @@ function yyparse()
 
 
 function __autoload($class) {
+    $dirname = dirname(__FILE__);
     $class = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);
-    require "libs/$class.class.php";
+    $filename = $dirname . DIRECTORY_SEPARATOR . $class . '.class.php';
+    require $filename;
 }
 
 function yylex() {

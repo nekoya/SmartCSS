@@ -127,4 +127,13 @@ class SCSS_Parser {
         }
     }
 
+    /**
+     *
+     */
+    public function reset() {
+        $this->lastInsertId = 0;
+        $this->topNode = null;
+        $this->nodes = array();
+    }
+
 }
