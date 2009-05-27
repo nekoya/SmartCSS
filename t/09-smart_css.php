@@ -4,7 +4,7 @@ require 'lime.php';
 $t = new lime_test();
 $t->output = new lime_output_color();
 
-function test($content, $expected, $note = '') {
+function parse($content, $expected, $note = '') {
     global $t;
     $lexer  = SCSS_Lexer::getInstance();
     $parser = SCSS_Parser::getInstance();
@@ -12,6 +12,20 @@ function test($content, $expected, $note = '') {
     yyparse();
     // add PHP_EOL for heredocument
     $t->is( $parser->run(), $expected . PHP_EOL, $note );
+    $parser->reset();
+}
+
+function throws_ok($content, $message = '', $note = '') {
+    global $t;
+    $lexer  = SCSS_Lexer::getInstance();
+    $parser = SCSS_Parser::getInstance();
+    $lexer->setBuffer($content);
+    try {
+        yyparse();
+    } catch ( Exception $e ) {
+        $t->isa_ok( $e, 'Exception', 'caught exception: ' . $note );
+        $t->is( $e->getMessage(), $message, $message );
+    }
     $parser->reset();
 }
 
@@ -25,7 +39,7 @@ __CSS__;
 $expected = <<<__CSS__
 form input, form select { width:300px; }
 __CSS__;
-test($content, $expected, 'single parent, multi child');
+parse($content, $expected, 'single parent, multi child');
 
 // ============================================================
 $content = <<<__CSS__
@@ -35,7 +49,7 @@ __CSS__;
 $expected = <<<__CSS__
 ul li, ol li { border:1px solid red; }
 __CSS__;
-test($content, $expected, 'multi parent, single child');
+parse($content, $expected, 'multi parent, single child');
 
 // ============================================================
 $content = <<<__CSS__
@@ -64,4 +78,8 @@ $expected = <<<__CSS__
 #content div ul li, #content div ol li { display:inline-block; }
 __CSS__;
 
-test($content, $expected, 'complex');
+parse($content, $expected, 'complex');
+
+// ============================================================
+throws_ok( 'div { margin:0', 'syntax error', 'unclosed ruleset (no RBRACE)');
+throws_ok( 'div { p { margin:0 }', 'syntax error', 'unclosed ruleset (less RBRACE)');
