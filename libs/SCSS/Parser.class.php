@@ -48,10 +48,10 @@ class SCSS_Parser {
     /**
      *
      */
-    public function genDeclaration($value) {
+    public function genDeclaration($property, $expr) {
         $node = $this->createNode('declaration');
-        preg_match('/(.+?)\s*:\s*([^;]*)\s*/', trim($value), $matches);
-        $node->value = $matches[1] . ':' . $matches[2] . ';';
+        $node->property = $property;
+        $node->expr = $expr;
         return $node;
     }
 

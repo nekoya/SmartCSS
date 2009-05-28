@@ -47,23 +47,43 @@ $lexbuf = <<<__CSS__
 __CSS__;
 isToken($lexbuf, array('IMPORT', 'IMPORT'));
 
-$ruleset = array('SELECTOR', 'LBRACE', 'DECLARATION', 'RBRACE');
-isToken( '* { margin:0; }', $ruleset );
-isToken( 'div{margin:5px 10px}', $ruleset );
-isToken( "p {\nline-height:1.5;\n}\n", $ruleset );
+isToken(
+    '* { margin:0; }',
+    array('SELECTOR', 'LBRACE', 'SPACE', 'IDENT', ':', 'NUMBER', ';', 'SPACE', 'RBRACE')
+);
+
+isToken(
+    'div{margin:5px 10px}',
+    array('SELECTOR', 'LBRACE', 'IDENT', ':', 'LENGTH', 'SPACE', 'LENGTH', 'RBRACE')
+);
+
+isToken(
+    "p {\nline-height:1.5;\n}\n",
+    array('SELECTOR', 'LBRACE', 'IDENT', ':', 'NUMBER', ';', 'RBRACE')
+);
 
 isToken(
     'ul,ol { margin:0; padding:0; }',
-    array('SELECTOR', 'COMMA', 'SELECTOR', 'LBRACE', 'DECLARATION', 'DECLARATION', 'RBRACE')
+    array(
+        'SELECTOR', 'COMMA', 'SELECTOR',
+        'LBRACE', 'SPACE',
+        'IDENT', ':', 'NUMBER', ';', 'SPACE',
+        'IDENT', ':', 'NUMBER', ';', 'SPACE',
+        'RBRACE',
+    )
 );
 
 isToken(
-    'h2+p, div > span { margin: 0; padding : 0; }',
+    'h2+p  ,  div > span { margin: 0; padding : 0 ; }',
     array(
-        'SELECTOR', 'PLUS', 'SELECTOR', 'COMMA', 'SELECTOR', 'GREATER', 'SELECTOR',
-        'LBRACE', 'DECLARATION', 'DECLARATION', 'RBRACE',
+        'SELECTOR', 'COMMA', 'SPACE', 'SELECTOR',
+        'LBRACE', 'SPACE',
+        'IDENT', ':', 'SPACE', 'NUMBER', ';', 'SPACE',
+        'IDENT', 'SPACE', ':', 'SPACE', 'NUMBER', 'SPACE', ';', 'SPACE',
+        'RBRACE',
     )
 );
+exit;
 
 isToken(
     'div { width:100%; p { color:#3399ff; } }',

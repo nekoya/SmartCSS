@@ -72,30 +72,15 @@ class SCSS_Lexer {
                             echo "SKIP COMMENT\n";
                         }
                         continue 3;
-
-                    case 'LBRACE':
-                        $this->states['ruleset']++;
-                        break;
-
-                    case 'RBRACE':
-                        $this->states['ruleset']--;
-                        break;
-
-                    case 'EXPRESSION':
-                        if (!$this->states['ruleset']) {
-                            $this->lexbuf = $yylval . $this->lexbuf;
-                            continue 2;
-                        }
-                        break;
                     }
                     $this->debug($token . ' ' . $yylval);
                     return $token;
                 }
             }
             // unmatched regexs
-            $this->debug('token unmatched');
             $yylval = ord($this->lexbuf);
             $this->lexbuf = substr($this->lexbuf, 1);
+            $this->debug('token unmatched ' . chr($yylval));
             return $yylval;
         }
     }
@@ -105,33 +90,10 @@ class SCSS_Lexer {
      */
     protected function defineRegexs() {
         $regexs = array(
-            'LBRACE'        => '\s*{\s*',
-            'RBRACE'        => '\s*}\s*',
+            'LBRACE'        => '\s*{',
+            'RBRACE'        => '}',
 
-            // only enable between LBRACE and RBRACE
-            'EXPRESSION'    =>
-            '(?:'.
-            '(?:'.
-            '{{unary_operator}}{{PERCENTAGE}}|'.
-            '{{unary_operator}}{{LENGTH}}|'.
-            '{{unary_operator}}{{EMS}}|'.
-            '{{unary_operator}}{{EXS}}|'.
-            '{{unary_operator}}{{ANGLE}}|'.
-            '{{unary_operator}}{{TIME}}|'.
-            '{{unary_operator}}{{FREQ}}|'.
-            '{{unary_operator}}{{NUMBER}}|'.
-            '{{URI}}|'.
-            '{{HEXCOLOR}}|'.
-            '{{IDENT}}|'.
-            '{{STRING}}'.
-            ')'.
-            '\s*)+'.
-            '({{IMPORTANT_SYM}})?'.
-            '(?:;\s*|(?=}))',
-
-            'DECLARATION'   => '{{ident}}\s*:\s*{{EXPRESSION}}',
-
-            'SELECTOR'      => '(?:(?:{{ident}}|\*){{selector_suffix}}*|{{selector_suffix}}+)',
+            'SELECTOR'      => '{{simple_selector}}((\s*\+\s*|\s*>\s*|\s+){{simple_selector}})*(?=\s*[,{])',
 
             'COMMENT'       => '\s*\/\*.*?\*\/\s*',
             'STRING'        => '{{string}}',
@@ -152,10 +114,9 @@ class SCSS_Lexer {
             'IDENT'         => '{{ident}}',
             'PERCENTAGE'    => '{{num}}+%',
             'NUMBER'        => '{{num}}',
-            'PLUS'          => '\s*\+\s*',
-            'GREATER'       => '\s*\>\s*',
-            'ASTERISK'      => '\*',
-            'COMMA'         => '\s*,\s*',
+            'PLUS'          => '\s*\+',
+            'GREATER'       => '\s*>',
+            'COMMA'         => '\s*,',
             'SPACE'         => '\s+',
         );
         $rules = array(
@@ -170,6 +131,7 @@ class SCSS_Lexer {
 
             'media_types'     => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
 
+            'simple_selector' => '(?:(?:{{ident}}|\*){{selector_suffix}}*|{{selector_suffix}}+)',
             'hash'            => '#{{name}}',
             'pseudo'          => ':{{ident}}',
             'class'           => '\.{{ident}}',

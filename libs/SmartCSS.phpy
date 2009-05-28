@@ -7,14 +7,14 @@
 $parser = SCSS_Parser::getInstance();
 //$parser->debug = true;
 %}
-%token LBRACE RBRACE SPACE PLUS GREATER ASTERISK
+%token LBRACE RBRACE SPACE
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
 %token EMS EXS LENGTH ANGLE TIME FREQ
 %token IMPORTANT_SYM
 %token CHARSET IMPORT
-%token EXPRESSION
 %token SELECTOR
-%token DECLARATION
+%token TERM
+%token '-' ':' ';'
 %token COMMA
 
 %%
@@ -34,10 +34,11 @@ imports
 import
     : IMPORT { $$ = gen('import', $1); }
 
-combinator
-    : PLUS    { $$ = '+'; }
-    | GREATER { $$ = '>'; }
-    | SPACE
+unary_operator
+    : '-' | '+'
+
+property
+    : IDENT s
 
 rulesets
     : ruleset
@@ -47,23 +48,35 @@ ruleset
     : selectors LBRACE declarations RBRACE { $$ = gen('ruleset', $1, $3); }
 
 selectors
-    : selector
-    | selector COMMA selector { $$ = cat($1, $3); }
-
-selector
-    : SELECTOR                     { $$ = gen('selector', $1); }
-    | selector combinator SELECTOR { $$ = $1; $1->appendValue($2, $3); }
+    : SELECTOR                 { $$ = gen('selector', $1); }
+    | selectors COMMA SELECTOR { $$ = cat($1, $3); }
 
 declarations
-    : decl
-    | declarations decl { $$ = cat($1, $2); }
-
-decl : declaration | ruleset
+    : declaration
+    | declarations ';' declaration { $$ = cat($1, $3); }
 
 declaration
-    : DECLARATION { $$ = gen('declaration', $1); }
+    : property ':' s expr { $$ = gen('declaration', $1, $4); }
 
-//s : | SPACE
+expr
+    : term
+    | expr term { $$ = $1 . $2; }
+
+term
+    : unary_operator PERCENTAGE s
+    | unary_operator LENGTH s
+    | unary_operator EMS s
+    | unary_operator EXS s
+    | unary_operator ANGLE s
+    | unary_operator TIME s
+    | unary_operator FREQ s
+    | unary_operator NUMBER s
+    | URI s
+    | HEXCOLOR
+    | IDENT s
+    | STRING s
+
+s : | SPACE
 
 %%
 
