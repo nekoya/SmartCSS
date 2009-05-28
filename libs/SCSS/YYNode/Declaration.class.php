@@ -10,7 +10,8 @@ class SCSS_YYNode_Declaration extends SCSS_YYNode {
      *
      */
     public function publish() {
-        return $this->property . ':' . $this->expr . ';';
+        $expr = preg_replace('/\s+/', ' ', $this->expr);
+        return trim($this->property) . ':' . trim($expr) . ';';
     }
 
     /**
