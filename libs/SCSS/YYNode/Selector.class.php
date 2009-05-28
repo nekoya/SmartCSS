@@ -7,7 +7,7 @@ class SCSS_YYNode_Selector extends SCSS_YYNode {
      *
      */
     public function publish() {
-        return $this->value;
+        return preg_replace('/\s+/', '', $this->value);
     }
 
     /**
