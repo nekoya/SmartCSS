@@ -53,7 +53,9 @@ selectors
 
 declarations
     : declaration
+    | ruleset
     | declarations ';' declaration { $$ = cat($1, $3); }
+    | declarations ';' ruleset     { $$ = cat($1, $3); }
 
 declaration
     : property ':' s expr { $$ = gen('declaration', $1, $4); }
