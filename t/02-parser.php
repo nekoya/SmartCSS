@@ -17,10 +17,10 @@ $t->is( $charset->next, $import, 'next of charset is import node' );
 
 $t->comment( 'generate ruleset nodes' );
 $sel1  = $parser->genSelector('body');
-$dec1  = $parser->genDeclaration('height:100%');
+$dec1  = $parser->genDeclaration('height', '100%');
 $rule1 = $parser->genRuleset($sel1, $dec1);
 $sel2  = $parser->genSelector('div');
-$dec2  = $parser->genDeclaration('margin:0');
+$dec2  = $parser->genDeclaration('margin', '0');
 $rule2 = $parser->genRuleset($sel2, $dec2);
 $t->is( $parser->catNode($import, array($rule1, $rule2)), $import, 'cat nodes by array' );
 $t->ok( $import->hasNext() === true, 'import has next node' );
