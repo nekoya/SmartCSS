@@ -35,15 +35,17 @@ $lexer->setBuffer("/**\n * comment\n **/\n");
 $t->is( $lexer->yylex(), null, 'skip multi lines comment' );
 
 $t->comment( 'charset' );
-isToken('@charset "utf-8";', 'CHARSET');
+isToken('@charset "utf-8";', 'CHARSET', 'CHARSET (lower case)');
+isToken('@CHARSET "UTF-8";', 'CHARSET', 'CHARSET (upper case)');
 
 $t->comment( 'import' );
 $lexbuf = <<<__CSS__
 /* import */
 @import "base.css";
 @import url('http://www.example.com/print.css') print;
+@IMPORT URL('http://www.example.com/print.css') PRINT;
 __CSS__;
-isToken($lexbuf, 'IMPORT IMPORT');
+isToken($lexbuf, 'IMPORT IMPORT IMPORT', 'IMPORT');
 
 $t->comment( 'rulesets' );
 isToken( '* { margin:0; }',
@@ -93,3 +95,8 @@ isToken( 'div { ul { list-style:none } margin:0 }',
     'SPACE IDENT : NUMBER SPACE RBRACE'
 );
 
+isToken( 'DIV { UL { LIST-STYLE:NONE } BACKGROUND:URL("HTTP://EXAMPLE.COM/BG.PNG") NO-REPEAT }',
+    'SELECTOR LBRACE SPACE '.
+    'SELECTOR LBRACE SPACE IDENT : IDENT SPACE RBRACE '.
+    'SPACE IDENT : URI SPACE IDENT SPACE RBRACE'
+);

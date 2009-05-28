@@ -83,6 +83,18 @@ parse($content, $expected, 'single parent, multi child');
 
 // ============================================================
 $content = <<<__CSS__
+FORM {
+    INPUT,SELECT { WIDTH:300PX; }
+}
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+FORM INPUT, FORM SELECT { WIDTH:300PX; }
+__CSS__;
+parse($content, $expected, 'upper case');
+
+// ============================================================
+$content = <<<__CSS__
 ul,ol{li{border:1px solid red}}
 __CSS__;
 // ------------------------------------------------------------
