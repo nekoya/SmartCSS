@@ -9,6 +9,8 @@ function parse($content, $expected, $note = '') {
     $lexer  = SCSS_Lexer::getInstance();
     $parser = SCSS_Parser::getInstance();
     $lexer->setBuffer($content);
+    //$lexer->debug = true;
+    //$parser->debug = true;
     yyparse();
     // add PHP_EOL for heredocument
     $t->is( $parser->run(), $expected . PHP_EOL, $note );
@@ -31,6 +33,44 @@ function throws_ok($content, $message = '', $note = '') {
 
 // ============================================================
 $content = <<<__CSS__
+*{font-size:100%}
+div { margin : 0 }
+p{padding:10px;}
+a { color:#fff; }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+* { font-size:100%; }
+div { margin:0; }
+p { padding:10px; }
+a { color:#fff; }
+__CSS__;
+parse($content, $expected, 'simple rulesets');
+
+// ============================================================
+$content = <<<__CSS__
+ul,li { list-style:none; }
+span , a:hover { background:#efefef; }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+ul, li { list-style:none; }
+span, a:hover { background:#efefef; }
+__CSS__;
+parse($content, $expected, 'multi selector');
+
+// ============================================================
+$content = <<<__CSS__
+div { p { margin:0 } }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+div p { margin:0; }
+__CSS__;
+parse($content, $expected, 'simple recurisive ruleset');
+
+// ============================================================
+$content = <<<__CSS__
 form {
     input,select { width:300px; }
 }
@@ -50,6 +90,16 @@ $expected = <<<__CSS__
 ul li, ol li { border:1px solid red; }
 __CSS__;
 parse($content, $expected, 'multi parent, single child');
+
+// ============================================================
+$content = <<<__CSS__
+dt,dd { sup,sub { font-color:red } }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+dt sup, dt sub, dd sup, dd sub { font-color:red; }
+__CSS__;
+parse($content, $expected, 'multi parent, multi child');
 
 // ============================================================
 $content = <<<__CSS__

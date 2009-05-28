@@ -35,7 +35,9 @@ import
     : IMPORT { $$ = gen('import', $1); }
 
 unary_operator
-    : '-' | '+'
+    : { $$ = ''; }
+    | '-'
+    | '+'
 
 property
     : IDENT s
@@ -45,34 +47,41 @@ rulesets
     | rulesets ruleset { $$ = cat($1, $2); }
 
 ruleset
-    : selectors LBRACE declarations RBRACE { $$ = gen('ruleset', $1, $3); }
+    : selectors LBRACE s declarations RBRACE s { $$ = gen('ruleset', $1, $4); }
 
 selectors
-    : SELECTOR                 { $$ = gen('selector', $1); }
-    | selectors COMMA SELECTOR { $$ = cat($1, $3); }
+    : selector
+    | selectors COMMA s selector { $$ = cat($1, $4); }
+
+selector
+    : SELECTOR { $$ = gen('selector', $1); }
 
 declarations
     : declaration
     | ruleset
-    | declarations ';' declaration { $$ = cat($1, $3); }
-    | declarations ';' ruleset     { $$ = cat($1, $3); }
+    | declarations followdecl { $$ = cat($1, $2); }
+    | declarations ruleset    { $$ = cat($1, $2); }
+
+followdecl
+    : ';' s
+    | ';' s declaration { $$ = $3; }
 
 declaration
     : property ':' s expr { $$ = gen('declaration', $1, $4); }
 
 expr
     : term
-    | expr term { $$ = $1 . $2; }
+    | expr term { $$ = $1 . ' ' . $2; }
 
 term
-    : unary_operator PERCENTAGE s
-    | unary_operator LENGTH s
-    | unary_operator EMS s
-    | unary_operator EXS s
-    | unary_operator ANGLE s
-    | unary_operator TIME s
-    | unary_operator FREQ s
-    | unary_operator NUMBER s
+    : unary_operator PERCENTAGE s { $$ = $1 . $2; }
+    | unary_operator LENGTH s     { $$ = $1 . $2; }
+    | unary_operator EMS s        { $$ = $1 . $2; }
+    | unary_operator EXS s        { $$ = $1 . $2; }
+    | unary_operator ANGLE s      { $$ = $1 . $2; }
+    | unary_operator TIME s       { $$ = $1 . $2; }
+    | unary_operator FREQ s       { $$ = $1 . $2; }
+    | unary_operator NUMBER s     { $$ = $1 . $2; }
     | URI s
     | HEXCOLOR
     | IDENT s

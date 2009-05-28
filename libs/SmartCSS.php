@@ -98,79 +98,84 @@ $yytranslate = array(
 define('YYBADCH', 25);
 define('YYMAXLEX', 279);
 define('YYTERMS', 25);
-define('YYNONTERMS', 16);
+define('YYNONTERMS', 18);
 
 $yyaction = array(
-     15,    4,   16,    0,   17,   18,   19,   20,   21,   22,
-     12,   13,   40,   59,   63,   14,   34,   10,   31,    0,
-      0,   42,   24,   41,    0,   35,    0,   11,    0,   36,
-      0,    6
+     20,  -24,   21,   10,   22,   23,   24,   25,   26,   27,
+     17,   18,   15,   67,    0,   19,   71,  -24,   48,   13,
+    -24,   35,    0,   14,   11,   40,   38,    0,    0,   41,
+      0,   16
   );
 
 define('YYLAST', 32);
 
 $yycheck = array(
-      7,    2,    9,    0,   11,   12,   13,   14,   15,   16,
-      5,    6,    3,    8,    4,   10,   18,    6,   17,   -1,
-     -1,   19,   23,   19,   -1,   20,   -1,   21,   -1,   24,
+      7,    3,    9,    2,   11,   12,   13,   14,   15,   16,
+      5,    6,    3,    8,    0,   10,    4,   19,   19,    6,
+     22,   17,   -1,   21,   23,   20,   18,   -1,   -1,   24,
      -1,   22
   );
 
 $yybase = array(
-      1,   -7,    5,    5,   11,   -2,   11,   -1,    9,    4,
-     10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
-     10,   10,   10,    3,    2,    6,    0,    0,    0,    0,
-      0,    4,    4,    4
+      4,   -2,   -7,    5,    9,   13,    8,    1,   -1,   13,
+     12,   12,   -1,   12,   12,   12,   12,   12,   12,   12,
+     12,   12,   12,   12,   12,   12,   12,   12,   14,    2,
+      0,    0,    5,    0,    0,   -1,   -1,   -1
   );
 
 define('YY2TBLSTATE', 7);
 
 $yydefault = array(
-      3,32767,32767,   20,32767,32767,32767,32767,32767,    2,
-     35,   35,   35,   35,   35,   35,   35,   35,   35,   35,
-     35,   35,   35,32767,32767,32767,    5
+      3,    8,32767,    8,32767,32767,32767,32767,    2,   22,
+     39,   39,32767,   39,   39,   39,   39,   39,   39,   39,
+     39,   39,   39,   39,   39,   39,   39,   39,32767,32767,
+      5
   );
 
 
 
 $yygoto = array(
-      2,   61,   60,   58,   57,   50,   52,   53,   51,   54,
-     55,   56,   38,   46,   49,   45,   39
+     12,   56,   42,    3,   45,    9,   69,   68,   66,   65,
+     58,   60,   61,   59,   62,   63,   64,   50,   43,   54,
+     44,   47
   );
 
-define('YYGLAST', 17);
+define('YYGLAST', 22);
 
 $yygcheck = array(
-      9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,   10,   10,   15,   13,   10
+      9,   17,    9,    9,    9,    9,    9,    9,    9,    9,
+      9,    9,    9,    9,    9,    9,    9,   10,   10,   14,
+     10,   13
   );
 
 $yygbase = array(
       0,    0,    0,    0,    0,    0,    0,    0,    0,  -11,
-      7,    0,    0,    9,    0,   11
+     12,    0,    0,    9,   10,    0,    0,   -2
   );
 
 $yygdefault = array(
-  -32768,   23,   28,   26,    5,    9,   33,    1,   25,   37,
-     44,    7,    8,   43,    3,   48
+  -32768,   28,   32,   30,    6,    8,   37,    2,   29,    5,
+     52,    7,    4,   46,   49,   51,    1,   57
   );
 
 $yylhs = array(
       0,    1,    2,    3,    3,    4,    4,    6,    7,    7,
-      8,    5,    5,   10,   11,   11,   12,   12,   12,   12,
-     13,   14,   14,   15,   15,   15,   15,   15,   15,   15,
-     15,   15,   15,   15,   15,    9,    9
+      7,    8,    5,    5,   10,   11,   11,   13,   12,   12,
+     12,   12,   15,   15,   14,   16,   16,   17,   17,   17,
+     17,   17,   17,   17,   17,   17,   17,   17,   17,    9,
+      9
   );
 
 $yylen = array(
-      1,    1,    3,    0,    1,    0,    2,    1,    1,    1,
-      2,    1,    2,    4,    1,    3,    1,    1,    3,    3,
-      4,    1,    2,    3,    3,    3,    3,    3,    3,    3,
-      3,    2,    1,    2,    2,    0,    1
+      1,    1,    3,    0,    1,    0,    2,    1,    0,    1,
+      1,    2,    1,    2,    6,    1,    4,    1,    1,    1,
+      2,    2,    2,    3,    4,    1,    2,    3,    3,    3,
+      3,    3,    3,    3,    3,    2,    1,    2,    2,    0,
+      1
   );
 
-define('YYSTATES', 58);
-define('YYNLSTATES', 27);
+define('YYSTATES', 64);
+define('YYNLSTATES', 31);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
 define('YYDEFAULT', -32766);
@@ -266,22 +271,42 @@ function yyparse()
 { $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 7:
 { $yyval = gen('import', $yyastk[$yysp-(1-1)]); } break;
-        case 12:
-{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+        case 8:
+{ $yyval = ''; } break;
         case 13:
-{ $yyval = gen('ruleset', $yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-3)]); } break;
+{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 14:
+{ $yyval = gen('ruleset', $yyastk[$yysp-(6-1)], $yyastk[$yysp-(6-4)]); } break;
+        case 16:
+{ $yyval = cat($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-4)]); } break;
+        case 17:
 { $yyval = gen('selector', $yyastk[$yysp-(1-1)]); } break;
-        case 15:
-{ $yyval = cat($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
-        case 18:
-{ $yyval = cat($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
-        case 19:
-{ $yyval = cat($yyastk[$yysp-(3-1)], $yyastk[$yysp-(3-3)]); } break;
         case 20:
+{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+        case 21:
+{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
+        case 23:
+{ $yyval = $yyastk[$yysp-(3-3)]; } break;
+        case 24:
 { $yyval = gen('declaration', $yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-4)]); } break;
-        case 22:
-{ $yyval = $yyastk[$yysp-(2-1)] . $yyastk[$yysp-(2-2)]; } break;
+        case 26:
+{ $yyval = $yyastk[$yysp-(2-1)] . ' ' . $yyastk[$yysp-(2-2)]; } break;
+        case 27:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
+        case 28:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
+        case 29:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
+        case 30:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
+        case 31:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
+        case 32:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
+        case 33:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
+        case 34:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         }
         /* Goto - shift nonterminal */
         $yysp -= $yyl;

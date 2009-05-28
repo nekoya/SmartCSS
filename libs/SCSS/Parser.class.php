@@ -8,7 +8,7 @@ class SCSS_Parser {
     protected $lastInsertId = 0;
     protected $topNode;
     protected $nodes = array();
-    protected $debug;
+    public $debug;
 
     /**
      *
@@ -41,7 +41,6 @@ class SCSS_Parser {
     public function genRuleset($selector, $declarations) {
         $node = $this->createNode('ruleset');
         $node->children = array($selector, $declarations);
-        $this->debug($selector->value);
         return $node;
     }
 
@@ -50,8 +49,9 @@ class SCSS_Parser {
      */
     public function genDeclaration($property, $expr) {
         $node = $this->createNode('declaration');
-        $node->property = $property;
-        $node->expr = $expr;
+        $this->debug(" - $property:$expr");
+        $node->property = trim($property);
+        $node->expr = trim($expr);
         return $node;
     }
 
@@ -80,7 +80,7 @@ class SCSS_Parser {
             $node->value = (string)$value;
         }
         array_push($this->nodes, $node);
-        $this->debug("create $type:" . $node->id . ':' . $node->value);
+        $this->debug($node->id. ": create $type:" . $node->value);
         return $node;
     }
 
