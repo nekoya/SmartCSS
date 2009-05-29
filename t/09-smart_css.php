@@ -83,13 +83,13 @@ parse($content, $expected, 'single parent, multi child');
 
 // ============================================================
 $content = <<<__CSS__
-FORM {
-    INPUT,SELECT { WIDTH:300PX; }
-}
+FORM { INPUT,SELECT { WIDTH:300PX; } }
+P { COLOR:#ABCDEF; BACKGROUND:URL('/IMAGES/BG.PNG') NO-REPEAT }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
 FORM INPUT, FORM SELECT { WIDTH:300PX; }
+P { COLOR:#ABCDEF; BACKGROUND:URL('/IMAGES/BG.PNG') NO-REPEAT; }
 __CSS__;
 parse($content, $expected, 'upper case');
 
