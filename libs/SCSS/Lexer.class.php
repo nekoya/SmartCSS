@@ -5,7 +5,8 @@
 class SCSS_Lexer {
     static private $instance;
     protected $regexs;
-    protected $states;
+    protected $commands;
+    protected $state;
     public $debug;
     public $lexbuf;
 
@@ -32,9 +33,7 @@ class SCSS_Lexer {
      */
     protected function initalize() {
         $this->defineRegexs();
-        $this->states = array(
-            'ruleset' => 0,
-        );
+        $this->state = 'ruleset';
     }
 
     /**
@@ -58,21 +57,48 @@ class SCSS_Lexer {
                 //var_dump($this->lexbuf);
             }
 
-            foreach ($this->regexs as $token => $regex) {
-                $regex = '/^('.$regex.')/i';
+            switch ($this->state) {
+            case 'ruleset':
+                $regexs  = $this->regexs;
+                $options = 'i';
+                break;
+
+            case 'command':
+                $regexs  = $this->commands;
+                $options = '';
+                break;
+
+            default:
+                throw new Exception('Invalid state');
+                break;
+            }
+
+            foreach ($regexs as $token => $regex) {
+                $regex = '/^(' . $regex . ')/' . $options;
                 if (preg_match($regex, $this->lexbuf, $matches)) {
                     if ($this->debug) {
                         //var_dump($matches);
                     }
                     $yylval = (string)$matches[1];
                     $this->lexbuf = substr($this->lexbuf, strlen($yylval));
+
                     switch ($token) {
                     case 'COMMENT':
                         if ($this->debug) {
                             echo "SKIP COMMENT\n";
                         }
                         continue 3;
+                        break;
+
+                    case 'cLDELIM':
+                        $this->state = 'command';
+                        break;
+
+                    case 'cRDELIM':
+                        $this->state = 'ruleset';
+                        break;
                     }
+
                     $this->debug($token . ' ' . $yylval);
                     return $token;
                 }
@@ -90,6 +116,8 @@ class SCSS_Lexer {
      */
     protected function defineRegexs() {
         $regexs = array(
+            'cLDELIM'        => '\[%',
+
             'LBRACE'        => '\s*{',
             'RBRACE'        => '}',
 
@@ -156,6 +184,14 @@ class SCSS_Lexer {
             }
         }
         $this->regexs = $regexs;
+
+        $this->commands = array(
+            'cRDELIM'  => '%\]',
+            'cCOMMAND' => '[A-Z\-_]+',
+            'cIDENT'   => '[a-z\-_]+',
+            'cEQUAL'   => '\s*=',
+            'cSPACE'   => '\s+',
+        );
     }
 
     /**

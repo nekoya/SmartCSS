@@ -86,17 +86,37 @@ isToken( 'div { width:100%; p { color:#3399ff; } }',
 isToken( 'div{a:hover{color:#3399ff}}',
     'SELECTOR LBRACE '.
     'SELECTOR LBRACE IDENT : HEXCOLOR RBRACE '.
-    'RBRACE'
+    'RBRACE',
+    'no space, hexcolor, only child'
 );
 
 isToken( 'div { ul { list-style:none } margin:0 }',
     'SELECTOR LBRACE SPACE '.
     'SELECTOR LBRACE SPACE IDENT : IDENT SPACE RBRACE '.
-    'SPACE IDENT : NUMBER SPACE RBRACE'
+    'SPACE IDENT : NUMBER SPACE RBRACE',
+    'with spaces, parent rule after childs one'
 );
 
 isToken( 'DIV { UL { LIST-STYLE:NONE } BACKGROUND:URL("HTTP://EXAMPLE.COM/BG.PNG") NO-REPEAT }',
     'SELECTOR LBRACE SPACE '.
     'SELECTOR LBRACE SPACE IDENT : IDENT SPACE RBRACE '.
-    'SPACE IDENT : URI SPACE IDENT SPACE RBRACE'
+    'SPACE IDENT : URI SPACE IDENT SPACE RBRACE',
+    'upper case'
+);
+
+$t->comment( 'commands' );
+isToken( '[% HOGE %]', 'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM', 'simple command' );
+
+isToken( 'div { margin:0 }[% HOGE %]p{padding:0}',
+    'SELECTOR LBRACE SPACE IDENT : NUMBER SPACE RBRACE '.
+    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM '.
+    'SELECTOR LBRACE IDENT : NUMBER RBRACE',
+    'ruleset - command - ruleset'
+);
+
+isToken( '[% SEL %] { [% PROP %]:[% EXPR %] }',
+    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM LBRACE SPACE '.
+    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM : '.
+    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM SPACE RBRACE',
+    'command as selector, property, expr'
 );
