@@ -190,6 +190,7 @@ class SCSS_Lexer {
             'cCOMMAND' => '[A-Z\-_]+',
             'cIDENT'   => '[a-z\-_]+',
             'cEQUAL'   => '\s*=',
+            'cVALUE'   => '(?:".*?"|' . "'.*?')",
             'SPACE'    => '\s+',
         );
     }

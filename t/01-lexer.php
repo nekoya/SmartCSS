@@ -114,14 +114,15 @@ isToken( 'div { margin:0 }[% HOGE %]p{padding:0}',
     'ruleset - command - ruleset'
 );
 
-isToken( '[% SEL %] { [% PROP %]:[% EXPR %] }',
+isToken( '[% SEL %] { [% PROP %]:[% EXPR term %] }',
     'cLDELIM SPACE cCOMMAND SPACE cRDELIM LBRACE SPACE '.
     'cLDELIM SPACE cCOMMAND SPACE cRDELIM : '.
-    'cLDELIM SPACE cCOMMAND SPACE cRDELIM SPACE RBRACE',
+    'cLDELIM SPACE cCOMMAND SPACE cIDENT SPACE cRDELIM SPACE RBRACE',
     'command as selector, property, expr'
 );
 
-isToken( '[% fuga = hogege %]',
-    'cLDELIM SPACE cIDENT cEQUAL SPACE cIDENT SPACE cRDELIM',
+isToken( '[% fuga = "hogege" %][%uge=\'UGE\'%]',
+    'cLDELIM SPACE cIDENT cEQUAL SPACE cVALUE SPACE cRDELIM '.
+    'cLDELIM cIDENT cEQUAL cVALUE cRDELIM',
     'define variable'
 );
