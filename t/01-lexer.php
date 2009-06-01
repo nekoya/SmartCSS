@@ -49,15 +49,15 @@ isToken($lexbuf, 'IMPORT IMPORT IMPORT', 'IMPORT');
 
 $t->comment( 'rulesets' );
 isToken( '* { margin:0; }',
-    'SELECTOR LBRACE SPACE IDENT : NUMBER ; SPACE RBRACE'
+    'SELECTOR LBRACE SPACE IDENT : NUMBER ; SPACE }'
 );
 
 isToken( 'div{margin:5px 10px}',
-    'SELECTOR LBRACE IDENT : LENGTH SPACE LENGTH RBRACE'
+    'SELECTOR LBRACE IDENT : LENGTH SPACE LENGTH }'
 );
 
 isToken( "a:hover {\nline-height:1.5;\n}\n",
-    'SELECTOR LBRACE IDENT : NUMBER ; RBRACE'
+    'SELECTOR LBRACE IDENT : NUMBER ; }'
 );
 
 isToken( 'ul,ol { margin:0; padding:0; }',
@@ -65,7 +65,7 @@ isToken( 'ul,ol { margin:0; padding:0; }',
     'LBRACE SPACE '.
     'IDENT : NUMBER ; SPACE '.
     'IDENT : NUMBER ; SPACE '.
-    'RBRACE'
+    '}'
 );
 
 isToken( 'h2+p  ,  div > span { margin: 0; padding : 0 ; }',
@@ -73,34 +73,34 @@ isToken( 'h2+p  ,  div > span { margin: 0; padding : 0 ; }',
     'LBRACE SPACE '.
     'IDENT : SPACE NUMBER ; SPACE '.
     'IDENT SPACE : SPACE NUMBER SPACE ; SPACE '.
-    'RBRACE'
+    '}'
 );
 
 $t->comment( 'recursive rulesets' );
 isToken( 'div { width:100%; p { color:#3399ff; } }',
     'SELECTOR LBRACE SPACE IDENT : PERCENTAGE ; SPACE '.
-    'SELECTOR LBRACE SPACE IDENT : HEXCOLOR ; SPACE RBRACE SPACE '.
-    'RBRACE'
+    'SELECTOR LBRACE SPACE IDENT : HEXCOLOR ; SPACE } SPACE '.
+    '}'
 );
 
 isToken( 'div{a:hover{color:#3399ff}}',
     'SELECTOR LBRACE '.
-    'SELECTOR LBRACE IDENT : HEXCOLOR RBRACE '.
-    'RBRACE',
+    'SELECTOR LBRACE IDENT : HEXCOLOR } '.
+    '}',
     'no space, hexcolor, only child'
 );
 
 isToken( 'div { ul { list-style:none } margin:0 }',
     'SELECTOR LBRACE SPACE '.
-    'SELECTOR LBRACE SPACE IDENT : IDENT SPACE RBRACE '.
-    'SPACE IDENT : NUMBER SPACE RBRACE',
+    'SELECTOR LBRACE SPACE IDENT : IDENT SPACE } '.
+    'SPACE IDENT : NUMBER SPACE }',
     'with spaces, parent rule after childs one'
 );
 
 isToken( 'DIV { UL { LIST-STYLE:NONE } BACKGROUND:URL("HTTP://EXAMPLE.COM/BG.PNG") NO-REPEAT }',
     'SELECTOR LBRACE SPACE '.
-    'SELECTOR LBRACE SPACE IDENT : IDENT SPACE RBRACE '.
-    'SPACE IDENT : URI SPACE IDENT SPACE RBRACE',
+    'SELECTOR LBRACE SPACE IDENT : IDENT SPACE } '.
+    'SPACE IDENT : URI SPACE IDENT SPACE }',
     'upper case'
 );
 
@@ -108,16 +108,16 @@ $t->comment( 'commands' );
 isToken( '[% HOGE %]', 'cLDELIM SPACE cCOMMAND SPACE cRDELIM', 'simple command' );
 
 isToken( 'div { margin:0 }[% HOGE %]p{padding:0}',
-    'SELECTOR LBRACE SPACE IDENT : NUMBER SPACE RBRACE '.
+    'SELECTOR LBRACE SPACE IDENT : NUMBER SPACE } '.
     'cLDELIM SPACE cCOMMAND SPACE cRDELIM '.
-    'SELECTOR LBRACE IDENT : NUMBER RBRACE',
+    'SELECTOR LBRACE IDENT : NUMBER }',
     'ruleset - command - ruleset'
 );
 
 isToken( '[% SEL %] { [% PROP %]:[% EXPR term %] }',
     'cLDELIM SPACE cCOMMAND SPACE cRDELIM LBRACE '.
     'cLDELIM SPACE cCOMMAND SPACE cRDELIM : '.
-    'cLDELIM SPACE cCOMMAND SPACE cIDENT SPACE cRDELIM SPACE RBRACE',
+    'cLDELIM SPACE cCOMMAND SPACE cIDENT SPACE cRDELIM SPACE }',
     'command as selector, property, expr'
 );
 

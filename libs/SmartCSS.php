@@ -15,33 +15,32 @@ $toktype = null;
 
 define('YYERRTOK', 256);
 define('LBRACE', 257);
-define('RBRACE', 258);
-define('SPACE', 259);
-define('STRING', 260);
-define('IDENT', 261);
-define('NUMBER', 262);
-define('HASH', 263);
-define('HEXCOLOR', 264);
-define('PERCENTAGE', 265);
-define('URI', 266);
-define('EMS', 267);
-define('EXS', 268);
-define('LENGTH', 269);
-define('ANGLE', 270);
-define('TIME', 271);
-define('FREQ', 272);
-define('IMPORTANT_SYM', 273);
-define('CHARSET', 274);
-define('IMPORT', 275);
-define('SELECTOR', 276);
-define('TERM', 277);
-define('COMMA', 278);
-define('cLDELIM', 279);
-define('cRDELIM', 280);
-define('cCOMMAND', 281);
-define('cIDENT', 282);
-define('cEQUAL', 283);
-define('cVALUE', 284);
+define('SPACE', 258);
+define('STRING', 259);
+define('IDENT', 260);
+define('NUMBER', 261);
+define('HASH', 262);
+define('HEXCOLOR', 263);
+define('PERCENTAGE', 264);
+define('URI', 265);
+define('EMS', 266);
+define('EXS', 267);
+define('LENGTH', 268);
+define('ANGLE', 269);
+define('TIME', 270);
+define('FREQ', 271);
+define('IMPORTANT_SYM', 272);
+define('CHARSET', 273);
+define('IMPORT', 274);
+define('SELECTOR', 275);
+define('TERM', 276);
+define('COMMA', 277);
+define('cLDELIM', 278);
+define('cRDELIM', 279);
+define('cCOMMAND', 280);
+define('cIDENT', 281);
+define('cEQUAL', 282);
+define('cVALUE', 283);
 
   
 /*
@@ -83,6 +82,7 @@ $yytranslate = array(
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
+     31,   31,   31,   31,   31,    3,   31,   31,   31,   31,
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
@@ -95,23 +95,22 @@ $yytranslate = array(
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
      31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
-     31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
-     31,   31,   31,   31,   31,   31,    1,    2,    3,    4,
-      5,    6,    7,   31,    8,    9,   10,   11,   12,   13,
-     14,   15,   16,   31,   17,   18,   19,   31,   23,   24,
-     25,   26,   27,   28,   29
+     31,   31,   31,   31,   31,   31,    1,    2,    4,    5,
+      6,    7,   31,    8,    9,   10,   11,   12,   13,   14,
+     15,   16,   31,   17,   18,   19,   31,   23,   24,   25,
+     26,   27,   28,   29
   );
 
 define('YYBADCH', 31);
-define('YYMAXLEX', 285);
+define('YYMAXLEX', 284);
 define('YYTERMS', 31);
 define('YYNONTERMS', 19);
 
 $yyaction = array(
      27,   15,   28,  -19,   29,   30,   31,   32,   33,   34,
-     23,   24,   21,   80,  -26,   25,   60,   17,   10,    0,
-     85,   14,   16,   19,  -19,   51,   49,   46,   20,   14,
-     18,   22,   40,  -26,    0,   52,    0,   88,   87,   86
+     23,   24,   21,   79,  -25,   25,   60,   17,    9,    0,
+     84,   14,   16,   19,  -19,   51,   49,   46,   20,   14,
+     18,   22,   40,  -25,    0,   52,    0,   87,   86,   85
   );
 
 define('YYLAST', 40);
@@ -124,69 +123,69 @@ $yycheck = array(
   );
 
 $yybase = array(
-     10,   11,   -7,    5,   17,    8,   17,    1,   -3,   -3,
-      2,    9,   -1,   -9,   16,   16,   16,   16,   16,   16,
+     10,   11,   -7,    5,   17,    8,    1,   -3,   -3,    2,
+      9,   -1,   -9,   17,   16,   16,   16,   16,   16,   16,
      16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
      16,   16,   16,   16,   16,   19,   14,   13,    7,    3,
-     12,    0,    0,    5,    0,    0,   -3,   -3,   -3,   16,
-      0,    0,   16
+     12,    0,    0,    5,    0,    0,   -3,   -3,   16,    0,
+      0,   16
   );
 
-define('YY2TBLSTATE', 11);
+define('YY2TBLSTATE', 10);
 
 $yydefault = array(
-      3,    8,32767,    8,32767,32767,   23,   42,    2,32767,
-     42,32767,32767,32767,   42,   42,   42,   42,   42,   42,
-     42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
-     42,   42,   42,   42,   42,32767,32767,32767,32767,32767,
+      3,    8,32767,    8,32767,32767,   41,    2,32767,   41,
+  32767,32767,32767,   23,   41,   41,   41,   41,   41,   41,
+     41,   41,   41,   41,   41,   41,   41,   41,   41,   41,
+     41,   41,   41,   41,   41,32767,32767,32767,32767,32767,
   32767,    5
   );
 
 
 
 $yygoto = array(
-     37,   69,   66,   59,   13,    4,    9,   36,   39,   53,
-      3,   56,    6,   82,   81,   79,   83,   78,   71,   73,
-     74,   72,   75,   76,   77,   26,    0,   26,   54,   67,
-      0,   55,    0,   61
+     37,   54,   68,   55,    0,   12,    4,    8,   36,   39,
+     53,    3,   56,   13,   81,   80,   78,   82,   77,   70,
+     72,   73,   71,   74,   75,   76,   26,   59,   26,   66,
+      0,    0,    0,   61
   );
 
 define('YYGLAST', 34);
 
 $yygcheck = array(
-      9,   18,   15,   14,    9,    9,    9,    9,    9,    9,
+      9,   10,   18,   10,   -1,    9,    9,    9,    9,    9,
       9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,   13,   -1,   13,   10,   10,
-     -1,   10,   -1,   13
+      9,    9,    9,    9,    9,    9,   13,   14,   13,   15,
+     -1,   -1,   -1,   13
   );
 
 $yygbase = array(
-      0,    0,    0,    0,    0,    0,    0,    0,    0,  -10,
-     23,    0,    0,   24,   -6,   -4,    0,    0,   -2
+      0,    0,    0,    0,    0,    0,    0,    0,    0,   -9,
+     -4,    0,    0,   25,   19,   16,    0,    0,   -1
   );
 
 $yygdefault = array(
-  -32768,   35,   43,   41,    5,    8,   48,    2,   38,   57,
-     63,   12,   11,    7,   58,   62,   64,    1,   70
+  -32768,   35,   43,   41,    5,    7,   48,    2,   38,   57,
+     63,   11,   10,    6,   58,   62,   64,    1,   69
   );
 
 $yylhs = array(
       0,    1,    2,    3,    3,    4,    4,    6,    7,    7,
       7,    8,    5,    5,   10,   10,   11,   11,   14,   14,
-     12,   12,   12,   16,   16,   16,   15,   17,   17,   18,
+     12,   12,   12,   16,   16,   15,   17,   17,   18,   18,
      18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
-     18,   18,    9,    9,   13,   13,   13
+     18,    9,    9,   13,   13,   13
   );
 
 $yylen = array(
       1,    1,    3,    0,    1,    0,    2,    1,    0,    1,
       1,    2,    1,    2,    6,    2,    1,    4,    1,    1,
-      1,    1,    2,    2,    3,    3,    4,    1,    2,    3,
-      3,    3,    3,    3,    3,    3,    3,    2,    1,    2,
-      2,    2,    0,    1,    5,    5,    7
+      1,    1,    2,    2,    3,    4,    1,    2,    3,    3,
+      3,    3,    3,    3,    3,    3,    2,    1,    2,    2,
+      2,    0,    1,    5,    5,    7
   );
 
-define('YYSTATES', 81);
+define('YYSTATES', 80);
 define('YYNLSTATES', 42);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
@@ -298,11 +297,11 @@ function yyparse()
         case 24:
 { $yyval = $yyastk[$yysp-(3-3)]; } break;
         case 25:
-{ $yyval = $yyastk[$yysp-(3-3)]; } break;
-        case 26:
 { $yyval = gen('declaration', $yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-4)]); } break;
-        case 28:
+        case 27:
 { $yyval = $yyastk[$yysp-(2-1)] . ' ' . $yyastk[$yysp-(2-2)]; } break;
+        case 28:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         case 29:
 { $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         case 30:
@@ -317,13 +316,11 @@ function yyparse()
 { $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         case 35:
 { $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
-        case 36:
-{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
-        case 44:
+        case 43:
 { $yyval = gen('command', $yyastk[$yysp-(5-3)]); } break;
-        case 45:
+        case 44:
 { $yyval = getvar($yyastk[$yysp-(5-3)]); } break;
-        case 46:
+        case 45:
 { $yyval = setvar($yyastk[$yysp-(7-3)], $yyastk[$yysp-(7-6)]); } break;
         }
         /* Goto - shift nonterminal */

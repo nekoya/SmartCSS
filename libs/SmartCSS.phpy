@@ -7,7 +7,7 @@
 $parser = SCSS_Parser::getInstance();
 //$parser->debug = true;
 %}
-%token LBRACE RBRACE SPACE
+%token LBRACE '}' SPACE
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
 %token EMS EXS LENGTH ANGLE TIME FREQ
 %token IMPORTANT_SYM
@@ -48,7 +48,7 @@ rulesets
     | rulesets ruleset { $$ = cat($1, $2); }
 
 ruleset
-    : selectors LBRACE s declarations RBRACE s { $$ = gen('ruleset', $1, $4); }
+    : selectors LBRACE s declarations '}' s { $$ = gen('ruleset', $1, $4); }
     | command s
 
 selectors
