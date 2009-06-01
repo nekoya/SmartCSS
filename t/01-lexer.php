@@ -120,3 +120,5 @@ isToken( '[% SEL %] { [% PROP %]:[% EXPR %] }',
     'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM SPACE RBRACE',
     'command as selector, property, expr'
 );
+
+isToken( '[% fuga = hogege %]', 'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM', 'simple command' );
