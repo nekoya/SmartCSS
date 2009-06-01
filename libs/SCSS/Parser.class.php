@@ -8,6 +8,7 @@ class SCSS_Parser {
     protected $lastInsertId = 0;
     protected $topNode;
     protected $nodes = array();
+    public $vars = array();
     public $debug;
 
     /**
@@ -134,6 +135,21 @@ class SCSS_Parser {
         $this->lastInsertId = 0;
         $this->topNode = null;
         $this->nodes = array();
+    }
+
+    /**
+     *
+     */
+    public function setVar($var, $value) {
+        $this->vars[$var] = $value;
+        return $value;
+    }
+
+    /**
+     *
+     */
+    public function getVar($var) {
+        return isset($this->vars[$var]) ? $this->vars[$var] : '';
     }
 
 }

@@ -115,7 +115,7 @@ isToken( 'div { margin:0 }[% HOGE %]p{padding:0}',
 );
 
 isToken( '[% SEL %] { [% PROP %]:[% EXPR term %] }',
-    'cLDELIM SPACE cCOMMAND SPACE cRDELIM LBRACE SPACE '.
+    'cLDELIM SPACE cCOMMAND SPACE cRDELIM LBRACE '.
     'cLDELIM SPACE cCOMMAND SPACE cRDELIM : '.
     'cLDELIM SPACE cCOMMAND SPACE cIDENT SPACE cRDELIM SPACE RBRACE',
     'command as selector, property, expr'

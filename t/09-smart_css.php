@@ -31,6 +31,7 @@ function throws_ok($content, $message = '', $note = '') {
     $parser->reset();
 }
 
+$t->comment('rulesets');
 // ============================================================
 $content = <<<__CSS__
 *{font-size:100%}
@@ -142,6 +143,19 @@ __CSS__;
 
 parse($content, $expected, 'complex');
 
+$t->comment('exceptions');
 // ============================================================
 throws_ok( 'div { margin:0', 'syntax error', 'unclosed ruleset (no RBRACE)');
 throws_ok( 'div { p { margin:0 }', 'syntax error', 'unclosed ruleset (less RBRACE)');
+
+$t->comment('exceptions');
+// ============================================================
+$content = <<<__CSS__
+[% margin = '10px' %]
+div { margin:[% margin %] }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+div { margin:10px; }
+__CSS__;
+parse($content, $expected, 'variable as expr');

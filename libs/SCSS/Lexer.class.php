@@ -116,7 +116,7 @@ class SCSS_Lexer {
      */
     protected function defineRegexs() {
         $regexs = array(
-            'cLDELIM'        => '\[%',
+            'cLDELIM'       => '\s*\[%',
 
             'LBRACE'        => '\s*{',
             'RBRACE'        => '}',

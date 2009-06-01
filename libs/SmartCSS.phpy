@@ -16,6 +16,7 @@ $parser = SCSS_Parser::getInstance();
 %token TERM
 %token '-' ':' ';'
 %token COMMA
+%token cLDELIM cRDELIM cCOMMAND cIDENT cEQUAL cVALUE
 
 %%
 root : stylesheet { $$ = topnode($1); }
@@ -48,6 +49,7 @@ rulesets
 
 ruleset
     : selectors LBRACE s declarations RBRACE s { $$ = gen('ruleset', $1, $4); }
+    | command s
 
 selectors
     : selector
@@ -55,12 +57,12 @@ selectors
 
 selector
     : SELECTOR { $$ = gen('selector', $1); }
+    | command
 
 declarations
     : declaration
     | ruleset
     | declarations followdecl { $$ = cat($1, $2); }
-    | declarations ruleset    { $$ = cat($1, $2); }
 
 followdecl
     : ';' s
@@ -86,8 +88,14 @@ term
     | HEXCOLOR
     | IDENT s
     | STRING s
+    | command s
 
 s : | SPACE
+
+command
+    : cLDELIM s cCOMMAND s cRDELIM             { $$ = gen('command', $3); }
+    | cLDELIM s cIDENT s cRDELIM               { $$ = getvar($3); }
+    | cLDELIM s cIDENT cEQUAL s cVALUE cRDELIM { $$ = setvar($3, $6); }
 
 %%
 
@@ -122,4 +130,14 @@ function cat($base, $newone) {
 function topnode($node) {
     $parser = SCSS_Parser::getInstance();
     return $parser->setTopNode($node);
+}
+
+function setvar($var, $value) {
+    $parser = SCSS_Parser::getInstance();
+    return $parser->setVar($var, $value);
+}
+
+function getvar($var) {
+    $parser = SCSS_Parser::getInstance();
+    return $parser->getVar($var);
 }
