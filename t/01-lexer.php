@@ -105,20 +105,23 @@ isToken( 'DIV { UL { LIST-STYLE:NONE } BACKGROUND:URL("HTTP://EXAMPLE.COM/BG.PNG
 );
 
 $t->comment( 'commands' );
-isToken( '[% HOGE %]', 'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM', 'simple command' );
+isToken( '[% HOGE %]', 'cLDELIM SPACE cCOMMAND SPACE cRDELIM', 'simple command' );
 
 isToken( 'div { margin:0 }[% HOGE %]p{padding:0}',
     'SELECTOR LBRACE SPACE IDENT : NUMBER SPACE RBRACE '.
-    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM '.
+    'cLDELIM SPACE cCOMMAND SPACE cRDELIM '.
     'SELECTOR LBRACE IDENT : NUMBER RBRACE',
     'ruleset - command - ruleset'
 );
 
 isToken( '[% SEL %] { [% PROP %]:[% EXPR %] }',
-    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM LBRACE SPACE '.
-    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM : '.
-    'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM SPACE RBRACE',
+    'cLDELIM SPACE cCOMMAND SPACE cRDELIM LBRACE SPACE '.
+    'cLDELIM SPACE cCOMMAND SPACE cRDELIM : '.
+    'cLDELIM SPACE cCOMMAND SPACE cRDELIM SPACE RBRACE',
     'command as selector, property, expr'
 );
 
-isToken( '[% fuga = hogege %]', 'cLDELIM cSPACE cCOMMAND cSPACE cRDELIM', 'simple command' );
+isToken( '[% fuga = hogege %]',
+    'cLDELIM SPACE cIDENT cEQUAL SPACE cIDENT SPACE cRDELIM',
+    'define variable'
+);
