@@ -99,13 +99,17 @@ class SCSS_Parser {
             // skip $newone (ex: catNode(decl, ';'))
             return $base;
         }
-        $node = $base;
-        if (!is_object($node) || !$node instanceof SCSS_YYNode) {
-            var_dump($base, $node);
-            throw new Exception('Is not node object');
+        if ($base === '') {
+            // skip command/vars
+            return $newone;
+            $this->debug('skip command/vars');
         }
+        $node = $base;
         while ($node->hasNext()) {
             $node = $node->next;
+            if (!is_object($node) || !$node instanceof SCSS_YYNode) {
+                throw new Exception('Is not node object');
+            }
         }
         $node->next = $newone;
         $this->debug($node->id . '<-' . $newone->id);
@@ -141,6 +145,8 @@ class SCSS_Parser {
      *
      */
     public function setVar($var, $value) {
+        $value = substr($value, 1);
+        $value = substr($value, 0, strlen($value)-1);
         $this->vars[$var] = $value;
         return $value;
     }
@@ -149,7 +155,10 @@ class SCSS_Parser {
      *
      */
     public function getVar($var) {
-        return isset($this->vars[$var]) ? $this->vars[$var] : '';
+        $lexer = SCSS_Lexer::getInstance();
+        if ( isset($this->vars[$var]) ) {
+            $lexer->lexbuf = $this->vars[$var] . $lexer->lexbuf;
+        }
     }
 
 }

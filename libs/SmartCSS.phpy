@@ -62,14 +62,19 @@ selector
 declarations
     : declaration
     | ruleset
-    | declarations followdecl { $$ = cat($1, $2); }
+    | declarations declaration { $$ = cat($1, $2); }
+    | declarations ruleset     { $$ = cat($1, $2); }
+//    | declarations followdecl { $$ = cat($1, $2); }
 
+/*
 followdecl
     : ';' s
     | ';' s declaration { $$ = $3; }
+*/
 
 declaration
-    : property ':' s expr { $$ = gen('declaration', $1, $4); }
+    : property ':' s expr ';' s { $$ = gen('declaration', $1, $4); }
+//    : property ':' s expr { $$ = gen('declaration', $1, $4); }
 
 expr
     : term
@@ -93,9 +98,9 @@ term
 s : | SPACE
 
 command
-    : cLDELIM s cCOMMAND s cRDELIM             { $$ = gen('command', $3); }
-    | cLDELIM s cIDENT s cRDELIM               { $$ = getvar($3); }
-    | cLDELIM s cIDENT cEQUAL s cVALUE cRDELIM { $$ = setvar($3, $6); }
+    : cLDELIM s cCOMMAND s cRDELIM               { $$ = gen('command', $3); }
+    | cLDELIM s cIDENT s cRDELIM                 { $$ = ''; getvar($3); }
+    | cLDELIM s cIDENT cEQUAL s cVALUE s cRDELIM { $$ = ''; setvar($3, $6); }
 
 %%
 

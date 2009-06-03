@@ -11,7 +11,15 @@ function parse($content, $expected, $note = '') {
     $lexer->setBuffer($content);
     //$lexer->debug = true;
     //$parser->debug = true;
-    yyparse();
+    try {
+        yyparse();
+    } catch ( Exception $e ) {
+        echo '[ERROR]' . $e->getMessage() . PHP_EOL;
+        var_dump($lexer->lexbuf);
+        var_dump($e->getTraceAsString());
+        $t->fail('Caught unexpected Exception');
+        exit(1);
+    }
     // add PHP_EOL for heredocument
     $t->is( $parser->run(), $expected . PHP_EOL, $note );
     $parser->reset();
@@ -34,8 +42,8 @@ function throws_ok($content, $message = '', $note = '') {
 $t->comment('rulesets');
 // ============================================================
 $content = <<<__CSS__
-*{font-size:100%}
-div { margin : 0 }
+*{font-size:100%;}
+div { margin : 0; }
 p{padding:10px;}
 a { color:#fff; }
 __CSS__;
@@ -62,7 +70,7 @@ parse($content, $expected, 'multi selector');
 
 // ============================================================
 $content = <<<__CSS__
-div { p { margin:0 } }
+div { p { margin:0; } }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
@@ -85,7 +93,7 @@ parse($content, $expected, 'single parent, multi child');
 // ============================================================
 $content = <<<__CSS__
 FORM { INPUT,SELECT { WIDTH:300PX; } }
-P { COLOR:#ABCDEF; BACKGROUND:URL('/IMAGES/BG.PNG') NO-REPEAT }
+P { COLOR:#ABCDEF; BACKGROUND:URL('/IMAGES/BG.PNG') NO-REPEAT; }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
@@ -96,7 +104,7 @@ parse($content, $expected, 'upper case');
 
 // ============================================================
 $content = <<<__CSS__
-ul,ol{li{border:1px solid red}}
+ul,ol{li{border:1px solid red;}}
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
@@ -106,7 +114,7 @@ parse($content, $expected, 'multi parent, single child');
 
 // ============================================================
 $content = <<<__CSS__
-dt,dd { sup,sub { font-color:red } }
+dt,dd { sup,sub { font-color:red; } }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
@@ -127,7 +135,7 @@ $content = <<<__CSS__
         }
         ul, ol {
             margin:0;
-            li{display:inline-block}
+            li{display:inline-block;}
         }
     }
 }
@@ -140,7 +148,6 @@ $expected = <<<__CSS__
 #content div ul, #content div ol { margin:0; }
 #content div ul li, #content div ol li { display:inline-block; }
 __CSS__;
-
 parse($content, $expected, 'complex');
 
 $t->comment('exceptions');
@@ -148,11 +155,11 @@ $t->comment('exceptions');
 throws_ok( 'div { margin:0', 'syntax error', 'unclosed ruleset (no RBRACE)');
 throws_ok( 'div { p { margin:0 }', 'syntax error', 'unclosed ruleset (less RBRACE)');
 
-$t->comment('exceptions');
+$t->comment('variables');
 // ============================================================
 $content = <<<__CSS__
 [% margin = '10px' %]
-div { margin:[% margin %] }
+div { margin:[% margin %]; }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
