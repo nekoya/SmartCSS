@@ -59,18 +59,4 @@ abstract class SCSS_YYnode {
         }
         return $output;
     }
-
-    /**
-     *
-     */
-    public function dump($indent = 0) {
-        $className = get_class($this);
-        $name = strtolower(preg_replace('/^SCSS_YYNode_/', '', $className));
-        $output  = str_repeat(' ', $indent);
-        $output .= $name . ':' . $this->id . "\n";
-        if ($this->hasNext()) {
-            $output .= $this->next->dump($indent + 1);
-        }
-        return $output;
-    }
 }

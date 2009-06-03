@@ -42,39 +42,6 @@ class SCSS_YYNode_Ruleset extends SCSS_YYNode {
     /**
      *
      */
-    public function dump($indent) {
-        $output = "----\n";
-        $output .= str_repeat(' ', $indent*2) . 'ruleset:' . $this->id . "\n";
-        if ($this->hasChildren()) {
-            $selectors    = $this->findSelectors();
-            $declarations = $this->findDeclarations();
-            $rulesets     = $this->findRulesets();
-            if ($declarations) {
-                foreach ($selectors as $selector) {
-                    $output .= $selector->dump($indent + 1);
-                }
-                foreach ($declarations as $declaration) {
-                    $output .= $declaration->dump($indent + 1);
-                }
-            }
-            if ($rulesets) {
-                foreach ($selectors as $selector) {
-                    $output .= $selector->dump($indent + 1);
-                }
-                foreach ($rulesets as $ruleset) {
-                    $output .= $ruleset->dump($indent + 1);
-                }
-            }
-        }
-        if ($this->hasNext()) {
-            $output .= $this->next->dump($indent);
-        }
-        return $output;
-    }
-
-    /**
-     *
-     */
     protected function parsePrefixes($prefixes, $selectors) {
         $values = array();
         foreach ($prefixes as $prefix) {
