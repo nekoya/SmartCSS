@@ -148,6 +148,7 @@ class SCSS_Parser {
         $value = substr($value, 1);
         $value = substr($value, 0, strlen($value)-1);
         $this->vars[$var] = $value;
+        $this->debug("setVar:$var = $value");
         return $value;
     }
 
@@ -157,6 +158,7 @@ class SCSS_Parser {
     public function getVar($var) {
         $lexer = SCSS_Lexer::getInstance();
         if ( isset($this->vars[$var]) ) {
+            $this->debug("getVar:$var");
             $lexer->lexbuf = $this->vars[$var] . $lexer->lexbuf;
         }
     }
