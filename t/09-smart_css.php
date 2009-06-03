@@ -166,3 +166,14 @@ $expected = <<<__CSS__
 div { margin:10px; }
 __CSS__;
 parse($content, $expected, 'variable as expr');
+
+// ============================================================
+$content = <<<__CSS__
+[% margin = '10px' %]
+div { margin:20px [% margin %] 5px [% margin %]; }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+div { margin:20px 10px 5px 10px; }
+__CSS__;
+parse($content, $expected, 'variable inner expr');

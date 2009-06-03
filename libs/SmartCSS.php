@@ -301,7 +301,7 @@ function yyparse()
         case 24:
 { $yyval = gen('declaration', $yyastk[$yysp-(6-1)], $yyastk[$yysp-(6-4)]); } break;
         case 26:
-{ $yyval = $yyastk[$yysp-(2-1)] . ' ' . $yyastk[$yysp-(2-2)]; } break;
+{ $yyval = trim($yyastk[$yysp-(2-1)]) . ' ' . trim($yyastk[$yysp-(2-2)]); } break;
         case 27:
 { $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         case 28:

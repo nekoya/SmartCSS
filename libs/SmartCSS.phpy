@@ -78,7 +78,7 @@ declaration
 
 expr
     : term
-    | expr term { $$ = $1 . ' ' . $2; }
+    | expr term { $$ = trim($1) . ' ' . trim($2); }
 
 term
     : unary_operator PERCENTAGE s { $$ = $1 . $2; }
