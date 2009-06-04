@@ -1,8 +1,6 @@
 <?php
 
 //<?php
-$parser = SCSS_Parser::getInstance();
-//$parser->debug = true;
 
 /* Prototype file of PHP parser.
  * Written by Masato Bito
@@ -107,88 +105,88 @@ define('YYTERMS', 31);
 define('YYNONTERMS', 18);
 
 $yyaction = array(
-     26,  -19,   27,   14,   28,   29,   30,   31,   32,   33,
-     22,   23,    0,   78,   60,   24,   18,   20,   19,   13,
-     18,   83,  -19,   46,   15,   51,   49,   86,   85,   13,
-     16,   10,   84,   34,    0,   52,    0,   17,    0,    0,
-      0,    0,   21
+     26,   13,   27,    0,   28,   29,   30,   31,   32,   33,
+     22,   23,   84,   79,   62,   24,   36,   20,   48,   11,
+     18,   18,   14,   15,    8,   53,   62,   51,   34,   11,
+     17,   19,    0,   21,    0,   54,   87,    0,   85,    0,
+      0,   88,   86,    0,    0,    0,    0,   40
   );
 
-define('YYLAST', 43);
+define('YYLAST', 48);
 
 $yycheck = array(
-      7,    2,    9,    2,   11,   12,   13,   14,   15,   16,
-      5,    6,    0,    8,   19,   10,    6,    3,   21,   24,
-      6,    4,   23,   17,   23,   20,   18,   25,   25,   24,
-     26,   27,   25,   22,   -1,   30,   -1,   28,   -1,   -1,
-     -1,   -1,   29
+      7,    2,    9,    0,   11,   12,   13,   14,   15,   16,
+      5,    6,    4,    8,   19,   10,    4,    3,   17,   24,
+      6,    6,   23,   26,   27,   20,   19,   18,   22,   24,
+     28,   21,   -1,   29,   -1,   30,   25,   -1,   25,   -1,
+     -1,   25,   25,   -1,   -1,   -1,   -1,   29
   );
 
 $yybase = array(
-      6,   11,   -7,    5,   14,   10,    8,   -1,   -5,   -5,
-      9,    1,    4,   17,   17,   17,   17,   17,   17,   17,
-     17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
-     17,   17,   17,   17,   17,   12,    7,    3,   -3,   13,
-      2,    0,    0,    5,    0,    0,   -5,   -5,   -5,   17,
-      0,    0,   17
+      1,    6,   -7,    5,   14,   15,    9,   -5,    2,   -1,
+     -3,    8,    8,    8,    8,   12,    7,    8,    8,    8,
+      8,    8,    8,    8,    8,    8,    8,    8,    8,    8,
+      8,    8,    8,    8,    8,    3,   18,   13,   11,   10,
+     17,    4,   16,    0,    0,    5,    0,    0,   -5,   -5,
+     -5,    0,    8
   );
 
-define('YY2TBLSTATE', 11);
+define('YY2TBLSTATE', 9);
 
 $yydefault = array(
-      3,    8,32767,    8,32767,32767,32767,   40,    2,32767,
-     40,32767,32767,   40,   40,   40,   40,   40,   40,   40,
-     40,   40,   40,   40,   40,   40,   40,   40,   40,   40,
-     40,   40,   40,   40,   40,32767,32767,32767,32767,32767,
-  32767,    5
+      3,    8,32767,    8,32767,32767,32767,    2,   39,32767,
+  32767,   39,   39,   39,   39,   39,32767,   39,   39,   39,
+     39,   39,   39,   39,   39,   39,   39,   39,   39,   39,
+     39,   39,   39,   39,   39,32767,   40,32767,32767,32767,
+  32767,32767,32767,    5
   );
 
 
 
 $yygoto = array(
-     37,   67,   62,   12,    5,    9,   36,   39,   53,    3,
-     56,   40,   80,   79,   77,   81,   76,   69,   71,   72,
-     70,   73,   74,   75,   66,   25,   59,   25,   63,   54,
-      0,   55,    0,   61
+     10,   59,    5,   16,   37,   68,   41,   55,    3,   58,
+     42,   81,   80,   78,   82,   77,   70,   72,   73,   71,
+     74,   75,   76,   67,   64,   56,   57,   25,   63,   25,
+     61
   );
 
-define('YYGLAST', 34);
+define('YYGLAST', 31);
 
 $yygcheck = array(
-      9,   17,   15,    9,    9,    9,    9,    9,    9,    9,
+      9,    9,    9,    9,    9,   17,    9,    9,    9,    9,
       9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
-      9,    9,    9,    9,    9,   13,   14,   13,   10,   10,
-     -1,   10,   -1,   13
+      9,    9,    9,    9,   10,   10,   10,   13,   15,   13,
+     14
   );
 
 $yygbase = array(
-      0,    0,    0,    0,    0,    0,    0,    0,    0,  -10,
-     23,    0,    0,   24,   17,   -3,    0,   -2
+      0,    0,    0,    0,    0,    0,    0,    0,    0,  -11,
+     19,    0,    0,   26,   14,   23,    0,    2
   );
 
 $yygdefault = array(
-  -32768,   35,   43,   41,    6,    8,   48,    2,   38,   57,
-     65,   11,    4,    7,   58,   64,    1,   68
+  -32768,   35,   45,   43,    6,    7,   50,    2,   39,   38,
+     66,    9,    4,   12,   60,   65,    1,   69
   );
 
 $yylhs = array(
       0,    1,    2,    3,    3,    4,    4,    6,    7,    7,
-      7,    8,    5,    5,   10,   10,   11,   11,   14,   14,
-     12,   12,   12,   12,   15,   16,   16,   17,   17,   17,
-     17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
-      9,    9,   13,   13,   13
+      7,    8,    5,    5,   10,   10,   11,   11,   14,   12,
+     12,   12,   12,   15,   16,   16,   17,   17,   17,   17,
+     17,   17,   17,   17,   17,   17,   17,   17,   17,    9,
+      9,   13,   13,   13,   13
   );
 
 $yylen = array(
       1,    1,    3,    0,    1,    0,    2,    1,    0,    1,
       1,    2,    1,    2,    6,    2,    1,    4,    1,    1,
-      1,    1,    2,    2,    6,    1,    2,    3,    3,    3,
-      3,    3,    3,    3,    3,    2,    1,    2,    2,    2,
-      0,    1,    5,    5,    8
+      1,    2,    2,    6,    1,    2,    3,    3,    3,    3,
+      3,    3,    3,    3,    2,    1,    2,    2,    2,    0,
+      1,    5,    6,    5,    8
   );
 
-define('YYSTATES', 81);
-define('YYNLSTATES', 42);
+define('YYSTATES', 83);
+define('YYNLSTATES', 44);
 define('YYINTERRTOK', 1);
 define('YYUNEXPECTED', 32767);
 define('YYDEFAULT', -32766);
@@ -294,14 +292,16 @@ function yyparse()
 { $yyval = cat($yyastk[$yysp-(4-1)], $yyastk[$yysp-(4-4)]); } break;
         case 18:
 { $yyval = gen('selector', $yyastk[$yysp-(1-1)]); } break;
+        case 21:
+{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 22:
 { $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
         case 23:
-{ $yyval = cat($yyastk[$yysp-(2-1)], $yyastk[$yysp-(2-2)]); } break;
-        case 24:
 { $yyval = gen('declaration', $yyastk[$yysp-(6-1)], $yyastk[$yysp-(6-4)]); } break;
-        case 26:
+        case 25:
 { $yyval = trim($yyastk[$yysp-(2-1)]) . ' ' . trim($yyastk[$yysp-(2-2)]); } break;
+        case 26:
+{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         case 27:
 { $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         case 28:
@@ -316,10 +316,10 @@ function yyparse()
 { $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
         case 33:
 { $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
-        case 34:
-{ $yyval = $yyastk[$yysp-(3-1)] . $yyastk[$yysp-(3-2)]; } break;
-        case 42:
+        case 41:
 { $yyval = gen('command', $yyastk[$yysp-(5-3)]); } break;
+        case 42:
+{ $yyval = gen('command', $yyastk[$yysp-(6-3)], $yyastk[$yysp-(6-5)]); } break;
         case 43:
 { $yyval = ''; getvar($yyastk[$yysp-(5-3)]); } break;
         case 44:
@@ -384,10 +384,15 @@ function yyparse()
 
 
 function __autoload($class) {
-    $dirname = dirname(__FILE__);
-    $class = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);
-    $filename = $dirname . DIRECTORY_SEPARATOR . $class . '.class.php';
-    require $filename;
+    $basedir = dirname(__FILE__);
+    $classfile = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);
+    $filename = $basedir. DIRECTORY_SEPARATOR . $classfile . '.class.php';
+    if (file_exists($filename)) {
+        require $filename;
+    }
+    if (!class_exists($class, false)) {
+        throw new Exception("Could not load class: $class");
+    }
 }
 
 function yylex() {

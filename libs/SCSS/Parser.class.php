@@ -59,6 +59,21 @@ class SCSS_Parser {
     /**
      *
      */
+    public function genCommand($name, $value = null) {
+        $className = 'SCSS_Command_' . ucfirst($name);
+        // calling __autoload deters Fatal error with load class
+        try {
+            __autoload($className);
+        } catch (Exception $e) {
+            throw new Exception("Command not found: $name");
+        }
+        $command = new $className($value);
+        $command->execute();
+    }
+
+    /**
+     *
+     */
     public function __call($method, $args) {
         if (preg_match('/^gen([A-Z][a-z]*)$/', $method, $matches)) {
             $type = strtolower($matches[1]);
@@ -160,6 +175,7 @@ class SCSS_Parser {
         if ( isset($this->vars[$var]) ) {
             $this->debug("getVar:$var");
             $lexer->lexbuf = $this->vars[$var] . $lexer->lexbuf;
+            return $this->vars[$var];
         }
     }
 

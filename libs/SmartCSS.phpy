@@ -4,8 +4,6 @@
 
 %{
 //<?php
-$parser = SCSS_Parser::getInstance();
-//$parser->debug = true;
 %}
 %token LBRACE '}' SPACE
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
@@ -99,16 +97,22 @@ s : | SPACE
 
 command
     : cLDELIM s cCOMMAND s cRDELIM               { $$ = gen('command', $3); }
+    | cLDELIM s cCOMMAND SPACE cVALUE cRDELIM    { $$ = gen('command', $3, $5); }
     | cLDELIM s cIDENT s cRDELIM                 { $$ = ''; getvar($3); }
     | cLDELIM s cIDENT cEQUAL s cVALUE s cRDELIM { $$ = ''; setvar($3, $6); }
 
 %%
 
 function __autoload($class) {
-    $dirname = dirname(__FILE__);
-    $class = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);
-    $filename = $dirname . DIRECTORY_SEPARATOR . $class . '.class.php';
-    require $filename;
+    $basedir = dirname(__FILE__);
+    $classfile = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);
+    $filename = $basedir. DIRECTORY_SEPARATOR . $classfile . '.class.php';
+    if (file_exists($filename)) {
+        require $filename;
+    }
+    if (!class_exists($class, false)) {
+        throw new Exception("Could not load class: $class");
+    }
 }
 
 function yylex() {
