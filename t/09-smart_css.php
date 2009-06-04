@@ -177,3 +177,16 @@ $expected = <<<__CSS__
 div { margin:20px 10px 5px 10px; }
 __CSS__;
 parse($content, $expected, 'variable inner expr');
+
+// ============================================================
+$content = <<<__CSS__
+[% rule = 'p { margin:0; }' %]
+[% rule %]
+[% rule %]
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+p { margin:0; }
+p { margin:0; }
+__CSS__;
+parse($content, $expected, 'variable as ruleset');

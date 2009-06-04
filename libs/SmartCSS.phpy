@@ -57,7 +57,7 @@ selectors
 
 selector
     : SELECTOR { $$ = gen('selector', $1); }
-    | command
+//    | command
 
 declarations
     : declaration
