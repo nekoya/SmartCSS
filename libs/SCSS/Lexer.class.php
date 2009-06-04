@@ -25,13 +25,13 @@ class SCSS_Lexer {
      *
      */
     public function __construct() {
-        $this->initalize();
+        $this->initialize();
     }
 
     /**
      *
      */
-    protected function initalize() {
+    protected function initialize() {
         $this->defineRegexs();
         $this->state = 'ruleset';
     }
