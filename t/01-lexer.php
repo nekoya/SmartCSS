@@ -1,4 +1,5 @@
 <?php
+chdir(dirname(__FILE__));
 require 'utils.php';
 $t->comment( 'test lexer instance' );
 $t->ok( $lexer = SCSS_Lexer::getInstance(), 'get lexer instance' );

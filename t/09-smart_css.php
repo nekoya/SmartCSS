@@ -1,4 +1,5 @@
 <?php
+chdir(dirname(__FILE__));
 require '../libs/SmartCSS.php';
 require 'lime.php';
 $t = new lime_test();

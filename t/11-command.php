@@ -1,6 +1,6 @@
 <?php
+chdir(dirname(__FILE__));
 require 'utils.php';
-$t->plan = 3;
 $t->comment( 'test parser instance' );
 $t->ok( $parser = SCSS_Parser::getInstance(), 'get parser instance' );
 $t->isa_ok( $parser, 'SCSS_Parser', 'parser instance isa SCSS_Parser' );
