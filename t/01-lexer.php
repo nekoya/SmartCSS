@@ -1,8 +1,12 @@
 <?php
 chdir(dirname(__FILE__));
-require 'utils.php';
+require 'lime.php';
+require '../libs/SCSS/Parser.class.php';
+$t = new lime_test();
+$t->output = new lime_output_color();
+
 $t->comment( 'test lexer instance' );
-$t->ok( $lexer = SCSS_Lexer::getInstance(), 'get lexer instance' );
+$t->ok( $lexer = new SCSS_Lexer(), 'get lexer instance' );
 $t->isa_ok( $lexer, 'SCSS_Lexer', 'parser instance isa SCSS_Lexer' );
 
 /*
@@ -16,7 +20,7 @@ function isToken($buffer, $tokenstr, $diag = null) {
     foreach (explode(' ', $tokenstr) as $token) {
         array_push($tokens, $token);
     }
-    while ($result = $lexer->yylex()) {
+    while ($result = $lexer->analyze($yylval)) {
         array_push( $results,
             is_numeric($result) ? chr($result) : $result
         );
@@ -29,11 +33,11 @@ function isToken($buffer, $tokenstr, $diag = null) {
 
 $t->comment( 'skip comments' );
 $lexer->setBuffer('/* comment */');
-$t->is( $lexer->yylex(), null, 'skip comment' );
+$t->is( $lexer->analyze($yylval), null, 'skip comment' );
 $lexer->setBuffer('/*** comment ***/');
-$t->is( $lexer->yylex(), null, 'skip comment end of **/' );
+$t->is( $lexer->analyze($yylval), null, 'skip comment end of **/' );
 $lexer->setBuffer("/**\n * comment\n **/\n");
-$t->is( $lexer->yylex(), null, 'skip multi lines comment' );
+$t->is( $lexer->analyze($yylval), null, 'skip multi lines comment' );
 
 $t->comment( 'charset' );
 isToken('@charset "utf-8";', 'CHARSET', 'CHARSET (lower case)');

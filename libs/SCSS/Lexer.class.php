@@ -3,7 +3,6 @@
  *
  */
 class SCSS_Lexer {
-    static private $instance;
     protected $regexs;
     protected $commands;
     protected $state;
@@ -13,25 +12,7 @@ class SCSS_Lexer {
     /**
      *
      */
-    static public function getInstance() {
-        if (self::$instance === null) {
-            $className = __CLASS__;
-            self::$instance = new $className();
-        }
-        return self::$instance;
-    }
-
-    /**
-     *
-     */
     public function __construct() {
-        $this->initialize();
-    }
-
-    /**
-     *
-     */
-    protected function initialize() {
         $this->defineRegexs();
         $this->state = 'ruleset';
     }
@@ -48,10 +29,16 @@ class SCSS_Lexer {
     /**
      *
      */
-    public function yylex() {
-        global $yylval;
-        $parser = SCSS_Parser::getInstance();
+    public function yylex(&$yylval) {
+        $lval = $this->analyze($yylval);
+        $const = "SCSS_Parser::$lval";
+        return (defined($const)) ? constant($const) : $lval;
+    }
 
+    /**
+     *
+     */
+    public function analyze(&$yylval) {
         while ($this->lexbuf) {
             if ($this->debug) {
                 //var_dump($this->lexbuf);
@@ -109,6 +96,7 @@ class SCSS_Lexer {
             $this->debug('token unmatched ' . chr($yylval));
             return $yylval;
         }
+        return 0;
     }
 
     /**

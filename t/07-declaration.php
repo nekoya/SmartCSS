@@ -2,10 +2,6 @@
 chdir(dirname(__FILE__));
 require 'utils.php';
 
-$t->comment( 'prepare parser instance' );
-$t->ok( $parser = SCSS_Parser::getInstance(), 'get parser instance' );
-$t->isa_ok( $parser, 'SCSS_Parser', 'parser instance isa SCSS_Parser' );
-
 $t->comment( 'create declaration node' );
 $t->ok( $decl = $parser->genDeclaration('margin', '0'), 'generate node' );
 $t->isa_ok( $decl, 'SCSS_YYNode_Declaration', 'node isa SCSS_YYNode_Declaration' );

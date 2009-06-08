@@ -1,19 +1,16 @@
 <?php
 chdir(dirname(__FILE__));
-require '../libs/SmartCSS.php';
-require 'lime.php';
-$t = new lime_test();
-$t->output = new lime_output_color();
+require 'utils.php';
 
 function parse($content, $expected, $note = '') {
     global $t;
-    $lexer  = SCSS_Lexer::getInstance();
-    $parser = SCSS_Parser::getInstance();
+    $parser = new SCSS_Parser();
+    $lexer  = new SCSS_Lexer();
     $lexer->setBuffer($content);
     //$lexer->debug = true;
     //$parser->debug = true;
     try {
-        yyparse();
+        $parser->yyparse($lexer);
     } catch ( Exception $e ) {
         echo '[ERROR]' . $e->getMessage() . PHP_EOL;
         var_dump($lexer->lexbuf);
@@ -28,16 +25,15 @@ function parse($content, $expected, $note = '') {
 
 function throws_ok($content, $message = '', $note = '') {
     global $t;
-    $lexer  = SCSS_Lexer::getInstance();
-    $parser = SCSS_Parser::getInstance();
+    $parser = new SCSS_Parser();
+    $lexer  = new SCSS_Lexer();
     $lexer->setBuffer($content);
     try {
-        yyparse();
+        $parser->yyparse($lexer);
     } catch ( Exception $e ) {
         $t->isa_ok( $e, 'Exception', 'caught exception: ' . $note );
         $t->is( $e->getMessage(), $message, $message );
     }
-    $parser->reset();
 }
 
 $t->comment('rulesets');
