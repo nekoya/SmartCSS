@@ -1,7 +1,7 @@
 <?php
 chdir(dirname(__FILE__));
 require 'lime.php';
-require '../libs/SCSS/Parser.class.php';
+require '../libs/SCSS/Lexer.class.php';
 $t = new lime_test();
 $t->output = new lime_output_color();
 

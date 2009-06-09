@@ -512,18 +512,6 @@ class SCSS_Parser
     public $vars = array();
     public $debug;
 
-    public static function autoload($class) {
-        $basedir = dirname(__FILE__) . DIRECTORY_SEPARATOR .  '..';
-        $classfile = preg_replace('/_/', DIRECTORY_SEPARATOR, $class);
-        $filename = $basedir . DIRECTORY_SEPARATOR . $classfile . '.class.php';
-        if (file_exists($filename)) {
-            require $filename;
-        }
-        if (!class_exists($class, false)) {
-            throw new Exception("Could not load class: $class");
-        }
-    }
-
     /**
      *
      */
@@ -677,4 +665,3 @@ class SCSS_Parser
         }
     }
 }
-spl_autoload_register( array( 'SCSS_Parser', 'autoload' ) );
