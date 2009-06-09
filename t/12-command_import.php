@@ -6,5 +6,5 @@ $t->comment( 'import command' );
 try {
     $parser->genCommand('IMPORT');
 } catch (Exception $e) {
-    $t->is( $e->getMessage(), 'Need target filename' );
+    $t->is( $e->getMessage(), 'Need target filename', 'Need target filename' );
 }
