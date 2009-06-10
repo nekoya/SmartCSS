@@ -22,13 +22,13 @@ class SCSS_Getopt_Web {
 
         $realpath = realpath($filename);
         if ($realpath === false) return false;
-        if (!file_exists($filename)) return false;
+        if (!file_exists($realpath)) return false;
 
         $basedir = realpath(dirname(__FILE__) . '/../../..');
         $dirname = substr($realpath, 0, strlen($basedir));
         if ($dirname !== $basedir) return false;
 
-        return file_get_contents($filename);
+        return file_get_contents($realpath);
         $this->notFoundError();
     }
 
