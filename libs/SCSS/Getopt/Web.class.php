@@ -35,4 +35,9 @@ class SCSS_Getopt_Web {
     public function failedReadFile() {
         $this->notFoundError();
     }
+
+    public function publish($content) {
+        header('Content-type: text/css');
+        echo $content;
+    }
 }

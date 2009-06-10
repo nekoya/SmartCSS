@@ -15,7 +15,7 @@ class SmartCSS {
         $buffer = $c->getTargetFile($this->fileName);
         if ($buffer === false ) $c->failedReadFile();
         $this->content = $this->parseSCSS($buffer);
-        $this->publish();
+        $c->publish($this->content);
     }
 
     public function callAsCLI() {

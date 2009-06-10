@@ -49,4 +49,8 @@ class SCSS_Getopt_CLI {
     public function failedReadFile() {
         die('Failed read scss file.');
     }
+
+    public function publish($content) {
+        echo $content;
+    }
 }
