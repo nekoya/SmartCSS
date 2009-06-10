@@ -1,16 +1,31 @@
+/**
+ * sample scss
+ */
+
 * {
     margin:0;
     padding:0;
     font-size:100%;
 }
 
+#container {
+    width:960px;
+    margin:0 auto;
+}
+
+a { color:#36f; text-decoration:none; }
+a:hover{text-decoration:underline;}
+
 div.section {
-    width:750px;
-    margin:10px auto;
+    margin:1em 10px;
     padding:10px;
     border:1px solid #a8a8a8;
+    background:url('http://example.com/images/bg_section.png') repeat-x 50% 0;
     p {
         margin:1em 0;
         line-height:1.6;
+    }
+    a:hover {
+        color:#ff9900;
     }
 }
