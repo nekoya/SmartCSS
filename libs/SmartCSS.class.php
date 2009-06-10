@@ -1,5 +1,5 @@
 <?php
-require 'AutoLoader.class.php';
+require 'SCSS/AutoLoader.class.php';
 
 class SmartCSS {
     protected $debug = false;

@@ -547,7 +547,7 @@ class SCSS_Parser
         $className = 'SCSS_Command_' . ucfirst($name);
         // calling autoload deters Fatal error with load class
         try {
-            AutoLoader::autoload($className);
+            SCSS_AutoLoader::autoload($className);
         } catch (Exception $e) {
             throw new Exception("Command not found: $name");
         }

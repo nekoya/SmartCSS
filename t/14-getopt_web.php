@@ -1,7 +1,7 @@
 <?php
 chdir(dirname(__FILE__));
 require 'lime.php';
-require '../libs/AutoLoader.class.php';
+require '../libs/SCSS/AutoLoader.class.php';
 $t = new lime_test();
 $t->output = new lime_output_color();
 
