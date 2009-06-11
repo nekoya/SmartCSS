@@ -1,5 +1,5 @@
 <?php
-/**
+e**
  *
  */
 class SCSS_Lexer {
@@ -20,10 +20,24 @@ class SCSS_Lexer {
     /**
      *
      */
-    public function setBuffer($lexbuf) {
-        $lexbuf = preg_replace('/^\s*(.*?)\s*$/m', '$1', $lexbuf);
-        $lexbuf = preg_replace('/[\r\n]/', '', $lexbuf);
-        $this->lexbuf = $lexbuf;
+    public function setBuffer($buffer) {
+        $buffer = preg_replace('/^\s*(.*?)\s*$/m', '$1', $buffer);
+        $buffer = preg_replace('/[\r\n]/', '', $buffer);
+        $this->lexbuf = $buffer;
+    }
+
+    /**
+     *
+     */
+    public function prependBuffer($buffer) {
+        $this->lexbuf = $buffer . $this->lexbuf;
+    }
+
+    /**
+     *
+     */
+    public function appendBuffer($buffer) {
+        $this->lexbuf = $this->lexbuf . $buffer;
     }
 
     /**
