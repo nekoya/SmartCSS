@@ -17,4 +17,15 @@ abstract class SCSS_Command {
      */
     public function execute() {
     }
+
+    /**
+     *
+     */
+    protected function trimValue($value) {
+        if (preg_match('/^(".*?"|\'.*?\')$/', $value)) {
+            $value = substr($value, 1);
+            $value = substr($value, 0, strlen($value)-1);
+        }
+        return $value;
+    }
 }

@@ -10,7 +10,7 @@ class SCSS_Command_Import extends SCSS_Command {
      */
     public function __construct($parser, $params) {
         parent::__construct($parser, $params);
-        $this->filename = isset($params[0]) ? $params[0] : '';
+        $this->filename = isset($params[0]) ? $this->trimValue($params[0]) : '';
         if (empty($this->filename)) {
             throw new Exception('Need target filename');
         }

@@ -2,13 +2,15 @@
 chdir(dirname(__FILE__));
 require 'utils.php';
 
-function parse($content, $expected, $note = '') {
+function parse($content, $expected, $note = '', $debug = false) {
     global $t;
     $parser = new SCSS_Parser();
     $lexer  = new SCSS_Lexer();
     $lexer->setBuffer($content);
-    //$lexer->debug = true;
-    //$parser->debug = true;
+    if ($debug) {
+        $lexer->debug = true;
+        $parser->debug = true;
+    }
     try {
         $parser->yyparse($lexer);
     } catch ( Exception $e ) {
@@ -187,3 +189,17 @@ p { margin:0; }
 div p { margin:0; }
 __CSS__;
 parse($content, $expected, 'variable as ruleset');
+
+// ============================================================
+$content = <<<__CSS__
+* { margin:0; }
+[% IMPORT '../sample/width.scss' %]
+#content { margin:0; }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+* { margin:0; }
+#content { width:960px; margin:0 auto; }
+#content { margin:0; }
+__CSS__;
+parse($content, $expected, 'IMPORT command');
