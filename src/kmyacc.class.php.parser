@@ -38,6 +38,7 @@ class YYParser
 @endtokenval
     // }}}
 
+    public $lex;
     protected $yyval;
     protected $yyastk;
     protected $yysp;
