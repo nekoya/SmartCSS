@@ -139,15 +139,21 @@ command
     /**
      *
      */
-    public function genCommand($name, $value = null) {
+    public function genCommand($name, $params = array()) {
+        if (!is_array($params)) {
+            $params = array($params);
+        }
+
         $className = 'SCSS_Command_' . ucfirst($name);
         // calling autoload deters Fatal error with load class
-        try {
-            SCSS_AutoLoader::autoload($className);
-        } catch (Exception $e) {
-            throw new Exception("Command not found: $name");
+        if (!class_exists($className, false)) {
+            try {
+                SCSS_AutoLoader::autoload($className);
+            } catch (Exception $e) {
+                throw new Exception("Command not found: $name");
+            }
         }
-        $command = new $className($value);
+        $command = new $className($this, $params);
         $command->execute();
     }
 
