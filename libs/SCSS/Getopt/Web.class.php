@@ -29,7 +29,6 @@ class SCSS_Getopt_Web {
         if ($dirname !== $basedir) return false;
 
         return file_get_contents($realpath);
-        $this->notFoundError();
     }
 
     public function failedReadFile() {
