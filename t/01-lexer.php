@@ -109,7 +109,7 @@ isToken( 'DIV { UL { LIST-STYLE:NONE } BACKGROUND:URL("HTTP://EXAMPLE.COM/BG.PNG
     'upper case'
 );
 
-$t->comment( 'commands' );
+$t->comment( 'variables' );
 isToken( '[% HOGE %]', 'cLDELIM SPACE cCOMMAND SPACE cRDELIM', 'simple command' );
 
 isToken( 'div { margin:0 }[% HOGE %]p{padding:0}',
@@ -130,4 +130,11 @@ isToken( '[% fuga = "hogege" %][%uge=\'UGE\'%]',
     'cLDELIM SPACE cIDENT cEQUAL SPACE cVALUE SPACE cRDELIM '.
     'cLDELIM cIDENT cEQUAL cVALUE cRDELIM',
     'define variable'
+);
+
+$t->comment( 'commands' );
+isToken( '[% IMPORT "hoge.scss" %][% IMPORT \'fuga.scss\' %]',
+    'cLDELIM SPACE cCOMMAND SPACE cVALUE SPACE cRDELIM '.
+    'cLDELIM SPACE cCOMMAND SPACE cVALUE SPACE cRDELIM',
+    'IMPORT command'
 );
