@@ -665,7 +665,7 @@ class SCSS_Parser
         if ( isset($this->vars[$var]) ) {
             $this->debug("getVar:$var");
             if (!empty($this->lex)) {
-                $this->lex->lexbuf = $this->vars[$var] . $this->lex->lexbuf;
+                $this->lex->prependBuffer($this->vars[$var]);
             }
             return $this->vars[$var];
         }
