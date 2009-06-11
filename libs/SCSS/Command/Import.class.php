@@ -44,7 +44,9 @@ class SCSS_Command_Import extends SCSS_Command {
 
         $basedir = realpath(dirname(__FILE__) . '/../../..');
         $dirname = substr($realpath, 0, strlen($basedir));
-        if ($dirname !== $basedir) return false;
+        if ($dirname !== $basedir) {
+            throw new Exception('IMPORT invalid basedir');
+        }
 
         return file_get_contents($realpath);
     }
