@@ -54,6 +54,7 @@ class SCSS_Parser
     const cVALUE = 283;
     // }}}
 
+    public $lex;
     protected $yyval;
     protected $yyastk;
     protected $yysp;
@@ -492,11 +493,11 @@ class SCSS_Parser
     private function yyn40() {}
 
     private function yyn41() {
-         $this->yyval = $this->genCommand($this->yyastk[$this->yysp-(5-3)]); 
+         $this->yyval = ''; $this->genCommand($this->yyastk[$this->yysp-(5-3)]); 
     }
 
     private function yyn42() {
-         $this->yyval = $this->genCommand($this->yyastk[$this->yysp-(6-3)], $this->yyastk[$this->yysp-(6-5)]); 
+         $this->yyval = ''; $this->genCommand($this->yyastk[$this->yysp-(6-3)], $this->yyastk[$this->yysp-(6-5)]); 
     }
 
     private function yyn43() {
@@ -558,7 +559,7 @@ class SCSS_Parser
             }
         }
         $command = new $className($this, $params);
-        $command->execute();
+        return $command->execute();
     }
 
     /**

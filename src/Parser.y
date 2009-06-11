@@ -96,8 +96,8 @@ term
 s : | SPACE
 
 command
-    : cLDELIM s cCOMMAND s cRDELIM               { $$ = $this->genCommand($3); }
-    | cLDELIM s cCOMMAND SPACE cVALUE cRDELIM    { $$ = $this->genCommand($3, $5); }
+    : cLDELIM s cCOMMAND s cRDELIM               { $$ = ''; $this->genCommand($3); }
+    | cLDELIM s cCOMMAND SPACE cVALUE cRDELIM    { $$ = ''; $this->genCommand($3, $5); }
     | cLDELIM s cIDENT s cRDELIM                 { $$ = ''; $this->getVar($3); }
     | cLDELIM s cIDENT cEQUAL s cVALUE s cRDELIM { $$ = ''; $this->setVar($3, $6); }
 
@@ -154,7 +154,7 @@ command
             }
         }
         $command = new $className($this, $params);
-        $command->execute();
+        return $command->execute();
     }
 
     /**
