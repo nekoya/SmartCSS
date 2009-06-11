@@ -1,5 +1,5 @@
 <?php
-e**
+/**
  *
  */
 class SCSS_Lexer {
