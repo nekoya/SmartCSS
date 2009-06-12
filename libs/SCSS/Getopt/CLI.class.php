@@ -33,7 +33,7 @@ class SCSS_Getopt_CLI {
         exit($code);
     }
 
-    public function getTargetFile($filename) {
+    public function getRealPath($filename) {
         if (empty($filename)) return false;
 
         $filename = str_replace("\0", '', $filename);
@@ -43,7 +43,7 @@ class SCSS_Getopt_CLI {
         if ($realpath === false) return false;
         if (!file_exists($filename)) return false;
 
-        return file_get_contents($filename);
+        return $realpath;
     }
 
     public function failedReadFile() {

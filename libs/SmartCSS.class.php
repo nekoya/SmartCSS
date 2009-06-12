@@ -12,8 +12,10 @@ class SmartCSS {
             $c = new SCSS_Getopt_Web();
         }
         $this->fileName = $c->getParams();
-        $buffer = $c->getTargetFile($this->fileName);
-        if ($buffer === false ) $c->failedReadFile();
+        $realpath = $c->getRealPath($this->fileName);
+        if ($realpath === false ) $c->failedReadFile();
+        chdir(dirname($realpath));
+        $buffer = file_get_contents($realpath);
         $this->content = $this->parseSCSS($buffer);
         $c->publish($this->content);
     }

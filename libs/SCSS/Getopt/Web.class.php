@@ -13,7 +13,7 @@ class SCSS_Getopt_Web {
         die('File not found.');
     }
 
-    public function getTargetFile($filename) {
+    public function getRealPath($filename) {
         if (empty($filename)) return false;
 
         $filename = str_replace("\0", '', $filename);
@@ -28,7 +28,7 @@ class SCSS_Getopt_Web {
         $dirname = substr($realpath, 0, strlen($basedir));
         if ($dirname !== $basedir) return false;
 
-        return file_get_contents($realpath);
+        return $realpath;
     }
 
     public function failedReadFile() {
