@@ -10,13 +10,18 @@ abstract class SCSS_Command {
      */
     public function __construct($parser, $params) {
         $this->parser = $parser;
+        $this->initialize($params);
     }
 
     /**
      *
      */
-    public function execute() {
-    }
+    protected function initialize($params) {}
+
+    /**
+     *
+     */
+    abstract public function execute();
 
     /**
      *
