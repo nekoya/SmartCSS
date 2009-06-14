@@ -510,6 +510,7 @@ class SCSS_Parser
     protected $lastInsertId = 0;
     protected $topNode;
     protected $nodes = array();
+    protected $dirStack = array();  // for pushd/popd
     public $vars = array();
     public $debug;
 
@@ -670,5 +671,31 @@ class SCSS_Parser
             }
             return $this->vars[$var];
         }
+    }
+
+    /**
+     *
+     */
+    public function pushd($dirname) {
+        if (empty($dirname)) {
+            throw new Exception('empty dirname for pushd');
+        }
+        array_push($this->dirStack, getcwd());
+        chdir($dirname);
+        $this->debug("chdir to $dirname");
+        return true;
+    }
+
+    /**
+     *
+     */
+    public function popd() {
+        $dirname = array_pop($this->dirStack);
+        if ($dirname === null) {
+            throw new Exception('no directory in stack');
+        }
+        chdir($dirname);
+        $this->debug("chdir to $dirname");
+        return $dirname;
     }
 }
