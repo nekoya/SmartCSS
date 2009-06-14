@@ -8,8 +8,7 @@ class SCSS_Command_Import extends SCSS_Command {
     /**
      *
      */
-    public function __construct($parser, $params) {
-        parent::__construct($parser, $params);
+    protected function initialize($params) {
         $this->filename = isset($params[0]) ? $this->trimValue($params[0]) : '';
         if (empty($this->filename)) {
             throw new Exception('Need target filename');
@@ -20,10 +19,12 @@ class SCSS_Command_Import extends SCSS_Command {
      *
      */
     public function execute() {
-        $content = $this->getTargetFile($this->filename);
+        $realpath = $this->getRealPath($this->filename);
+        $content = file_get_contents($realpath);
+        $this->parser->pushd(dirname($realpath));
         $lexer = $this->parser->lex;
         if (!empty($lexer)) {
-            $lexer->prependBuffer($content);
+            $lexer->prependBuffer($content . '[% POPD %]');
         }
         return $content;
     }
@@ -31,7 +32,7 @@ class SCSS_Command_Import extends SCSS_Command {
     /**
      *
      */
-    protected function getTargetFile($filename) {
+    protected function getRealPath($filename) {
         $filename = str_replace("\0", '', $filename);
         if (!preg_match('/\.scss$/', $filename)) {
             throw new Exception('IMPORT filename must be .scss');
@@ -48,6 +49,6 @@ class SCSS_Command_Import extends SCSS_Command {
             throw new Exception('IMPORT invalid basedir');
         }
 
-        return file_get_contents($realpath);
+        return $realpath;
     }
 }
