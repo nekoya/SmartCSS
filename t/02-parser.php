@@ -39,4 +39,13 @@ $content =
 $t->is( $parser->run(), $content, 'publish all nodes' );
 
 $t->comment( 'pushd and popd' );
-$e = $t->throws_ok(array($parser), '$p[0]->popd();', 'no directory in stack');
+$t->throws_ok(array($parser), '$p[0]->popd();', 'no directory in stack');
+$dir1 = dirname(__FILE__);
+$dir2 = dirname($dir1);
+chdir($dir2);
+$t->isnt( $dir1, $dir2, '$dir1 is not $dir2' );
+$t->is( getcwd(), $dir2, "current working directory: $dir2" );
+$t->ok( $parser->pushd($dir1), 'pushd' );
+$t->is( getcwd(), $dir1, "current working directory: $dir1" );
+$t->ok( $parser->popd(), 'popd' );
+$t->is( getcwd(), $dir2, "current working directory: $dir2" );
