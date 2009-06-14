@@ -1,10 +1,6 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->comment( 'not implemented command' );
-try {
-    $parser->genCommand('NONE');
-} catch (Exception $e) {
-    $t->is( $e->getMessage(), 'Command not found: NONE', 'Command not found: NONE' );
-}
+$t->throws_ok( $parser, '$p->genCommand("NONE");', 'Command not found: NONE' );

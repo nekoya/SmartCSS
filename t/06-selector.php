@@ -1,12 +1,12 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->comment( 'ident' );
 $t->ok( $sel = $parser->genSelector('div'), 'generate node' );
 $t->is( $sel->getType(), 'selector', 'get node type' );
-$t->ok( $sel->hasChildren() === false, 'has not child nodes' );
-$t->ok( $sel->hasNext() === false, 'has not next node' );
+$t->false( $sel->hasChildren(), 'has not child nodes' );
+$t->false( $sel->hasNext(), 'has not next node' );
 $t->is( $sel->publish(), 'div', 'publish' );
 
 $t->comment( 'ident hash' );

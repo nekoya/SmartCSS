@@ -1,20 +1,20 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->comment( 'create declaration node' );
 $t->ok( $decl = $parser->genDeclaration('margin', '0'), 'generate node' );
 $t->isa_ok( $decl, 'SCSS_YYNode_Declaration', 'node isa SCSS_YYNode_Declaration' );
-$t->ok( $decl->id === 0, 'id of first node is 0' );
+$t->iss( $decl->id, 0, 'id of first node is 0' );
 $t->is( $decl->getType(), 'declaration', 'get node type' );
-$t->ok( $decl->hasChildren() === false, 'has not child nodes' );
-$t->ok( $decl->hasNext() === false, 'has not next node' );
+$t->false( $decl->hasChildren(), 'has not child nodes' );
+$t->false( $decl->hasNext(), 'has not next node' );
 $t->is( $decl->publish(), 'margin:0;', 'publish, not line breaking' );
 
 $t->comment( 'next node operation' );
 $t->ok( $next = $parser->genDeclaration('padding', '10px'), 'generate node' );
 $t->is( $parser->catNode($decl, $next), $decl, 'cat next node' );
-$t->ok( $decl->hasNext() === true, 'base declaration node has next one' );
+$t->true( $decl->hasNext(), 'base declaration node has next one' );
 $t->is( $decl->publish(), 'margin:0;', 'not publish next node' );
 
 $t->comment( 'without semicolon' );

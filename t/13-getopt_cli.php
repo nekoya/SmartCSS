@@ -1,9 +1,6 @@
 <?php
-chdir(dirname(__FILE__));
-require 'lime.php';
-require '../libs/SCSS/AutoLoader.class.php';
-$t = new lime_test();
-$t->output = new lime_output_color();
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->ok( $c = new SCSS_Getopt_CLI(), 'create SCSS_Getopt_CLI instance' );
 $t->isa_ok( $c, 'SCSS_Getopt_CLI', 'instance isa SCSS_Getopt_CLI' );

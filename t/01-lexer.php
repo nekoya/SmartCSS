@@ -1,9 +1,5 @@
 <?php
-chdir(dirname(__FILE__));
-require 'lime.php';
-require '../libs/SCSS/Lexer.class.php';
-$t = new lime_test();
-$t->output = new lime_output_color();
+require 'initialize.php';
 
 $t->comment( 'test lexer instance' );
 $t->ok( $lexer = new SCSS_Lexer(), 'get lexer instance' );

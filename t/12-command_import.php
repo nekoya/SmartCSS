@@ -1,36 +1,15 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->comment( 'no parameter' );
-try {
-    $threw = false;
-    $parser->genCommand('IMPORT');
-} catch (Exception $e) {
-    $threw = true;
-    $t->is( $e->getMessage(), 'Need target filename', 'Need target filename' );
-}
-$t->ok( $threw === true, 'threw exception' );
+$t->throws_ok( $parser, '$p->genCommand("IMPORT");', 'Need target filename' );
 
 $t->comment( 'not scss file import' );
-try {
-    $threw = false;
-    $parser->genCommand('IMPORT', 'filename');
-} catch (Exception $e) {
-    $threw = true;
-    $t->is( $e->getMessage(), 'IMPORT filename must be .scss', 'IMPORT filename must be .scss' );
-}
-$t->ok( $threw === true, 'threw exception' );
+$t->throws_ok( $parser, '$p->genCommand("IMPORT", "filename");', 'IMPORT filename must be .scss' );
 
 $t->comment( 'target file not found' );
-try {
-    $threw = false;
-    $parser->genCommand('IMPORT', 'none.scss');
-} catch (Exception $e) {
-    $threw = true;
-    $t->is( $e->getMessage(), 'IMPORT file not found', 'IMPORT file not found' );
-}
-$t->ok( $threw === true, 'threw exception' );
+$t->throws_ok( $parser, '$p->genCommand("IMPORT", "none.scss");', 'IMPORT file not found' );
 
 $t->comment( 'import succeed' );
 $t->is(

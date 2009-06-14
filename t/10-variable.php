@@ -1,6 +1,6 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->comment( 'test variables' );
 $t->is( $parser->getVar('hoge'), '', 'get undefined variable is ""' );

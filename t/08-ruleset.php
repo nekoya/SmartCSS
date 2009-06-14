@@ -1,12 +1,12 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->comment( 'simple ruleset' );
 $t->ok( $sel  = $parser->genSelector('div'), 'generate selector node' );
 $t->ok( $decl = $parser->genDeclaration('margin', '0'), 'generate declaration node' );
 $t->ok( $rule = $parser->genRuleset($sel, $decl), 'generate ruleset node' );
-$t->ok( $rule->hasChildren() === true, 'ruleset has children(selector and declaration)' );
+$t->true( $rule->hasChildren(), 'ruleset has children(selector and declaration)' );
 $t->is( $rule->publish(), "div { margin:0; }\n", 'publish' );
 
 $sel1 = $parser->genSelector('div#header');

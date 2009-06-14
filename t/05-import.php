@@ -1,6 +1,6 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
+$parser = new SCSS_Parser();
 
 $t->comment( 'test import node' );
 $t->ok( $base = $parser->genImport('@import "base.css";'), 'generate import node' );

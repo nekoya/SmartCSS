@@ -1,6 +1,5 @@
 <?php
-chdir(dirname(__FILE__));
-require 'utils.php';
+require 'initialize.php';
 
 function parse($content, $expected, $note = '', $debug = false) {
     global $t;
@@ -25,17 +24,12 @@ function parse($content, $expected, $note = '', $debug = false) {
     $parser->reset();
 }
 
-function throws_ok($content, $message = '', $note = '') {
+function throws_ok($content, $message = '') {
     global $t;
     $parser = new SCSS_Parser();
     $lexer  = new SCSS_Lexer();
     $lexer->setBuffer($content);
-    try {
-        $parser->yyparse($lexer);
-    } catch ( Exception $e ) {
-        $t->isa_ok( $e, 'Exception', 'caught exception: ' . $note );
-        $t->is( $e->getMessage(), $message, $message );
-    }
+    $t->throws_ok(array($lexer, $parser), '$p[1]->yyparse($p[0]);', $message);
 }
 
 $t->comment('rulesets');
@@ -149,10 +143,12 @@ $expected = <<<__CSS__
 __CSS__;
 parse($content, $expected, 'complex');
 
-$t->comment('exceptions');
 // ============================================================
-throws_ok( 'div { margin:0', 'syntax error', 'unclosed ruleset (no RBRACE)');
-throws_ok( 'div { p { margin:0 }', 'syntax error', 'unclosed ruleset (less RBRACE)');
+$t->comment('throw Exception: unclosed ruleset (no RBRACE)');
+throws_ok( 'div { margin:0', 'syntax error' );
+
+$t->comment('throw Exception: unclosed ruleset (less RBRACE)');
+throws_ok( 'div { p { margin:0 }', 'syntax error' );
 
 $t->comment('variables');
 // ============================================================
