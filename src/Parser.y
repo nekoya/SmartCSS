@@ -33,6 +33,11 @@ imports
 import
     : IMPORT { $$ = $this->genImport($1); }
 
+operator
+    : { $$ = ' '; }
+    | '/' s   { $$ = $1; }
+    | COMMA s { $$ = $1; }
+
 unary_operator
     : { $$ = ''; }
     | '-' { $$ = $1; }
@@ -71,12 +76,16 @@ followdecl
 */
 
 declaration
-    : property ':' s expr ';' s { $$ = $this->genDeclaration($1, $4); }
+    : property ':' s expr prio ';' s { $$ = $this->genDeclaration($1, $4, $5); }
 //    : property ':' s expr { $$ = gen('declaration', $1, $4); }
 
+prio
+    : { $$ = ''; }
+    | IMPORTANT_SYM s { $$ = $1; }
+
 expr
-    : term      { $$ = $1; }
-    | expr term { $$ = trim($1) . ' ' . trim($2); }
+    : term               { $$ = $1; }
+    | expr operator term { $$ = trim($1) . $2 . trim($3); }
 
 term
     : unary_operator PERCENTAGE s { $$ = $1 . $2; }
@@ -129,10 +138,11 @@ command
     /**
      *
      */
-    public function genDeclaration($property, $expr) {
+    public function genDeclaration($property, $expr, $prio) {
         $node = $this->createNode('declaration');
         $this->debug(" - $property:$expr");
         $node->property = trim($property);
+        if (!empty($prio)) { $expr .= ' ' . $prio; }
         $node->expr = trim($expr);
         return $node;
     }
