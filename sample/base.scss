@@ -1,4 +1,6 @@
-[% IMPORT 'sample/width.scss' %]
+[% IMPORT 'width.scss' %]
 #content p {
     margin:0;
 }
+[% IMPORT 'subdir/primary.scss' %]
+[% IMPORT 'footer.scss' %]
