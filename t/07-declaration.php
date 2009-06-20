@@ -24,8 +24,8 @@ $t->is( $noSemi->publish(), 'margin:0;', 'publish with semicolon' );
 $t->comment( 'blank spaces' );
 $t->ok( $blank = $parser->genDeclaration('margin', '0'), 'generate node' );
 $t->is( $blank->publish(), 'margin:0;', 'publish trimed' );
-$t->ok( $blank = $parser->genDeclaration('margin', '5px   10px 0'), 'generate node' );
-$t->is( $blank->publish(), 'margin:5px   10px 0;', 'no operation for inner space' );
+$t->ok( $blank = $parser->genDeclaration(' margin', ' 5px   10px  0 '), 'generate node' );
+$t->is( $blank->publish(), 'margin:5px 10px 0;', 'space trimming and compressed' );
 
 /*
  * Expression formats.

@@ -51,33 +51,17 @@ rulesets
     | rulesets ruleset { $$ = $this->catNode($1, $2); }
 
 ruleset
-    : selectors LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $4); }
+    : SELECTOR LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $4); }
     | command s { $$ = $1; }
-
-selectors
-    : selector { $$ = $1; }
-    | selectors COMMA s selector { $$ = $this->catNode($1, $4); }
-
-selector
-    : SELECTOR { $$ = $this->genSelector($1); }
-//    | command
 
 declarations
     : declaration { $$ = $1; }
-    | ruleset { $$ = $1; }
+    | ruleset     { $$ = $1; }
     | declarations declaration { $$ = $this->catNode($1, $2); }
     | declarations ruleset     { $$ = $this->catNode($1, $2); }
-//    | declarations followdecl { $$ = cat($1, $2); }
-
-/*
-followdecl
-    : ';' s
-    | ';' s declaration { $$ = $3; }
-*/
 
 declaration
     : property ':' s expr prio ';' s { $$ = $this->genDeclaration($1, $4, $5); }
-//    : property ':' s expr { $$ = gen('declaration', $1, $4); }
 
 prio
     : { $$ = ''; }
@@ -141,9 +125,8 @@ command
     public function genDeclaration($property, $expr, $prio = '') {
         $node = $this->createNode('declaration');
         $this->debug(" - $property:$expr");
-        $node->property = trim($property);
-        if (!empty($prio)) { $expr .= ' ' . $prio; }
-        $node->expr = trim($expr);
+        $node->setProperty($property);
+        $node->setExpression($expr, $prio);
         return $node;
     }
 
