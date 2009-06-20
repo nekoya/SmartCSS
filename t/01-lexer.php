@@ -50,31 +50,34 @@ isToken($lexbuf, 'IMPORT IMPORT IMPORT', 'IMPORT');
 
 $t->comment( 'rulesets' );
 isToken( '* { margin:0; }',
-    'SELECTOR LBRACE SPACE IDENT : NUMBER ; SPACE }'
+    'SELECTOR LBRACE SPACE IDENT : NUMBER ; SPACE }',
+    'star selector'
 );
 
 isToken( 'div{margin:5px 10px}',
-    'SELECTOR LBRACE IDENT : LENGTH SPACE LENGTH }'
+    'SELECTOR LBRACE IDENT : LENGTH SPACE LENGTH }',
+    'basically ruleset'
 );
 
 isToken( "a:hover {\nline-height:1.5;\n}\n",
-    'SELECTOR LBRACE IDENT : NUMBER ; }'
+    'SELECTOR LBRACE IDENT : NUMBER ; }',
+    'pseudo'
 );
 
 isToken( 'ul,ol { margin:0; padding:0; }',
-    'SELECTOR COMMA SELECTOR '.
-    'LBRACE SPACE '.
+    'SELECTOR LBRACE SPACE '.
     'IDENT : NUMBER ; SPACE '.
     'IDENT : NUMBER ; SPACE '.
-    '}'
+    '}',
+    'multi parent'
 );
 
 isToken( 'h2+p  ,  div > span { margin: 0; padding : 0 ; }',
-    'SELECTOR COMMA SPACE SELECTOR '.
-    'LBRACE SPACE '.
+    'SELECTOR LBRACE SPACE '.
     'IDENT : SPACE NUMBER ; SPACE '.
     'IDENT SPACE : SPACE NUMBER SPACE ; SPACE '.
-    '}'
+    '}',
+    'selectors with plus and greater operator'
 );
 
 $t->comment( 'recursive rulesets' );
@@ -82,6 +85,12 @@ isToken( 'div { width:100%; p { color:#3399ff; } }',
     'SELECTOR LBRACE SPACE IDENT : PERCENTAGE ; SPACE '.
     'SELECTOR LBRACE SPACE IDENT : HEXCOLOR ; SPACE } SPACE '.
     '}'
+);
+
+isToken( 'a:hover { color:#ccc; span:hover { text-decoration:underline; } }',
+    'SELECTOR LBRACE SPACE IDENT : HEXCOLOR ; SPACE '.
+    'SELECTOR LBRACE SPACE IDENT : IDENT ; SPACE } SPACE }',
+    'resursive selector with pseudo'
 );
 
 isToken( 'div{a:hover{color:#3399ff}}',
@@ -113,6 +122,11 @@ isToken( 'div { margin:0 }[% HOGE %]p{padding:0}',
     'cLDELIM SPACE cCOMMAND SPACE cRDELIM '.
     'SELECTOR LBRACE IDENT : NUMBER }',
     'ruleset - command - ruleset'
+);
+
+isToken( 'h2 { border:1px solid [%sky%]; }',
+    'SELECTOR LBRACE SPACE IDENT : LENGTH SPACE IDENT cLDELIM cIDENT cRDELIM ; SPACE }',
+    'variable as a value'
 );
 
 isToken( '[% SEL %] { [% PROP %]:[% EXPR term %] }',

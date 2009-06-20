@@ -121,7 +121,7 @@ class SCSS_Lexer {
             'cLDELIM'       => '\s*\[%',
             'LBRACE'        => '\s*{',
 
-            'SELECTOR'      => '{{simple_selector}}((\s*\+\s*|\s*>\s*|\s+){{simple_selector}})*(?=\s*[,{])',
+            'SELECTOR'      => '{{selector}}(\s*,\s*{{selector}})*(?=\s*{)',
 
             'COMMENT'       => '\s*\/\*.*?\*\/\s*',
             'STRING'        => '{{string}}',
@@ -160,6 +160,7 @@ class SCSS_Lexer {
             'media_types'     => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
 
             'simple_selector' => '(?:(?:{{ident}}|\*){{selector_suffix}}*|{{selector_suffix}}+)',
+            'selector'        => '{{simple_selector}}((\s*\+\s*|\s*>\s*|\s+){{simple_selector}})*',
             'hash'            => '#{{name}}',
             'pseudo'          => ':{{ident}}',
             'class'           => '\.{{ident}}',
