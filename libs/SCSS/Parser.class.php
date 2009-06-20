@@ -556,7 +556,7 @@ class SCSS_Parser
     /**
      *
      */
-    public function genDeclaration($property, $expr, $prio) {
+    public function genDeclaration($property, $expr, $prio = '') {
         $node = $this->createNode('declaration');
         $this->debug(" - $property:$expr");
         $node->property = trim($property);
