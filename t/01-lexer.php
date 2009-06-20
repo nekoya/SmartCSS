@@ -93,10 +93,9 @@ isToken( 'a:hover { color:#ccc; span:hover { text-decoration:underline; } }',
     'resursive selector with pseudo'
 );
 
-isToken( 'div{a:hover{color:#3399ff}}',
-    'SELECTOR LBRACE '.
-    'SELECTOR LBRACE IDENT : HEXCOLOR } '.
-    '}',
+isToken( 'div{a:hover{background:url("http://example.com/bg.png") no-repeat;}}',
+    'SELECTOR LBRACE SELECTOR LBRACE '.
+    'IDENT : URI SPACE IDENT ; } }',
     'no space, hexcolor, only child'
 );
 
