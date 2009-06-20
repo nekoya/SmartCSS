@@ -51,8 +51,11 @@ rulesets
     | rulesets ruleset { $$ = $this->catNode($1, $2); }
 
 ruleset
-    : SELECTOR LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $4); }
+    : selector LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $4); }
     | command s { $$ = $1; }
+
+selector
+    : SELECTOR { $$ = $this->genSelector($1); }
 
 declarations
     : declaration { $$ = $1; }
