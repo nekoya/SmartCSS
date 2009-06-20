@@ -36,3 +36,17 @@ $t->is( $sel->publish(), 'h2>p', 'publish' );
 $t->comment( 'combinators (no space)' );
 $t->ok( $sel = $parser->genSelector('h1+h2>p'), 'generate node' );
 $t->is( $sel->publish(), 'h1+h2>p', 'publish' );
+
+$t->comment( 'attributes' );
+$t->ok( $sel = $parser->genSelector('h1 [ foo = "bar" ]'), 'generate node' );
+$t->is( $sel->publish(), 'h1[foo="bar"]', 'publish (remove spaces)' );
+$t->ok( $sel = $parser->genSelector('h1[foo=bar]'), 'generate node' );
+$t->is( $sel->publish(), 'h1[foo=bar]', 'publish' );
+$t->ok( $sel = $parser->genSelector('h2[foo~="bar"]'), 'generate node, includes' );
+$t->is( $sel->publish(), 'h2[foo~="bar"]', 'publish' );
+$t->ok( $sel = $parser->genSelector('h2[foo~=bar]'), 'generate node, includes' );
+$t->is( $sel->publish(), 'h2[foo~=bar]', 'publish' );
+$t->ok( $sel = $parser->genSelector('h3[foo|="bar"]'), 'generate node, includes' );
+$t->is( $sel->publish(), 'h3[foo|="bar"]', 'publish' );
+$t->ok( $sel = $parser->genSelector('h3[foo|=bar]'), 'generate node, includes' );
+$t->is( $sel->publish(), 'h3[foo|=bar]', 'publish' );
