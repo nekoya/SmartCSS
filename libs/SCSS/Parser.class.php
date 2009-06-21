@@ -691,7 +691,7 @@ class SCSS_Parser
         }
         $this->dirStack[] =  getcwd();
         chdir($dirname);
-        $this->debug("chdir to $dirname");
+        $this->debug("pushd: $dirname");
         return true;
     }
 
@@ -704,7 +704,7 @@ class SCSS_Parser
             throw new Exception('no directory in stack');
         }
         chdir($dirname);
-        $this->debug("chdir to $dirname");
+        $this->debug("popd: $dirname");
         return $dirname;
     }
 }

@@ -270,7 +270,7 @@ command
         }
         $this->dirStack[] =  getcwd();
         chdir($dirname);
-        $this->debug("chdir to $dirname");
+        $this->debug("pushd: $dirname");
         return true;
     }
 
@@ -283,7 +283,7 @@ command
             throw new Exception('no directory in stack');
         }
         chdir($dirname);
-        $this->debug("chdir to $dirname");
+        $this->debug("popd: $dirname");
         return $dirname;
     }
 }
