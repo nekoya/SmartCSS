@@ -36,7 +36,7 @@ class SCSS_Controller_CLI extends SCSS_Controller {
     protected function getRealPath($filename) {
         $filename = str_replace("\0", '', $filename);
         if (!preg_match('/\.scss$/', $filename)) {
-            throw new Exception('target extension is not .scss');
+            throw new Exception('target extension must be .scss');
         }
 
         $realpath = realpath($filename);
