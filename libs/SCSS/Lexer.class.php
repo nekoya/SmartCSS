@@ -21,8 +21,6 @@ class SCSS_Lexer {
      *
      */
     public function setBuffer($buffer) {
-        $buffer = preg_replace('/^\s*(.*?)\s*$/m', '$1', $buffer);
-        $buffer = preg_replace('/[\r\n]/', '', $buffer);
         $this->lexbuf = $buffer;
     }
 
@@ -74,23 +72,23 @@ class SCSS_Lexer {
                 break;
             }
 
+            $comment = $this->isComment($this->lexbuf);
+            if ($comment !== false) {
+                $this->debug('SKIP COMMENT');
+                $this->lexbuf = substr($this->lexbuf, strlen($comment));
+                continue;
+            }
+
             foreach ($regexs as $token => $regex) {
                 $regex = '/^(' . $regex . ')/' . $options;
                 if (preg_match($regex, $this->lexbuf, $matches)) {
                     if ($this->debug) {
-                        //var_dump($matches);
+                        var_dump($matches);
                     }
                     $yylval = (string)$matches[1];
                     $this->lexbuf = substr($this->lexbuf, strlen($yylval));
 
                     switch ($token) {
-                    case 'COMMENT':
-                        if ($this->debug) {
-                            echo "SKIP COMMENT\n";
-                        }
-                        continue 3;
-                        break;
-
                     case 'cLDELIM':
                         $this->state = 'command';
                         break;
@@ -118,12 +116,12 @@ class SCSS_Lexer {
      */
     protected function defineRegexs() {
         $regexs = array(
+            'NL'            => '\s*(?:\n|\r|\r\n)',
             'cLDELIM'       => '\s*\[%',
             'LBRACE'        => '\s*{',
 
             'SELECTOR'      => '{{selector}}(\s*,\s*{{selector}})*(?=\s*{)',
 
-            'COMMENT'       => '\s*\/\*.*?\*\/\s*',
             'STRING'        => '{{string}}',
             'URI'           => 'url\(\s*{{string}}\s*\)',
             'IMPORTANT_SYM' => '!important\s*',
@@ -194,6 +192,16 @@ class SCSS_Lexer {
             'cVALUE'   => '(?:".*?"|' . "'.*?')",
             'SPACE'    => '\s+',
         );
+    }
+
+    /**
+     *
+     */
+    public function isComment($buffer) {
+        if (preg_match('|\s*/\*.*?\*/\s*|ms', $buffer, $matches)) {
+            return $matches[0];
+        }
+        return false;
     }
 
     /**

@@ -5,7 +5,7 @@
 %{
 //<?php
 %}
-%token LBRACE '}' SPACE
+%token LBRACE '}' SPACE NL
 %token STRING IDENT NUMBER HASH HEXCOLOR PERCENTAGE URI
 %token EMS EXS LENGTH ANGLE TIME FREQ
 %token IMPORTANT_SYM
@@ -89,7 +89,13 @@ term
     | STRING s                    { $$ = $1; }
     | command s                   { $$ = $1; }
 
-s : | SPACE
+s   : | spaces
+
+spaces
+    : space
+    | spaces space
+
+space : SPACE | NL
 
 command
     : cLDELIM s cCOMMAND s cRDELIM               { $$ = ''; $this->genCommand($3); }

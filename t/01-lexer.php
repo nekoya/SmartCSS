@@ -42,9 +42,9 @@ $lexbuf = <<<__CSS__
 /* import */
 @import "base.css";
 @import url('http://www.example.com/print.css') print;
-@IMPORT URL('http://www.example.com/print.css') PRINT;
+@IMPORT URL("http://www.example.com/print.css") PRINT;
 __CSS__;
-isToken($lexbuf, 'IMPORT IMPORT IMPORT', 'IMPORT');
+isToken($lexbuf, 'IMPORT NL IMPORT NL IMPORT', 'IMPORT');
 
 $t->comment( 'rulesets' );
 isToken( '* { margin:0; }',
@@ -57,8 +57,8 @@ isToken( 'div{margin:5px 10px}',
     'basically ruleset'
 );
 
-isToken( "a:hover {\nline-height:1.5;\n}\n",
-    'SELECTOR LBRACE IDENT : NUMBER ; }',
+isToken( "a:hover\n  {\n    line-height:1.5;\n  }\n",
+    'SELECTOR NL LBRACE NL SPACE IDENT : NUMBER ; NL SPACE } NL',
     'pseudo'
 );
 
@@ -126,10 +126,10 @@ isToken( 'h2 { border:1px solid [%sky%]; }',
     'variable as a value'
 );
 
-isToken( '[% SEL %] { [% PROP %]:[% EXPR term %] }',
-    'cLDELIM SPACE cCOMMAND SPACE cRDELIM LBRACE '.
-    'cLDELIM SPACE cCOMMAND SPACE cRDELIM : '.
-    'cLDELIM SPACE cCOMMAND SPACE cIDENT SPACE cRDELIM SPACE }',
+isToken( "[% SEL %]\n{\n[% PROP %]\n:\n[% EXPR term %]\n}",
+    'cLDELIM SPACE cCOMMAND SPACE cRDELIM NL LBRACE NL '.
+    'cLDELIM SPACE cCOMMAND SPACE cRDELIM NL : NL '.
+    'cLDELIM SPACE cCOMMAND SPACE cIDENT SPACE cRDELIM NL }',
     'command as selector, property, expr'
 );
 
