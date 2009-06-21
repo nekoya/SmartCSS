@@ -176,7 +176,7 @@ command
         $className = 'SCSS_YYNode_' . ucfirst($type);
         $node = new $className($arg);
         $node->id = $this->lastInsertId++;
-        array_push($this->nodes, $node);
+        $this->nodes[] = $node;
         $this->debug($node->id. ": create $type:" . (string)$arg);
         return $node;
     }
@@ -268,7 +268,7 @@ command
         if (empty($dirname)) {
             throw new Exception('empty dirname for pushd');
         }
-        array_push($this->dirStack, getcwd());
+        $this->dirStack[] =  getcwd();
         chdir($dirname);
         $this->debug("chdir to $dirname");
         return true;

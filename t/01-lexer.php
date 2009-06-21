@@ -14,12 +14,10 @@ function isToken($buffer, $tokenstr, $diag = null) {
     $results = array();
     $tokens = array();
     foreach (explode(' ', $tokenstr) as $token) {
-        array_push($tokens, $token);
+        $tokens[] = $token;
     }
     while ($result = $lexer->analyze($yylval)) {
-        array_push( $results,
-            is_numeric($result) ? chr($result) : $result
-        );
+        $results[] = is_numeric($result) ? chr($result) : $result;
     }
     if (is_null($diag)) {
         $diag = "token: $tokenstr";
