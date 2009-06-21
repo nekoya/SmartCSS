@@ -193,14 +193,19 @@ parse($content, $expected, 'variable as term');
 
 // ============================================================
 $content = <<<__CSS__
-[% rule = 'p { margin:0; }' %]
-[% rule %]
-div { [% rule %] }
+[% anchor = "a { text-decoration:none; } a:hover { text-decoration:underline; }" %]
+[%anchor%]
+#header { [% anchor %] }
+#footer { [% anchor %] }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-p { margin:0; }
-div p { margin:0; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+#header a { text-decoration:none; }
+#header a:hover { text-decoration:underline; }
+#footer a { text-decoration:none; }
+#footer a:hover { text-decoration:underline; }
 __CSS__;
 parse($content, $expected, 'variable as ruleset');
 
