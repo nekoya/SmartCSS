@@ -1,6 +1,9 @@
 <?php
-class SCSS_Getopt_CLI {
-    public function getParams() {
+class SCSS_Controller_CLI extends SCSS_Controller {
+    /**
+     *
+     */
+    protected function getParams() {
         $short_opts = 'hd';
         $long_opts  = array('help');
 
@@ -27,30 +30,50 @@ class SCSS_Getopt_CLI {
         return $filename;
     }
 
-    protected function usage($code = 0) {
-        echo 'smart_css.php [-d] filename' . PHP_EOL;
-        echo '  -d  show debug log (level:1-2)' . PHP_EOL;
-        exit($code);
-    }
-
-    public function getRealPath($filename) {
-        if (empty($filename)) return false;
-
+    /**
+     *
+     */
+    protected function getRealPath($filename) {
         $filename = str_replace("\0", '', $filename);
-        if (!preg_match('/\.scss$/', $filename)) return false;
+        if (!preg_match('/\.scss$/', $filename)) {
+            throw new Exception('target extension is not .scss');
+        }
 
         $realpath = realpath($filename);
-        if ($realpath === false) return false;
-        if (!file_exists($filename)) return false;
+        if ($realpath === false || !file_exists($filename)) {
+            throw new Exception('file not found.');
+        }
 
         return $realpath;
     }
 
-    public function failedReadFile() {
-        die('Failed read scss file.');
+    /**
+     *
+     */
+    protected function failedReadFile(Exception $e) {
+        die('[ERROR] ' . $e->getMessage() . PHP_EOL);
     }
 
-    public function publish($content) {
+    /**
+     *
+     */
+    protected function parseError(Exception $e) {
+        die('[ERROR]' . $e->getMessage() . PHP_EOL);
+    }
+
+    /**
+     *
+     */
+    protected function publish($content) {
         echo $content;
+    }
+
+    /**
+     *
+     */
+    protected function usage($code = 0) {
+        echo 'smart_css.php [-d] filename' . PHP_EOL;
+        echo '  -d  show debug log (level:1-2)' . PHP_EOL;
+        exit($code);
     }
 }

@@ -1,19 +1,19 @@
 <?php
-class SCSS_Getopt_Web {
-    public function getParams() {
+class SCSS_Controller_Web extends SCSS_Controller {
+    /**
+     *
+     */
+    protected function getParams() {
         if (!isset($_GET['file'])) $this->notFoundError();
         $filename = $_GET['file'];
         if (empty($filename)) $this->notFoundError();
         return $filename;
     }
 
-    protected function notFoundError() {
-        header('HTTP/1.0 404 Not Found');
-        header('Content-type: text/plain');
-        die('File not found.');
-    }
-
-    public function getRealPath($filename) {
+    /**
+     *
+     */
+    protected function getRealPath($filename) {
         if (empty($filename)) return false;
 
         $filename = str_replace("\0", '', $filename);
@@ -31,12 +31,34 @@ class SCSS_Getopt_Web {
         return $realpath;
     }
 
-    public function failedReadFile() {
+    /**
+     *
+     */
+    protected function failedReadFile(Exception $e) {
         $this->notFoundError();
     }
 
-    public function publish($content) {
+    /**
+     *
+     */
+    protected function parseError(Exception $e) {
+        die('[ERROR]' . $e->getMessage() . PHP_EOL);
+    }
+
+    /**
+     *
+     */
+    protected function publish($content) {
         header('Content-type: text/css');
         echo $content;
+    }
+
+    /**
+     *
+     */
+    protected function notFoundError() {
+        header('HTTP/1.0 404 Not Found');
+        header('Content-type: text/plain');
+        die('File not found.');
     }
 }
