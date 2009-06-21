@@ -59,5 +59,5 @@ through( 'background-image', "('http://example.com/bg_img.jpg')" );
 through( 'background', '#fff url("/images/bg.png") no-repeat left 50%' );
 
 $t->comment( 'string' );
-through( 'font-family', '"Helvetica, sans-serif"' );
-through( 'font-family', "'Frutiger, sans-serif'" );
+through( 'font-family', '"Helvetica", "sans-serif"' );
+through( 'font-family', "'Frutiger", "sans-serif'" );
