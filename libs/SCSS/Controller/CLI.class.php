@@ -5,7 +5,7 @@ class SCSS_Controller_CLI extends SCSS_Controller {
      */
     public function getParams() {
         $short_opts = 'hd';
-        $long_opts  = array('help');
+        $long_opts  = array('help', 'debug');
 
         $console = new Console_Getopt;
         $args = $console->readPHPArgv();
@@ -19,7 +19,7 @@ class SCSS_Controller_CLI extends SCSS_Controller {
             if ($opt[0] === '--help' || $opt[0] === 'h') {
                 $this->usage();
             }
-            if ($opt[0] === 'd') {
+            if ($opt[0] === '--debug' || $opt[0] === 'd') {
                 $this->debug = true;
             }
         }
@@ -72,9 +72,9 @@ class SCSS_Controller_CLI extends SCSS_Controller {
      *
      */
     protected function usage($code = 0) {
-        echo 'smart_css.php [-d][-h|--help] filename' . PHP_EOL;
-        echo '  -d         show parser debug messages.' . PHP_EOL;
-        echo '  -h|--help  show this usage.' . PHP_EOL;
+        echo 'smart_css.php [-d|--debug][-h|--help] filename' . PHP_EOL;
+        echo '  -d|--debug  show parser debug messages.' . PHP_EOL;
+        echo '  -h|--help   show this usage.' . PHP_EOL;
         exit($code);
     }
 }
