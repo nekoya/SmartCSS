@@ -62,7 +62,12 @@ isToken ("div { margin:10px\nauto\n15px; }",
     'expressions splited by NL'
 );
 
-isToken( "a:hover\n  {\n    line-height:1.5;\n  }\n",
+isToken( "p\n\n{\r\nmargin:\r\n\r\n0;}",
+    'SELECTOR NL NL LBRACE NL IDENT : NL NL NUMBER ; }',
+    'continuum NL'
+);
+
+isToken( "a:hover\n{\n line-height:1.5;\n }\n",
     'SELECTOR NL LBRACE NL SPACE IDENT : NUMBER ; NL SPACE } NL',
     'pseudo'
 );
