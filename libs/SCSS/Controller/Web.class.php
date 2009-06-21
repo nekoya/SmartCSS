@@ -5,7 +5,7 @@ class SCSS_Controller_Web extends SCSS_Controller {
     /**
      *
      */
-    protected function getParams() {
+    public function getParams() {
         if (!isset($_GET['file'])) $this->notFoundError();
         $filename = $_GET['file'];
         if (empty($filename)) $this->notFoundError();
@@ -15,7 +15,7 @@ class SCSS_Controller_Web extends SCSS_Controller {
     /**
      *
      */
-    protected function getRealPath($filename) {
+    public function getRealPath($filename) {
         $filename = str_replace("\0", '', $filename);
         if (!preg_match('/\.css$/', $filename)) {
             $this->code = 403;
@@ -29,12 +29,7 @@ class SCSS_Controller_Web extends SCSS_Controller {
             throw new Exception('file not found.');
         }
 
-        $basedir = realpath(dirname(__FILE__) . '/../../..');
-        $dirname = substr($realpath, 0, strlen($basedir));
-        if ($dirname !== $basedir) {
-            $this->code = 403;
-            throw new Exception('invalid target path.');
-        }
+        $this->isValidPath($realpath);
 
         return $realpath;
     }
@@ -42,23 +37,35 @@ class SCSS_Controller_Web extends SCSS_Controller {
     /**
      *
      */
-    protected function failedReadFile(Exception $e) {
+    public function isValidPath($path) {
+        $basedir = realpath(dirname(__FILE__) . '/../../..');
+        $dirname = substr($path, 0, strlen($basedir));
+        if ($dirname !== $basedir) {
+            $this->code = 403;
+            throw new Exception('invalid target path.');
+        }
+    }
+
+    /**
+     *
+     */
+    public function failedReadFile(Exception $e) {
         $this->header($this->code);
-        die('[ERROR]' . $e->getMessage() . PHP_EOL);
+        trigger_error('[ERROR]' . $e->getMessage(), E_USER_ERROR);
     }
 
     /**
      *
      */
-    protected function parseError(Exception $e) {
+    public function parseError(Exception $e) {
         $this->header(500);
-        die('[ERROR]' . $e->getMessage() . PHP_EOL);
+        trigger_error('[ERROR]' . $e->getMessage(), E_USER_ERROR);
     }
 
     /**
      *
      */
-    protected function publish($content) {
+    public function publish($content) {
         header('Content-type: text/css');
         echo $content;
     }
@@ -66,10 +73,10 @@ class SCSS_Controller_Web extends SCSS_Controller {
     /**
      *
      */
-    protected function notFoundError() {
+    public function notFoundError() {
         $this->header(404);
         header('Content-type: text/plain');
-        die('File not found.');
+        trigger_error('File not found.', E_USER_ERROR);
     }
 
     /**

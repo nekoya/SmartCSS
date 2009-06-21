@@ -25,7 +25,6 @@ abstract class SCSS_Controller {
         } catch (Exception $e) {
             $this->failedReadFile($e);
         }
-
         chdir(dirname($realpath));
         $buffer = file_get_contents($realpath);
         $content = $this->parseSCSS($buffer);
@@ -48,9 +47,9 @@ abstract class SCSS_Controller {
         }
     }
 
-    abstract protected function getParams();
-    abstract protected function getRealPath($filename);
-    abstract protected function failedReadFile(Exception $e);
-    abstract protected function parseError(Exception $e);
-    abstract protected function publish($content);
+    abstract public function getParams();
+    abstract public function getRealPath($filename);
+    abstract public function failedReadFile(Exception $e);
+    abstract public function parseError(Exception $e);
+    abstract public function publish($content);
 }

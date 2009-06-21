@@ -3,7 +3,7 @@ class SCSS_Controller_CLI extends SCSS_Controller {
     /**
      *
      */
-    protected function getParams() {
+    public function getParams() {
         $short_opts = 'hd';
         $long_opts  = array('help');
 
@@ -33,7 +33,7 @@ class SCSS_Controller_CLI extends SCSS_Controller {
     /**
      *
      */
-    protected function getRealPath($filename) {
+    public function getRealPath($filename) {
         $filename = str_replace("\0", '', $filename);
         if (!preg_match('/\.scss$/', $filename)) {
             throw new Exception('target extension must be .scss');
@@ -50,21 +50,21 @@ class SCSS_Controller_CLI extends SCSS_Controller {
     /**
      *
      */
-    protected function failedReadFile(Exception $e) {
+    public function failedReadFile(Exception $e) {
         die('[ERROR] ' . $e->getMessage() . PHP_EOL);
     }
 
     /**
      *
      */
-    protected function parseError(Exception $e) {
+    public function parseError(Exception $e) {
         die('[ERROR]' . $e->getMessage() . PHP_EOL);
     }
 
     /**
      *
      */
-    protected function publish($content) {
+    public function publish($content) {
         echo $content;
     }
 
