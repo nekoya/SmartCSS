@@ -112,10 +112,6 @@ class YYParser
         return;
     }
 
-    protected function yyerror($msg) {
-        throw new Exception($msg);
-    }
-
     protected function yyaccept() {
         $this->yyaccept = 1;
     }

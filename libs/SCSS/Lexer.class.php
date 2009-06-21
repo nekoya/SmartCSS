@@ -6,6 +6,7 @@ class SCSS_Lexer {
     protected $regexs;
     protected $commands;
     protected $state;
+    public $lineNum = 1;
     public $debug;
     public $lexbuf;
 
@@ -89,6 +90,10 @@ class SCSS_Lexer {
                     $this->lexbuf = substr($this->lexbuf, strlen($yylval));
 
                     switch ($token) {
+                    case 'NL':
+                        $this->lineNum++;
+                        break;
+
                     case 'cLDELIM':
                         $this->state = 'command';
                         break;

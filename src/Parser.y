@@ -292,4 +292,12 @@ command
         $this->debug("popd: $dirname");
         return $dirname;
     }
+
+    /**
+     *
+     */
+    protected function yyerror($msg) {
+        $lineNum = $this->lex->lineNum;
+        throw new Exception("$msg at line $lineNum.");
+    }
 }

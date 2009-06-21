@@ -181,10 +181,6 @@ class SCSS_Parser
         return;
     }
 
-    protected function yyerror($msg) {
-        throw new Exception($msg);
-    }
-
     protected function yyaccept() {
         $this->yyaccept = 1;
     }
@@ -716,5 +712,13 @@ class SCSS_Parser
         chdir($dirname);
         $this->debug("popd: $dirname");
         return $dirname;
+    }
+
+    /**
+     *
+     */
+    protected function yyerror($msg) {
+        $lineNum = $this->lex->lineNum;
+        throw new Exception("$msg at line $lineNum.");
     }
 }
