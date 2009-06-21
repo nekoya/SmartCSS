@@ -72,8 +72,9 @@ class SCSS_Controller_CLI extends SCSS_Controller {
      *
      */
     protected function usage($code = 0) {
-        echo 'smart_css.php [-d] filename' . PHP_EOL;
-        echo '  -d  show debug log (level:1-2)' . PHP_EOL;
+        echo 'smart_css.php [-d][-h|--help] filename' . PHP_EOL;
+        echo '  -d         show parser debug messages.' . PHP_EOL;
+        echo '  -h|--help  show this usage.' . PHP_EOL;
         exit($code);
     }
 }
