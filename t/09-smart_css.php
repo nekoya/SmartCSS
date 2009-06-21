@@ -171,7 +171,7 @@ __CSS__;
 $expected = <<<__CSS__
 div { margin:20px 10px 5px 10px; }
 __CSS__;
-parse($content, $expected, 'variable inner expr');
+parse($content, $expected, 'variable as term');
 
 // ============================================================
 $content = <<<__CSS__

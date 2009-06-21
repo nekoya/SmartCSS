@@ -4,110 +4,94 @@
  */
 class SCSS_YYNode_Ruleset extends SCSS_YYNode {
     /**
+     * parent ruleset
+     */
+    public $parent;
+
+    /**
+     * selector
+     */
+    public $selector;
+
+    /**
+     * all declarations
+     */
+    public $declarations = array();
+
+    /**
+     * first child ruleset
+     *
+     * publishing second or more rulesets by first child.
+     */
+    public $firstChild;
+
+    /**
      *
      */
-    public function publish($prefixes = null) {
-        $isChild = true;
-        if (is_null($prefixes)) {
-            $prefixes = array('');
-            $isChild = false;
+    public function __construct($args) {
+        if (!is_array($args) || count($args) !== 2) {
+            throw new Exception('Invalid arguments for ruleset');
         }
+        $this->setSelector($args[0]);
+        $this->setDeclarations($args[1]);
+    }
+
+    /**
+     *
+     */
+    protected function setSelector($selector) {
+        if (!$selector instanceof SCSS_YYNode_Selector) {
+            throw new Exception('Invalid selector node for ruleset');
+        }
+        $this->selector = $selector;
+    }
+
+    /**
+     *
+     */
+    protected function setDeclarations($node) {
+        do {
+            if ($node instanceof SCSS_YYNode_Ruleset) {
+                $node->selector->parent = $this->selector;
+                if (!$this->firstChild) {
+                    $this->firstChild = $node;
+                }
+            } else if ($node instanceof SCSS_YYNode_Declaration) {
+                $this->declarations[] = $node;
+            } else {
+                throw new Exception('Invalid ruleset/declaration node for ruleset');
+            }
+        } while ($node = $node->next);
+    }
+
+    /**
+     *
+     */
+    public function publish() {
         $output = '';
-        if ($this->hasChildren()) {
-            $selectors    = $this->findSelectors();
-            $declarations = $this->findDeclarations();
-            $rulesets     = $this->findRulesets();
-            $myPrefixes   = $this->parsePrefixes($prefixes, $selectors);
-            if ($declarations) {
-                $output .= join(', ', $myPrefixes);
-                $output .= " { ";
-                foreach ($declarations as $declaration) {
-                    $output .= $declaration->publish() . ' ';
-                }
-                $output .= "}\n";
+        if ($this->declarations) {
+            $output .= $this->selector->publish() . ' {';
+            foreach ($this->declarations as $declaration) {
+                $output .= ' ' . $declaration->publish();
             }
-            if ($rulesets) {
-                foreach ($rulesets as $ruleset) {
-                    $output .= $ruleset->publish($myPrefixes);
-                }
-            }
+            $output .= ' }' . PHP_EOL;
         }
-        // child rulesets published by parent node
-        if (!$isChild && $this->hasNext()) {
-            $output .= $this->next->publish();
+        if ($this->firstChild) {
+            $output .= $this->firstChild->publish();
         }
+        $output .= $this->publishNextRuleset();
         return $output;
     }
 
     /**
      *
      */
-    protected function parsePrefixes($prefixes, $selectors) {
-        $values = array();
-        foreach ($prefixes as $prefix) {
-            if ($prefix !== '') {
-                $prefix .= ' ';
-            }
-            foreach ($selectors as $selector) {
-                array_push($values, $prefix . $selector->value);
-            }
-        }
-        return $values;
-    }
-
-    /**
-     *
-     */
-    protected function findSelectors() {
-        if (!$this->hasChildren()) {
-            throw new Exception('Ruleset has not child.');
-        }
-        $nodes = array();
-        $node = $this->children[0];
-        do {
-            if (!$node instanceof SCSS_YYNode_Selector) {
-                throw new Exception('Invalid selector node.');
-            }
-            array_push($nodes, $node);
-        } while ($node = $node->next);
-        return $nodes;
-    }
-
-    /**
-     *
-     */
-    protected function findDeclarations() {
-        if (!$this->hasChildren()) {
-            throw new Exception('Ruleset has not child.');
-        }
-        $nodes = array();
-        $node = $this->children[1];
-        do {
-            if ($node instanceof SCSS_YYNode_Declaration) {
-                array_push($nodes, $node);
-            } else if (!$node instanceof SCSS_YYNode_Ruleset) {
-                throw new Exception('Found invalid node in ruleset.');
-            }
-        } while ($node = $node->next);
-        return $nodes;
-    }
-
-    /**
-     *
-     */
-    protected function findRulesets() {
-        if (!$this->hasChildren()) {
-            throw new Exception('Ruleset has not child.');
-        }
-        $nodes = array();
-        $node = $this->children[1];
-        do {
+    public function publishNextRuleset() {
+        $node = $this;
+        while ($node = $node->next) {
             if ($node instanceof SCSS_YYNode_Ruleset) {
-                array_push($nodes, $node);
-            } else if (!$node instanceof SCSS_YYNode_Declaration) {
-                throw new Exception('Found invalid node in ruleset.');
+                return $node->publish();
             }
-        } while ($node = $node->next);
-        return $nodes;
+        }
     }
 }

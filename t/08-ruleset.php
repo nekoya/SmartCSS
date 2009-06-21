@@ -1,54 +1,100 @@
 <?php
 require 'initialize.php';
 $parser = new SCSS_Parser();
+//$parser->debug = true;
 
 $t->comment( 'simple ruleset' );
 $t->ok( $sel  = $parser->genSelector('div'), 'generate selector node' );
 $t->ok( $decl = $parser->genDeclaration('margin', '0'), 'generate declaration node' );
 $t->ok( $rule = $parser->genRuleset($sel, $decl), 'generate ruleset node' );
-$t->true( $rule->hasChildren(), 'ruleset has children(selector and declaration)' );
 $t->is( $rule->publish(), "div { margin:0; }\n", 'publish' );
 
-$sel1 = $parser->genSelector('div#header');
-$sel2 = $parser->genSelector('div.section');
+$sel  = $parser->genSelector('div#header, div.section');
 $dec1 = $parser->genDeclaration('margin', '0');
 $dec2 = $parser->genDeclaration('padding', '10px');
-$parser->catNode($sel1, $sel2);
 $parser->catNode($dec1, $dec2);
-$rule = $parser->genRuleset($sel1, $dec1);
+$rule = $parser->genRuleset($sel, $dec1);
 $t->is( $rule->publish(), "div#header, div.section { margin:0; padding:10px; }\n", 'selectors and declarations' );
 
-$t->comment( 'recursive rulesets' );
-$childSel   = $parser->genSelector('p');
-$childDecl  = $parser->genDeclaration('line-height', '1.5');
-$childRule  = $parser->genRuleset($childSel, $childDecl);
-
-$parentSel  = $parser->genSelector('div');
-$parentRule = $parser->genRuleset($parentSel, $childRule);
-$t->is( $parentRule->publish(), "div p { line-height:1.5; }\n", 'publish parent has no declaration, child has one declaration' );
-
-$parentDecl = $parser->genDeclaration('margin', '0');
-$parser->catNode($parentDecl, $childRule);
-$parentRule = $parser->genRuleset($parentSel, $parentDecl);
-$t->is( $parentRule->publish(), "div { margin:0; }\ndiv p { line-height:1.5; }\n", 'publish parent:1 , child:1' );
-
-$parentDecl2 = $parser->genDeclaration('padding', '0');
-$t->ok( $parser->catNode($parentDecl, $parentDecl2), 'Added parent decl node after child rule node' );
-$t->is( $parentRule->publish(), "div { margin:0; padding:0; }\ndiv p { line-height:1.5; }\n", 'publish parent:2 , child:1' );
-
-$childDecl2 = $parser->genDeclaration('font-weight', 'bold');
-$t->ok( $parser->catNode($childDecl, $childDecl2), 'Added declaration to child ruleset' );
-$t->is( $parentRule->publish(), "div { margin:0; padding:0; }\ndiv p { line-height:1.5; font-weight:bold; }\n", 'publish parent:2 , child:2' );
-
-$sel1  = $parser->genSelector('#nav');
-$sel2  = $parser->genSelector('ul');
-$sel3  = $parser->genSelector('li');
+$sel1  = $parser->genSelector('div');
 $dec1  = $parser->genDeclaration('margin', '0');
-$dec2  = $parser->genDeclaration('width', '100%');
-$dec3  = $parser->genDeclaration('display', 'inline');
 $rule1 = $parser->genRuleset($sel1, $dec1);
+$sel2  = $parser->genSelector('p');
+$dec2  = $parser->genDeclaration('padding', '0');
 $rule2 = $parser->genRuleset($sel2, $dec2);
-$rule3 = $parser->genRuleset($sel3, $dec3);
-$parser->catNode($dec1, $rule2);
-$parser->catNode($dec2, $rule3);
-$t->is( $rule1->publish(), "#nav { margin:0; }\n#nav ul { width:100%; }\n#nav ul li { display:inline; }\n", 'publish depth 3' );
+$parser->catNode($rule1, $rule2);
+$t->is( $rule1->publish(), "div { margin:0; }\np { padding:0; }\n", 'publish rulesets' );
+
+$t->comment( 'recursive rulesets' );
+{
+    $cSel  = $parser->genSelector('p');
+    $cDec  = $parser->genDeclaration('line-height', '1.5');
+    $cRule = $parser->genRuleset($cSel, $cDec);
+
+    $pSel  = $parser->genSelector('div');
+    $pRule = $parser->genRuleset($pSel, $cRule);
+    $t->is( $pRule->publish(), "div p { line-height:1.5; }\n", 'publish parent has no declaration, child has one declaration' );
+}
+
+{
+    $cSel  = $parser->genSelector('p');
+    $cDec  = $parser->genDeclaration('line-height', '1.5');
+    $cRule = $parser->genRuleset($cSel, $cDec);
+
+    $pSel  = $parser->genSelector('div');
+    $pDec  = $parser->genDeclaration('margin', '0');
+    $parser->catNode($pDec, $cRule);
+    $pRule = $parser->genRuleset($pSel, $pDec);
+
+    $t->is( $pRule->publish(), "div { margin:0; }\ndiv p { line-height:1.5; }\n", 'publish parent:1 , child:1' );
+}
+
+{
+    $cSel  = $parser->genSelector('p');
+    $cDec  = $parser->genDeclaration('line-height', '1.5');
+    $cRule = $parser->genRuleset($cSel, $cDec);
+
+    $pSel  = $parser->genSelector('div');
+    $pDec  = $parser->genDeclaration('margin', '0');
+    $pDec2 = $parser->genDeclaration('padding', '0');
+    $parser->catNode($cRule, $pDec);
+    $parser->catNode($cRule, $pDec2);
+    $pRule = $parser->genRuleset($pSel, $cRule);
+
+    $t->is( $pRule->publish(), "div { margin:0; padding:0; }\ndiv p { line-height:1.5; }\n", 'publish parent:2 , child:1' );
+}
+
+{
+    $cSel  = $parser->genSelector('p');
+    $cDec  = $parser->genDeclaration('line-height', '1.5');
+    $cDec2 = $parser->genDeclaration('font-weight', 'bold');
+    $cRule = $parser->catNode($cDec, $cDec2);
+    $cRule = $parser->genRuleset($cSel, $cDec);
+
+    $pSel  = $parser->genSelector('div');
+    $pDec  = $parser->genDeclaration('margin', '0');
+    $pDec2 = $parser->genDeclaration('padding', '0');
+    $parser->catNode($cRule, $pDec);
+    $parser->catNode($cRule, $pDec2);
+    $pRule = $parser->genRuleset($pSel, $cRule);
+
+    $t->is( $pRule->publish(), "div { margin:0; padding:0; }\ndiv p { line-height:1.5; font-weight:bold; }\n", 'publish parent:2 , child:2' );
+}
+
+{
+    $gSel  = $parser->genSelector('li');
+    $gDec  = $parser->genDeclaration('display', 'inline');
+    $gRule = $parser->genRuleset($gSel, $gDec);
+
+    $cSel  = $parser->genSelector('ul');
+    $cDec  = $parser->genDeclaration('width', '100%');
+    $parser->catNode($cDec, $gRule);
+    $cRule = $parser->genRuleset($cSel, $cDec);
+
+    $pSel  = $parser->genSelector('#nav');
+    $pDec  = $parser->genDeclaration('margin', '0');
+    $parser->catNode($pDec, $cRule);
+    $pRule = $parser->genRuleset($pSel, $pDec);
+
+    $t->is( $pRule->publish(), "#nav { margin:0; }\n#nav ul { width:100%; }\n#nav ul li { display:inline; }\n", 'publish depth 3' );
+}

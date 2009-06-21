@@ -117,8 +117,10 @@ command
      *
      */
     public function genRuleset($selector, $declarations) {
-        $node = $this->createNode('ruleset');
-        $node->children = array($selector, $declarations);
+        $node = $this->createNode(
+            'ruleset',
+            array($selector, $declarations)
+        );
         return $node;
     }
 
@@ -126,10 +128,11 @@ command
      *
      */
     public function genDeclaration($property, $expr, $prio = '') {
-        $node = $this->createNode('declaration');
-        $this->debug(" - $property:$expr");
-        $node->setProperty($property);
-        $node->setExpression($expr, $prio);
+        $node = $this->createNode(
+            'declaration',
+            array($property, $expr, $prio)
+        );
+        $this->debug(" - $property:$expr $prio");
         return $node;
     }
 
@@ -169,18 +172,12 @@ command
     /**
      *
      */
-    protected function createNode($type, $value = null) {
-        //echo "[[$type]]\n";
+    protected function createNode($type, $arg = null) {
         $className = 'SCSS_YYNode_' . ucfirst($type);
-        $node = new $className;
+        $node = new $className($arg);
         $node->id = $this->lastInsertId++;
-        //echo "----\n";
-        //var_dump($node, $value);
-        if (!is_null($value)) {
-            $node->value = (string)$value;
-        }
         array_push($this->nodes, $node);
-        $this->debug($node->id. ": create $type:" . $node->value);
+        $this->debug($node->id. ": create $type:" . (string)$arg);
         return $node;
     }
 

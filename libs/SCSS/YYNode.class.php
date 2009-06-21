@@ -13,7 +13,8 @@ abstract class SCSS_YYnode {
     /**
      *
      */
-    public function __construct() {
+    public function __construct($value) {
+        $this->value = $value;
     }
 
     /**
