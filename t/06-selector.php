@@ -9,6 +9,14 @@ $t->false( $sel->hasChildren(), 'has not child nodes' );
 $t->false( $sel->hasNext(), 'has not next node' );
 $t->is( $sel->publish(), 'div', 'publish' );
 
+$t->comment( 'space selector' );
+$t->ok( $sel = $parser->genSelector('div p'), 'generate node' );
+$t->is( $sel->publish(), 'div p', 'publish' );
+
+$t->comment( 'comma separated multi selector' );
+$t->ok( $sel = $parser->genSelector('#content div , p'), 'generate node' );
+$t->is( $sel->publish(), '#content div,p', 'publish' );
+
 $t->comment( 'ident hash' );
 $t->ok( $sel = $parser->genSelector('div#header'), 'generate node' );
 $t->is( $sel->publish(), 'div#header', 'publish' );
@@ -27,18 +35,18 @@ $t->is( $sel->publish(), 'a:hover', 'publish' );
 
 $t->comment( 'plus combinator' );
 $t->ok( $sel = $parser->genSelector('h1 + p'), 'generate node' );
-$t->is( $sel->publish(), 'h1+p', 'publish' );
+$t->is( $sel->publish(), 'h1 + p', 'publish' );
 
 $t->comment( 'greater combinator' );
 $t->ok( $sel = $parser->genSelector('h2  >  p'), 'generate node' );
-$t->is( $sel->publish(), 'h2>p', 'publish' );
+$t->is( $sel->publish(), 'h2 > p', 'publish, space compressed' );
 
 $t->comment( 'combinators (no space)' );
 $t->ok( $sel = $parser->genSelector('h1+h2>p'), 'generate node' );
 $t->is( $sel->publish(), 'h1+h2>p', 'publish' );
 
 $t->comment( 'attributes' );
-$t->ok( $sel = $parser->genSelector('h1 [ foo = "bar" ]'), 'generate node' );
+$t->ok( $sel = $parser->genSelector('h1[foo="bar"]'), 'generate node' );
 $t->is( $sel->publish(), 'h1[foo="bar"]', 'publish (remove spaces)' );
 $t->ok( $sel = $parser->genSelector('h1[foo=bar]'), 'generate node' );
 $t->is( $sel->publish(), 'h1[foo=bar]', 'publish' );
