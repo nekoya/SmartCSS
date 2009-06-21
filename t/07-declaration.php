@@ -61,3 +61,6 @@ through( 'background', '#fff url("/images/bg.png") no-repeat left 50%' );
 $t->comment( 'string' );
 through( 'font-family', '"Helvetica", "sans-serif"' );
 through( 'font-family', "'Frutiger", "sans-serif'" );
+
+$t->comment( 'Japanese font name' );
+through( 'font-family', '"ヒラギノ角ゴ PRO w3"' );
