@@ -51,7 +51,7 @@ rulesets
     | rulesets ruleset { $$ = $this->catNode($1, $2); }
 
 ruleset
-    : selector LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $4); }
+    : selector s LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $5); }
     | command s { $$ = $1; }
 
 selector

@@ -117,6 +117,24 @@ parse($content, $expected, 'multi parent, multi child');
 
 // ============================================================
 $content = <<<__CSS__
+p
+    {
+        margin:
+0
+auto
+10px
+        ;
+        padding:0;
+    }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+p { margin:0 auto 10px; padding:0; }
+__CSS__;
+parse($content, $expected, 'NL separated expr');
+
+// ============================================================
+$content = <<<__CSS__
 #content {
     height:100%;
     div {

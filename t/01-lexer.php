@@ -57,6 +57,11 @@ isToken( 'div{margin:5px 10px}',
     'basically ruleset'
 );
 
+isToken ("div { margin:10px\nauto\n15px; }",
+    'SELECTOR LBRACE SPACE IDENT : LENGTH NL IDENT NL LENGTH ; SPACE }',
+    'expressions splited by NL'
+);
+
 isToken( "a:hover\n  {\n    line-height:1.5;\n  }\n",
     'SELECTOR NL LBRACE NL SPACE IDENT : NUMBER ; NL SPACE } NL',
     'pseudo'
