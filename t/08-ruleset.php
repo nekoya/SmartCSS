@@ -3,9 +3,14 @@ require 'initialize.php';
 $parser = new SCSS_Parser();
 //$parser->debug = true;
 
+$t->comment( 'invalid nodes' );
+$t->throws_ok( $parser, '$p->genRuleset("", "");', 'Invalid selector node for ruleset' );
+$sel  = $parser->genSelector('div');
+$t->throws_ok( array($parser, $sel), '$p[0]->genRuleset($p[1], "");', 'Invalid ruleset/declaration node for ruleset' );
+
 $t->comment( 'simple ruleset' );
-$t->ok( $sel  = $parser->genSelector('div'), 'generate selector node' );
-$t->ok( $decl = $parser->genDeclaration('margin', '0'), 'generate declaration node' );
+$sel  = $parser->genSelector('div');
+$decl = $parser->genDeclaration('margin', '0');
 $t->ok( $rule = $parser->genRuleset($sel, $decl), 'generate ruleset node' );
 $t->is( $rule->publish(), "div { margin:0; }\n", 'publish' );
 
