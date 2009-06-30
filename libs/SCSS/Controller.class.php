@@ -37,6 +37,7 @@ abstract class SCSS_Controller {
     protected function parseSCSS($buffer) {
         $this->lexer->setBuffer($buffer);
         if ($this->debug) {
+            //$this->lexer->debug = true;
             $this->parser->debug = true;
         }
         try {
