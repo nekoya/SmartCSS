@@ -571,7 +571,7 @@ class SCSS_Parser
             $params = array($params);
         }
 
-        $className = 'SCSS_Command_' . ucfirst($name);
+        $className = 'SCSS_Command_' . ucfirst(strtolower($name));
         // calling autoload deters Fatal error with load class
         if (!class_exists($className, false)) {
             try {
