@@ -1,0 +1,105 @@
+/**
+ * 段組レイアウト定義
+ *
+ * @copyright 2006-2007 Lism.in
+ * @author    Ryo Miyake <ryo.studiom@gmail.com>
+ */
+
+
+/* 段組用ブロックの初期化
+----------------------------------------*/
+/* コンテンツ全体を中央に配置 */
+#container { margin:0 auto; }
+
+/* 背景指定がcontent全体に回るようにfloat指定 */
+/*#content { float:left; }*/
+#content:after {
+	content:".";
+	display:block;
+	clear:both;
+	height:0;
+	visibility:hidden;
+}
+#content { display:inline-block; }
+/* exlude MacIE5 \*/
+* html #conetnt { height:1%; }
+#content {display:block;}
+/* end MacIE5 */
+
+/* 段組指定がない場合はsubcol,xcolを表示しない */
+#subcol , #xcol { display:none; }
+
+/* 幅100%をデフォルトで指定するブロック */
+#wrapper ,
+#maincol {
+	width:100%;
+}
+
+/* floatをデフォルトで解除するブロック */
+#content ,
+#wrapper ,
+#footContent ,
+#footer { clear:both; }
+
+
+/********************************************************************************
+ * 2段組
+ ********************************************************************************/
+
+#container.col-ms #subcol , #container.col-sm #subcol ,
+#container.col-mx #xcol   , #container.col-xm #xcol   { display:inline; }
+
+#container.col-ms #maincol ,
+#container.col-mx #wrapper { float: left; margin-right:-100%; }
+
+#container.col-sm #maincol ,
+#container.col-xm #wrapper { float:right; margin-left:-100%; }
+
+#container.col-ms #subcol  ,
+#container.col-mx #xcol    { float:right; }
+
+#container.col-sm #subcol  ,
+#container.col-xm #xcol    { float: left; }
+
+#container.col-ms #maincnt ,
+#container.col-sm #maincnt ,
+#container.col-mx #maincol ,
+#container.col-xm #maincol { width: auto; }
+
+
+/* 3段組
+----------------------------------------*/
+#container.col-msx #subcol , #container.col-msx #xcol ,
+#container.col-mxs #subcol , #container.col-mxs #xcol ,
+#container.col-smx #subcol , #container.col-smx #xcol ,
+#container.col-sxm #subcol , #container.col-sxm #xcol ,
+#container.col-xms #subcol , #container.col-xms #xcol ,
+#container.col-xsm #subcol , #container.col-xsm #xcol { display:inline; }
+
+#container.col-msx #maincnt ,
+#container.col-mxs #maincnt ,
+#container.col-smx #maincnt ,
+#container.col-sxm #maincnt ,
+#container.col-xms #maincnt ,
+#container.col-xsm #maincnt { width: auto; }
+
+#container.col-msx #wrapper , #container.col-msx #maincol ,
+#container.col-mxs #wrapper , #container.col-mxs #maincol ,
+#container.col-smx #wrapper , #container.col-smx #maincol ,
+#container.col-sxm #wrapper , #container.col-sxm #maincol ,
+#container.col-xms #wrapper , #container.col-xms #maincol ,
+#container.col-xsm #wrapper , #container.col-xsm #maincol { float: left; margin-right:-100%; }
+
+#container.col-msx #subcol  ,
+#container.col-msx #xcol    ,
+#container.col-mxs #subcol  ,
+#container.col-mxs #xcol    ,
+#container.col-smx #xcol    ,
+#container.col-xms #subcol  { float:right; display:inline; }
+
+#container.col-smx #subcol  ,
+#container.col-sxm #subcol  ,
+#container.col-sxm #xcol    ,
+#container.col-xms #xcol    ,
+#container.col-xsm #xcol    ,
+#container.col-xsm #subcol  { float: left; display:inline; }
