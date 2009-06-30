@@ -75,6 +75,10 @@ class SCSS_Lexer {
             if ($comment !== false) {
                 $this->debug("SKIP COMMENT:[" . mb_substr($comment, 0, 8) . "...]" . mb_strlen($comment) . " characters.");
                 $this->lexbuf = mb_substr($this->lexbuf, mb_strlen($comment));
+
+                $count = preg_match_all('(\r\n|\r|\n)', $comment, $lineBreaks);
+                $this->debug("$count line breaks exists inner comment.");
+                $this->lineNum += $count;
                 continue;
             }
 
@@ -91,6 +95,12 @@ class SCSS_Lexer {
                     case 'NL':
                         $this->lineNum++;
                         $this->debug("analyze new line:" . $this->lineNum);
+                        break;
+
+                    case 'SELECTOR':
+                        $count = preg_match_all('(\r\n|\r|\n)', $yylval, $lineBreaks);
+                        $this->debug("$count line breaks exists inner selector.");
+                        $this->lineNum += $count;
                         break;
 
                     case 'cLDELIM':
