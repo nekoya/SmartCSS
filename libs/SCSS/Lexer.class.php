@@ -53,9 +53,7 @@ class SCSS_Lexer {
      */
     public function analyze(&$yylval) {
         while ($this->lexbuf) {
-            if ($this->debug) {
-                //var_dump($this->lexbuf);
-            }
+            //$this->debug("buffer: " . mb_substr($this->lexbuf, 0, 30) . "...");
 
             switch ($this->state) {
             case 'ruleset':
@@ -75,8 +73,8 @@ class SCSS_Lexer {
 
             $comment = $this->isComment($this->lexbuf);
             if ($comment !== false) {
-                $this->debug('SKIP COMMENT');
-                $this->lexbuf = substr($this->lexbuf, strlen($comment));
+                $this->debug("SKIP COMMENT:[" . mb_substr($comment, 0, 8) . "...]" . mb_strlen($comment) . " characters.");
+                $this->lexbuf = mb_substr($this->lexbuf, mb_strlen($comment));
                 continue;
             }
 
@@ -87,11 +85,12 @@ class SCSS_Lexer {
                         var_dump($matches);
                     }
                     $yylval = (string)$matches[1];
-                    $this->lexbuf = substr($this->lexbuf, strlen($yylval));
+                    $this->lexbuf = mb_substr($this->lexbuf, mb_strlen($yylval));
 
                     switch ($token) {
                     case 'NL':
                         $this->lineNum++;
+                        $this->debug("analyze new line:" . $this->lineNum);
                         break;
 
                     case 'cLDELIM':
@@ -109,7 +108,7 @@ class SCSS_Lexer {
             }
             // unmatched regexs
             $yylval = ord($this->lexbuf);
-            $this->lexbuf = substr($this->lexbuf, 1);
+            $this->lexbuf = mb_substr($this->lexbuf, 1);
             $this->debug('token unmatched ' . chr($yylval));
             return $yylval;
         }
@@ -203,7 +202,7 @@ class SCSS_Lexer {
      *
      */
     public function isComment($buffer) {
-        if (preg_match('|\s*/\*.*?\*/\s*|ms', $buffer, $matches)) {
+        if (preg_match('|^\s*/\*.*?\*/\s*|s', $buffer, $matches)) {
             return $matches[0];
         }
         return false;
