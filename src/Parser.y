@@ -52,6 +52,7 @@ rulesets
 
 ruleset
     : selector s LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $5); }
+    | selector s LBRACE s              '}' s { $$ = $this->genRuleset($1, null); }
     | command s { $$ = $1; }
 
 selector

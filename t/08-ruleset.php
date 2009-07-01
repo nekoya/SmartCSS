@@ -103,3 +103,14 @@ $t->comment( 'recursive rulesets' );
 
     $t->is( $pRule->publish(), "#nav { margin:0; }\n#nav ul { width:100%; }\n#nav ul li { display:inline; }\n", 'publish depth 3' );
 }
+
+$t->comment( 'empty ruleset' );
+{
+    $cSel  = $parser->genSelector('p');
+    $cRule = $parser->genRuleset($cSel, null);
+    $t->is( $cRule->publish(), "", 'no output for empty ruleset' );
+
+    $pSel  = $parser->genSelector('div');
+    $pRule = $parser->genRuleset($pSel, $cRule);
+    $t->is( $pRule->publish(), "", 'no output for recursive empty rulesets' );
+}

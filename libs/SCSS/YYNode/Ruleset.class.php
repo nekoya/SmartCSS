@@ -50,6 +50,7 @@ class SCSS_YYNode_Ruleset extends SCSS_YYNode {
      *
      */
     protected function setDeclarations($node) {
+        if ($node === null) { return; }
         do {
             if ($node instanceof SCSS_YYNode_Ruleset) {
                 $node->selector->parent = $this->selector;

@@ -14,11 +14,11 @@ class SCSS_Parser
     const YYMAXLEX     = 285;
     const YYTERMS      = 34;
     const YYNONTERMS   = 21;
-    const YYLAST       = 50;
+    const YYLAST       = 51;
     const YY2TBLSTATE  = 14;
-    const YYGLAST      = 35;
-    const YYSTATES     = 93;
-    const YYNLSTATES   = 50;
+    const YYGLAST      = 36;
+    const YYSTATES     = 95;
+    const YYNLSTATES   = 51;
     const YYINTERRTOK  = 1;
     const YYUNEXPECTED = 32767;
     const YYDEFAULT    = -32766;
@@ -96,81 +96,84 @@ class SCSS_Parser
     );
 
     private static $yyaction = array(
-           25,   14,   26,    0,   27,   28,   29,   30,   31,   32,
-           21,   22,   69,   88,   33,   23,   41,    9,   20,   36,
-          -25,   34,   17,   96,   97,-32766,   62,   17,   35,   13,
-            8,   57,   54,   19,   99,  100,  101,   63,    0,    0,
-            0,   98,    0,    0,    0,    0,   15,    0,   16,   18
+           26,    0,   27,   42,   28,   29,   30,   31,   32,   33,
+           22,   23,   71,   90,   34,   24,   14,    9,   21,   17,
+          -26,   35,   18,   18,   55,-32766,   63,   58,   36,   98,
+           99,   13,    8,   20,    0,   37,  101,   64,   15,  103,
+          100,    0,    0,    0,  102,    0,    0,    0,    0,   16,
+           19
     );
 
     private static $yycheck = array(
-            8,    2,   10,    0,   12,   13,   14,   15,   16,   17,
-            6,    7,   21,    9,   18,   11,    4,   26,    3,   24,
-           24,   25,    7,    4,    5,   21,   22,    7,   32,   28,
-           29,   20,   19,   23,   27,   27,   27,   33,   -1,   -1,
-           -1,   27,   -1,   -1,   -1,   -1,   30,   -1,   31,   31
+            8,    0,   10,    4,   12,   13,   14,   15,   16,   17,
+            6,    7,   21,    9,   18,   11,    2,   26,    3,    3,
+           24,   25,    7,    7,   19,   21,   22,   20,   32,    4,
+            5,   28,   29,   23,   -1,   24,   27,   33,   30,   27,
+           27,   -1,   -1,   -1,   27,   -1,   -1,   -1,   -1,   31,
+           31
     );
 
     private static $yybase = array(
-           13,   -8,    4,    4,   15,   -4,   20,   11,   16,   19,
-           -9,   19,   19,   12,   19,   19,   19,   19,   19,   19,
-           19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-           19,   19,   19,   19,   19,   19,   19,   19,    1,    3,
-           -1,   17,   14,    8,   18,   10,    7,    9,   -5,    0,
-            0,    0,   -9,   -9,   -9,    0,   -9,   -9,   19,    0,
-            0,    0,    0,   19
+            5,   -8,    4,    4,   16,   15,   -4,    7,    8,   25,
+           -9,   25,   25,   -1,   25,   25,   25,   25,   25,   25,
+           25,   25,   25,   25,   25,   25,   25,   25,   25,   25,
+           25,   25,   25,   25,   25,   25,   25,   25,   25,    3,
+            1,   14,   18,   13,   17,   19,   10,    9,   12,   11,
+            0,    0,    0,   -9,   -9,   -9,   -9,    0,   -9,   25,
+            0,    0,    0,    0,   25
     );
 
     private static $yydefault = array(
-            3,32767,   11,   11,32767,    8,32767,32767,   42,   42,
-            2,   42,   42,   42,   42,   42,   42,   42,   42,   42,
-           42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
-           42,   42,   42,   42,   42,   42,   42,   43,32767,32767,
-        32767,   46,32767,32767,32767,32767,32767,32767,32767,    5
+            3,32767,   11,   11,32767,32767,    8,32767,   43,   43,
+            2,   43,   43,   43,   43,   43,   43,   43,   43,   43,
+           43,   43,   43,   43,   43,   43,   43,   43,   43,   43,
+           43,   43,   43,   43,   43,   43,   43,   43,   44,32767,
+        32767,32767,   47,32767,32767,32767,32767,32767,32767,32767,
+            5
     );
 
     private static $yygoto = array(
-           38,   78,   40,   68,   42,    6,   44,   46,   64,   47,
-            2,   67,   90,   89,   87,   91,   86,   79,   81,   82,
-           80,   83,   84,   85,   76,   60,   59,   74,   71,   65,
-           24,   24,   66,   70,   95
+           39,   80,   41,   70,   43,    4,   45,   47,   69,   65,
+           48,    2,   68,   92,   91,   89,   93,   88,   81,   83,
+           84,   82,   85,   86,   87,   78,   61,   60,   76,   75,
+           74,   66,   25,   25,   67,   97
     );
 
     private static $yygcheck = array(
             8,   18,    8,    8,    8,    8,    8,    8,    8,    8,
             8,    8,    8,    8,    8,    8,    8,    8,    8,    8,
-            8,    8,    8,    8,    8,    8,    8,    8,   11,   11,
-           14,   14,   11,   15,   20
+            8,    8,    8,    8,    8,    8,    8,    8,    8,   11,
+           15,   11,   14,   14,   11,   20
     );
 
     private static $yygbase = array(
             0,    0,    0,    0,    0,    0,    0,    0,   -9,    0,
-            0,   22,    0,    0,   28,   27,    0,    0,   -2,    0,
+            0,   24,    0,    0,   30,   25,    0,    0,   -2,    0,
            -3
     );
 
     private static $yygdefault = array(
-        -32768,   39,   51,   49,    7,   10,   56,    3,   43,    1,
-           45,   73,   11,    4,   12,   72,    5,   48,   77,   37,
-           94
+        -32768,   40,   52,   50,    7,   10,   57,    3,   44,    1,
+           46,   73,   11,    5,   12,   72,    6,   49,   79,   38,
+           96
     );
 
     private static $yylhs = array(
             0,    1,    2,    3,    3,    4,    4,    6,    7,    7,
-            7,    9,    9,    9,   10,    5,    5,   11,   11,   12,
-           13,   13,   13,   13,   15,   17,   17,   16,   16,   18,
+            7,    9,    9,    9,   10,    5,    5,   11,   11,   11,
+           12,   13,   13,   13,   13,   15,   17,   17,   16,   16,
            18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
-           18,   18,    8,    8,   19,   19,   20,   20,   14,   14,
-           14,   14
+           18,   18,   18,    8,    8,   19,   19,   20,   20,   14,
+           14,   14,   14
     );
 
     private static $yylen = array(
             1,    1,    3,    0,    1,    0,    2,    1,    0,    2,
-            2,    0,    1,    1,    2,    1,    2,    7,    2,    1,
-            1,    1,    2,    2,    7,    0,    2,    1,    3,    3,
-            3,    3,    3,    3,    3,    3,    3,    2,    1,    2,
-            2,    2,    0,    1,    1,    2,    1,    1,    5,    7,
-            5,    8
+            2,    0,    1,    1,    2,    1,    2,    7,    6,    2,
+            1,    1,    1,    2,    2,    7,    0,    2,    1,    3,
+            3,    3,    3,    3,    3,    3,    3,    3,    2,    1,
+            2,    2,    2,    0,    1,    1,    2,    1,    1,    5,
+            7,    5,    8
     );
 
     protected function yyprintln($msg) {
@@ -409,15 +412,15 @@ class SCSS_Parser
     }
 
     private function yyn18() {
-         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
+         $this->yyval = $this->genRuleset($this->yyastk[$this->yysp-(6-1)], null); 
     }
 
     private function yyn19() {
-         $this->yyval = $this->genSelector($this->yyastk[$this->yysp-(1-1)]); 
+         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
     }
 
     private function yyn20() {
-         $this->yyval = $this->yyastk[$this->yysp-(1-1)]; 
+         $this->yyval = $this->genSelector($this->yyastk[$this->yysp-(1-1)]); 
     }
 
     private function yyn21() {
@@ -425,7 +428,7 @@ class SCSS_Parser
     }
 
     private function yyn22() {
-         $this->yyval = $this->catNode($this->yyastk[$this->yysp-(2-1)], $this->yyastk[$this->yysp-(2-2)]); 
+         $this->yyval = $this->yyastk[$this->yysp-(1-1)]; 
     }
 
     private function yyn23() {
@@ -433,27 +436,27 @@ class SCSS_Parser
     }
 
     private function yyn24() {
-         $this->yyval = $this->genDeclaration($this->yyastk[$this->yysp-(7-1)], $this->yyastk[$this->yysp-(7-4)], $this->yyastk[$this->yysp-(7-5)]); 
+         $this->yyval = $this->catNode($this->yyastk[$this->yysp-(2-1)], $this->yyastk[$this->yysp-(2-2)]); 
     }
 
     private function yyn25() {
-         $this->yyval = ''; 
+         $this->yyval = $this->genDeclaration($this->yyastk[$this->yysp-(7-1)], $this->yyastk[$this->yysp-(7-4)], $this->yyastk[$this->yysp-(7-5)]); 
     }
 
     private function yyn26() {
-         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
+         $this->yyval = ''; 
     }
 
     private function yyn27() {
-         $this->yyval = $this->yyastk[$this->yysp-(1-1)]; 
+         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
     }
 
     private function yyn28() {
-         $this->yyval = trim($this->yyastk[$this->yysp-(3-1)]) . $this->yyastk[$this->yysp-(3-2)] . trim($this->yyastk[$this->yysp-(3-3)]); 
+         $this->yyval = $this->yyastk[$this->yysp-(1-1)]; 
     }
 
     private function yyn29() {
-         $this->yyval = $this->yyastk[$this->yysp-(3-1)] . $this->yyastk[$this->yysp-(3-2)]; 
+         $this->yyval = trim($this->yyastk[$this->yysp-(3-1)]) . $this->yyastk[$this->yysp-(3-2)] . trim($this->yyastk[$this->yysp-(3-3)]); 
     }
 
     private function yyn30() {
@@ -485,15 +488,15 @@ class SCSS_Parser
     }
 
     private function yyn37() {
-         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
+         $this->yyval = $this->yyastk[$this->yysp-(3-1)] . $this->yyastk[$this->yysp-(3-2)]; 
     }
 
     private function yyn38() {
-         $this->yyval = $this->yyastk[$this->yysp-(1-1)]; 
+         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
     }
 
     private function yyn39() {
-         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
+         $this->yyval = $this->yyastk[$this->yysp-(1-1)]; 
     }
 
     private function yyn40() {
@@ -503,26 +506,30 @@ class SCSS_Parser
     private function yyn41() {
          $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
     }
-    private function yyn42() {}
+
+    private function yyn42() {
+         $this->yyval = $this->yyastk[$this->yysp-(2-1)]; 
+    }
     private function yyn43() {}
     private function yyn44() {}
     private function yyn45() {}
     private function yyn46() {}
     private function yyn47() {}
+    private function yyn48() {}
 
-    private function yyn48() {
+    private function yyn49() {
          $this->yyval = ''; $this->genCommand($this->yyastk[$this->yysp-(5-3)]); 
     }
 
-    private function yyn49() {
+    private function yyn50() {
          $this->yyval = ''; $this->genCommand($this->yyastk[$this->yysp-(7-3)], $this->yyastk[$this->yysp-(7-5)]); 
     }
 
-    private function yyn50() {
+    private function yyn51() {
          $this->yyval = ''; $this->getVar($this->yyastk[$this->yysp-(5-3)]); 
     }
 
-    private function yyn51() {
+    private function yyn52() {
          $this->yyval = ''; $this->setVar($this->yyastk[$this->yysp-(8-3)], $this->yyastk[$this->yysp-(8-6)]); 
     }
     protected $lastInsertId = 0;
