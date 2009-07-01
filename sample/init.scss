@@ -1,0 +1,117 @@
+/* Initalize
+----------------------------------------*/
+body ,
+div ,
+ul , ol , li ,
+h1 , h2 , h3 , h4 , h5 , h6 ,
+p , a , address ,
+img ,
+table , th , td ,
+dl , dt , dd ,
+form , fieldset {
+    margin:0;
+    padding:0;
+    border:none;
+    font-style:normal;
+    font-weight:normal;
+    line-height:inherit;
+}
+
+html {
+    filter:expression(document.execCommand("BackgroundImageCache", false, true));
+    overflow-y:scroll;
+    height:100%;
+}
+
+body {
+    line-height:1;
+}
+
+/* YUI font settings
+----------------------------------------*/
+body {
+    font-size:13px;
+    *font-size:small;
+    *font:x-small;
+}
+
+table {
+    font-size:inherit;
+    font:100%;
+}
+
+/* 99% for safari; 100% is too large */
+select ,
+input ,
+textarea {
+    font-size:99%;
+}
+
+/**
+ * Bump up !IE to get to 13px equivalent
+pre ,
+code {
+    font:115% monospace;
+    *font-size:100%;
+}
+*/
+
+/* Elements
+----------------------------------------*/
+b , em , strong {
+    font-style:normal;
+    font-weight:bold;
+}
+
+sup {
+    vertical-align:top;
+    font-size:80%;
+}
+
+sub {
+    vertical-align:bottom;
+    font-size:80%;
+}
+
+a:link img {
+    border:none;
+}
+
+ul, ol {
+    list-style-position:outside;
+    margin:1em 2em;
+}
+
+table {
+    border-collapse:collapse;
+}
+
+table th , table td {
+    vertical-align:top;
+    text-align:left;
+}
+
+/* Basic listing table */
+table.list th , table.list td {
+    padding:2px 4px;
+    border:1px solid #999;
+    text-align:left;
+}
+
+table.list tr.oddline td { background:#eee; }
+table.list th            { background:#ccc; }
+
+/* Clearfix
+----------------------------------------*/
+.clearfix:after {
+    content:".";
+    display:block;
+    clear:both;
+    height:0;
+    visibility:hidden;
+}
+.clearfix { display:inline-block; }
+/* exlude MacIE5 \*/
+* html .clearfix { height:1% }
+.clearfix {display:block;}
+/* end MacIE5 */
