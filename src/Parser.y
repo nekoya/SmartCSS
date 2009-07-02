@@ -304,6 +304,6 @@ command
      */
     protected function yyerror($msg) {
         $lineNum = $this->lex->lineNum;
-        throw new Exception("$msg at line $lineNum.");
+        throw new Exception("$msg at line $lineNum, neay by '" . $this->lex->bufferHead() . "'");
     }
 }
