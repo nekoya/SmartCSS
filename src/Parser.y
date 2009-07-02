@@ -51,8 +51,10 @@ rulesets
     | rulesets ruleset { $$ = $this->catNode($1, $2); }
 
 ruleset
-    : selector s LBRACE s declarations '}' s { $$ = $this->genRuleset($1, $5); }
-    | selector s LBRACE s              '}' s { $$ = $this->genRuleset($1, null); }
+    : selector s LBRACE s declarations '}' s              { $$ = $this->genRuleset($1, $5); }
+    | selector s LBRACE s last_declaration s              { $$ = $this->genRuleset($1, $5); }
+    | selector s LBRACE s declarations last_declaration s { $this->catNode($5, $6); $$ = $this->genRuleset($1, $5); }
+    | selector s LBRACE s              '}' s              { $$ = $this->genRuleset($1, null); }
     | command s { $$ = $1; }
 
 selector
@@ -66,6 +68,9 @@ declarations
 
 declaration
     : property ':' s expr prio ';' s { $$ = $this->genDeclaration($1, $4, $5); }
+
+last_declaration
+    : property ':' s expr prio '}'   { $$ = $this->genDeclaration($1, $4, $5); }
 
 prio
     : { $$ = ''; }
@@ -85,7 +90,7 @@ term
     | unary_operator FREQ s       { $$ = $1 . $2; }
     | unary_operator NUMBER s     { $$ = $1 . $2; }
     | URI s                       { $$ = $1; }
-    | HEXCOLOR                    { $$ = $1; }
+    | HEXCOLOR s                  { $$ = $1; }
     | IDENT s                     { $$ = $1; }
     | STRING s                    { $$ = $1; }
     | command s                   { $$ = $1; }

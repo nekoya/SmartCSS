@@ -222,3 +222,19 @@ $expected = <<<__CSS__
 #content { margin:0; }
 __CSS__;
 parse($content, $expected, 'IMPORT command');
+
+// ============================================================
+$content = <<<__CSS__
+div { margin:0 }
+p { margin:0; padding:0 }
+a { color:red !important }
+a:hover { color:#f30 }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+div { margin:0; }
+p { margin:0; padding:0; }
+a { color:red !important; }
+a:hover { color:#f30; }
+__CSS__;
+parse($content, $expected, 'omited semicolon');
