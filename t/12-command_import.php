@@ -14,6 +14,6 @@ $t->throws_ok( $parser, '$p->genCommand("IMPORT", "none.scss");', 'IMPORT file n
 $t->comment( 'import succeed' );
 $t->is(
     $parser->genCommand('IMPORT', '../sample/width.scss'),
-    '#content { width:960px; margin:0 auto; }' . PHP_EOL,
+    "#content {\n    width:960px; margin:0 auto;\n}\n",
     'imported content'
 );

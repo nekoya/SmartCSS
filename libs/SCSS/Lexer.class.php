@@ -45,8 +45,8 @@ class SCSS_Lexer {
      *
      */
     public function bufferHead() {
-        $msg = mb_substr($this->lexbuf, 0, 30);
-        if ( mb_strlen($this->lexbuf) > 30 ) {
+        $msg = preg_replace('/(\r\n|\r|\n).*$/s', '', mb_substr($this->lexbuf, 0, 30));
+        if ( mb_strlen($this->lexbuf) > mb_strlen($msg) ) {
             $msg .= '...';
         }
         return $msg;
@@ -91,7 +91,7 @@ class SCSS_Lexer {
 
                 $count = preg_match_all('(\r\n|\r|\n)', $comment, $lineBreaks);
                 $this->debug("$count line breaks exists inner comment.");
-                $this->lineNum += $count;
+                $this->addLineNum($count);
                 continue;
             }
 
@@ -106,14 +106,14 @@ class SCSS_Lexer {
 
                     switch ($token) {
                     case 'NL':
-                        $this->lineNum++;
+                        $this->addLineNum(1);
                         $this->debug("analyze new line:" . $this->lineNum);
                         break;
 
                     case 'SELECTOR':
                         $count = preg_match_all('(\r\n|\r|\n)', $yylval, $lineBreaks);
                         $this->debug("$count line breaks exists inner selector.");
-                        $this->lineNum += $count;
+                        $this->addLineNum($count);
                         break;
 
                     case 'cLDELIM':
@@ -244,7 +244,7 @@ class SCSS_Lexer {
      *
      */
     protected function addLineNum($count) {
-        if ( !$this->parser->isDirStacked() ) {
+        if ( $this->parser instanceof SCSS_Parser && !$this->parser->isDirStacked() ) {
             $this->lineNum += $count;
         }
     }
