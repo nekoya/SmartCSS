@@ -47,7 +47,7 @@ property
     : IDENT s { $$ = $1; }
 
 rulesets
-    : ruleset { $$ = $1; }
+    : s                { $$ = $this->genEmpty(); }
     | rulesets ruleset { $$ = $this->catNode($1, $2); }
 
 ruleset

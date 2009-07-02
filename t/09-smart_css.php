@@ -20,7 +20,10 @@ function parse($content, $expected, $note = '', $debug = false) {
         exit(1);
     }
     // add PHP_EOL for heredocument
-    $t->is( $parser->run(), $expected . PHP_EOL, $note );
+    if ( $expected !== '' ) {
+        $expected .= PHP_EOL;
+    }
+    $t->is( $parser->run(), $expected, $note );
     $parser->reset();
 }
 
@@ -202,6 +205,7 @@ a:hover { text-decoration:underline; }
 __CSS__;
 parse($content, $expected, 'variable as ruleset');
 
+$t->comment('etc');
 // ============================================================
 $content = <<<__CSS__
 * { margin:0; }
@@ -231,3 +235,6 @@ a { color:red !important; }
 a:hover { color:#f30; }
 __CSS__;
 parse($content, $expected, 'omited semicolon');
+
+parse("", '', 'empty scss' );
+parse("\n", '', 'empty scss' );
