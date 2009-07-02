@@ -736,8 +736,16 @@ class SCSS_Parser
     /**
      *
      */
+    public function isDirStacked() {
+        return count($this->dirStack) ? true : false;
+    }
+
+
+    /**
+     *
+     */
     protected function yyerror($msg) {
         $lineNum = $this->lex->lineNum;
-        throw new Exception("$msg at line $lineNum neay by '" . $this->lex->bufferHead() . "'");
+        throw new Exception("$msg at line $lineNum, near by \"" . $this->lex->bufferHead() . '"');
     }
 }

@@ -6,6 +6,7 @@ class SCSS_Lexer {
     protected $regexs;
     protected $commands;
     protected $state;
+    protected $parser;
     public $lineNum = 1;
     public $debug;
     public $lexbuf;
@@ -13,7 +14,8 @@ class SCSS_Lexer {
     /**
      *
      */
-    public function __construct() {
+    public function __construct($parser = null) {
+        $this->parser = $parser;
         $this->defineRegexs();
         $this->state = 'ruleset';
     }
@@ -43,7 +45,11 @@ class SCSS_Lexer {
      *
      */
     public function bufferHead() {
-        return mb_substr($this->lexbuf, 0, 30) . '...';
+        $msg = mb_substr($this->lexbuf, 0, 30);
+        if ( mb_strlen($this->lexbuf) > 30 ) {
+            $msg .= '...';
+        }
+        return $msg;
     }
 
     /**
@@ -231,6 +237,15 @@ class SCSS_Lexer {
     protected function debug($msg) {
         if ($this->debug) {
             echo $msg . "\n";
+        }
+    }
+
+    /**
+     *
+     */
+    protected function addLineNum($count) {
+        if ( !$this->parser->isDirStacked() ) {
+            $this->lineNum += $count;
         }
     }
 }

@@ -11,8 +11,8 @@ abstract class SCSS_Controller {
      *
      */
     public function __construct() {
-        $this->lexer  = new SCSS_Lexer();
         $this->parser = new SCSS_Parser();
+        $this->lexer  = new SCSS_Lexer($this->parser);
     }
 
     /**

@@ -163,10 +163,10 @@ parse($content, $expected, 'complex');
 
 // ============================================================
 $t->comment('throw Exception: unclosed ruleset (no RBRACE)');
-throws_ok( 'div { margin:0', 'syntax error at line 1.' );
+throws_ok( 'div { margin:0', 'syntax error at line 1, near by "0"');
 
 $t->comment('throw Exception: unclosed ruleset (less RBRACE)');
-throws_ok( "div {\r\np {\nmargin:0\n}", 'syntax error at line 4.' );
+throws_ok( "div {\r\np {\nmargin:0\n}", 'syntax error at line 4, near by ""' );
 
 $t->comment('variables');
 // ============================================================
