@@ -42,6 +42,13 @@ class SCSS_Lexer {
     /**
      *
      */
+    public function bufferHead() {
+        return mb_substr($this->lexbuf, 0, 30) . '...';
+    }
+
+    /**
+     *
+     */
     public function yylex(&$yylval) {
         $lval = $this->analyze($yylval);
         $const = "SCSS_Parser::$lval";
