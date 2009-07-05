@@ -19,11 +19,7 @@ function parse($content, $expected, $note = '', $debug = false) {
         $t->fail('Caught unexpected Exception');
         exit(1);
     }
-    // add PHP_EOL for heredocument
-    if ( $expected !== '' ) {
-        $expected .= PHP_EOL;
-    }
-    $t->is( $parser->run(), $expected, $note );
+    $t->is( $parser->run(), $expected . PHP_EOL, $note );
     $parser->reset();
 }
 

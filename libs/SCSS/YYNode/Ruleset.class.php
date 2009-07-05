@@ -75,7 +75,7 @@ class SCSS_YYNode_Ruleset extends SCSS_YYNode {
      */
     public function publish() {
         $output = '';
-        $compress = SCSS_Parser::$compress;
+        $compress = SmartCSS::$compress;
         if ($this->declarations) {
             $output .= $this->selector->publish();
             $output .= $compress ? '{' : ' {' . PHP_EOL;

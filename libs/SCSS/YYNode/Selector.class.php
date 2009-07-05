@@ -19,7 +19,7 @@ class SCSS_YYNode_Selector extends SCSS_YYNode {
      *
      */
     public function publish() {
-        $separator = SCSS_Parser::$compress ? ',' : ', ';
+        $separator = SmartCSS::$compress ? ',' : ', ';
         return join($separator, $this->getSelectors());
     }
 

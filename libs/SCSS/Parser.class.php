@@ -550,7 +550,6 @@ class SCSS_Parser
     protected $dirStack = array();  // for pushd/popd
     public $vars = array();
     public $debug;
-    static public $compress;
 
     /**
      *

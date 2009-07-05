@@ -20,10 +20,10 @@ class SCSS_Controller_CLI extends SCSS_Controller {
                 $this->usage();
             }
             if ($opt[0] === '--debug' || $opt[0] === 'd') {
-                $this->debug = true;
+                SmartCSS::$debug = true;
             }
             if ($opt[0] === '--compress' || $opt[0] === 'c') {
-                $this->compress = true;
+                SmartCSS::$compress = true;
             }
         }
 

@@ -1,11 +1,11 @@
 <?php
 require 'initialize.php';
+SmartCSS::$compress = true;
 
 function parse($content, $expected, $note = '', $debug = false) {
     global $t;
     $parser = new SCSS_Parser();
     $lexer  = new SCSS_Lexer();
-    SCSS_Parser::$compress = true;
     $lexer->setBuffer($content);
     if ($debug) {
         $lexer->debug = true;
@@ -20,7 +20,7 @@ function parse($content, $expected, $note = '', $debug = false) {
         $t->fail('Caught unexpected Exception');
         exit(1);
     }
-    $t->is( $parser->run(), $expected, $note );
+    $t->is( $parser->run(), $expected . PHP_EOL, $note );
     $parser->reset();
 }
 

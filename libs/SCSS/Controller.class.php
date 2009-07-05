@@ -5,8 +5,6 @@
 abstract class SCSS_Controller {
     protected $lexer;
     protected $parser;
-    protected $debug;
-    protected $compress;
 
     /**
      *
@@ -37,12 +35,9 @@ abstract class SCSS_Controller {
      */
     protected function parseSCSS($buffer) {
         $this->lexer->setBuffer($buffer);
-        if ($this->debug) {
+        if (SmartCSS::$debug) {
             //$this->lexer->debug = true;
             $this->parser->debug = true;
-        }
-        if ($this->compress) {
-            SCSS_Parser::$compress = true;
         }
         try {
             $this->parser->yyparse($this->lexer);
