@@ -45,10 +45,21 @@ a { color:#fff; }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-* { font-size:100%; }
-div { margin:0; }
-p { padding:10px; }
-a { color:#fff; }
+* {
+    font-size:100%;
+}
+
+div {
+    margin:0;
+}
+
+p {
+    padding:10px;
+}
+
+a {
+    color:#fff;
+}
 __CSS__;
 parse($content, $expected, 'simple rulesets');
 
@@ -59,8 +70,13 @@ span , a:hover { background:#efefef; }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-ul, li { list-style:none; }
-span, a:hover { background:#efefef; }
+ul, li {
+    list-style:none;
+}
+
+span, a:hover {
+    background:#efefef;
+}
 __CSS__;
 parse($content, $expected, 'multi selector');
 
@@ -70,7 +86,9 @@ div { p { margin:0; } }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-div p { margin:0; }
+div p {
+    margin:0;
+}
 __CSS__;
 parse($content, $expected, 'simple recurisive ruleset');
 
@@ -82,7 +100,9 @@ form {
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-form input, form select { width:300px; }
+form input, form select {
+    width:300px;
+}
 __CSS__;
 parse($content, $expected, 'single parent, multi child');
 
@@ -93,8 +113,14 @@ P { COLOR:#ABCDEF; BACKGROUND:URL('/IMAGES/BG.PNG') NO-REPEAT; }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-FORM INPUT, FORM SELECT { WIDTH:300PX; }
-P { COLOR:#ABCDEF; BACKGROUND:URL('/IMAGES/BG.PNG') NO-REPEAT; }
+FORM INPUT, FORM SELECT {
+    WIDTH:300PX;
+}
+
+P {
+    COLOR:#ABCDEF;
+    BACKGROUND:URL('/IMAGES/BG.PNG') NO-REPEAT;
+}
 __CSS__;
 parse($content, $expected, 'upper case');
 
@@ -104,7 +130,9 @@ ul,ol{li{border:1px solid red;}}
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-ul li, ol li { border:1px solid red; }
+ul li, ol li {
+    border:1px solid red;
+}
 __CSS__;
 parse($content, $expected, 'multi parent, single child');
 
@@ -114,7 +142,9 @@ dt,dd { sup,sub { font-color:red; } }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-dt sup, dt sub, dd sup, dd sub { font-color:red; }
+dt sup, dt sub, dd sup, dd sub {
+    font-color:red;
+}
 __CSS__;
 parse($content, $expected, 'multi parent, multi child');
 
@@ -132,7 +162,10 @@ auto
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-p { margin:0 auto 10px; padding:0; }
+p {
+    margin:0 auto 10px;
+    padding:0;
+}
 __CSS__;
 parse($content, $expected, 'NL separated expr');
 
@@ -156,11 +189,27 @@ $content = <<<__CSS__
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-#content { height:100%; }
-#content div { margin:0; padding:0; }
-#content div p { margin:10px; line-height:1.5; }
-#content div ul, #content div ol { margin:0; }
-#content div ul li, #content div ol li { display:inline-block; }
+#content {
+    height:100%;
+}
+
+#content div {
+    margin:0;
+    padding:0;
+}
+
+#content div p {
+    margin:10px;
+    line-height:1.5;
+}
+
+#content div ul, #content div ol {
+    margin:0;
+}
+
+#content div ul li, #content div ol li {
+    display:inline-block;
+}
 __CSS__;
 parse($content, $expected, 'complex');
 
@@ -172,7 +221,9 @@ div { margin:[% margin %]; }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-div { margin:10px; }
+div {
+    margin:10px;
+}
 __CSS__;
 parse($content, $expected, 'variable as expr');
 
@@ -183,7 +234,9 @@ div { margin:20px [% margin %] 5px [% margin %]; }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-div { margin:20px 10px 5px 10px; }
+div {
+    margin:20px 10px 5px 10px;
+}
 __CSS__;
 parse($content, $expected, 'variable as term');
 
@@ -196,12 +249,29 @@ $content = <<<__CSS__
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-a { text-decoration:none; }
-a:hover { text-decoration:underline; }
-#header a { text-decoration:none; }
-#header a:hover { text-decoration:underline; }
-#footer a { text-decoration:none; }
-#footer a:hover { text-decoration:underline; }
+a {
+    text-decoration:none;
+}
+
+a:hover {
+    text-decoration:underline;
+}
+
+#header a {
+    text-decoration:none;
+}
+
+#header a:hover {
+    text-decoration:underline;
+}
+
+#footer a {
+    text-decoration:none;
+}
+
+#footer a:hover {
+    text-decoration:underline;
+}
 __CSS__;
 parse($content, $expected, 'variable as ruleset');
 
@@ -214,9 +284,18 @@ $content = <<<__CSS__
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-* { margin:0; }
-#content { width:960px; margin:0 auto; }
-#content { margin:0; }
+* {
+    margin:0;
+}
+
+#content {
+    width:960px;
+    margin:0 auto;
+}
+
+#content {
+    margin:0;
+}
 __CSS__;
 parse($content, $expected, 'IMPORT command');
 
@@ -229,10 +308,22 @@ a:hover { color:#f30 }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
-div { margin:0; }
-p { margin:0; padding:0; }
-a { color:red !important; }
-a:hover { color:#f30; }
+div {
+    margin:0;
+}
+
+p {
+    margin:0;
+    padding:0;
+}
+
+a {
+    color:red !important;
+}
+
+a:hover {
+    color:#f30;
+}
 __CSS__;
 parse($content, $expected, 'omited semicolon');
 

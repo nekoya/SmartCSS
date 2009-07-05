@@ -42,7 +42,7 @@ div {
     margin:0;
 }
 __CSS__;
-$t->is( $parser->run(), $content, 'publish all nodes' );
+$t->is( $parser->run(), $content . PHP_EOL, 'publish all nodes' );
 
 $t->comment( 'pushd and popd' );
 $t->throws_ok(array($parser), '$p[0]->popd();', 'no directory in stack');
