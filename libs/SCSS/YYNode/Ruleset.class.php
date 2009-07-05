@@ -75,12 +75,20 @@ class SCSS_YYNode_Ruleset extends SCSS_YYNode {
      */
     public function publish() {
         $output = '';
+        $compress = SCSS_Parser::$compress;
         if ($this->declarations) {
-            $output .= $this->selector->publish() . ' {' . PHP_EOL;
+            $output .= $this->selector->publish();
+            $output .= $compress ? '{' : ' {' . PHP_EOL;
             foreach ($this->declarations as $declaration) {
-                $output .= $this->indent . $declaration->publish() . PHP_EOL;
+                $output .= $compress
+                    ? $declaration->publish()
+                    : $this->indent . $declaration->publish() . PHP_EOL;
             }
-            $output .= '}' . PHP_EOL . PHP_EOL;
+            if ($compress) {
+                $output = rtrim($output, ';') . '}';
+            } else {
+                $output .= '}' . PHP_EOL . PHP_EOL;
+            }
         }
         if ($this->firstChild) {
             $output .= $this->firstChild->publish();

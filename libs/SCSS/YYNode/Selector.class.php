@@ -19,7 +19,8 @@ class SCSS_YYNode_Selector extends SCSS_YYNode {
      *
      */
     public function publish() {
-        return join(', ', $this->getSelectors());
+        $separator = SCSS_Parser::$compress ? ',' : ', ';
+        return join($separator, $this->getSelectors());
     }
 
     /**

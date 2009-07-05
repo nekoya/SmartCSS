@@ -550,6 +550,7 @@ class SCSS_Parser
     protected $dirStack = array();  // for pushd/popd
     public $vars = array();
     public $debug;
+    static public $compress;
 
     /**
      *
@@ -663,7 +664,7 @@ class SCSS_Parser
      */
     public function run() {
         $content = $this->topNode->publish();
-        return preg_replace('/'.PHP_EOL.'+$/', PHP_EOL, $content);
+        return rtrim($content, PHP_EOL) . PHP_EOL;
     }
 
     /**

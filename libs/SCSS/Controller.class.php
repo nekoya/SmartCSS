@@ -6,6 +6,7 @@ abstract class SCSS_Controller {
     protected $lexer;
     protected $parser;
     protected $debug;
+    protected $compress;
 
     /**
      *
@@ -39,6 +40,9 @@ abstract class SCSS_Controller {
         if ($this->debug) {
             //$this->lexer->debug = true;
             $this->parser->debug = true;
+        }
+        if ($this->compress) {
+            SCSS_Parser::$compress = true;
         }
         try {
             $this->parser->yyparse($this->lexer);
