@@ -31,11 +31,17 @@ $t->is( $rule1->next,  $rule2, 'next of rule1 is rule2 node' );
 
 $t->comment( 'publish all nodes' );
 $t->is( $parser->setTopNode($charset), $charset, 'charset set as top node' );
-$content =
-    "@charset 'utf-8';\n" .
-    "@import \"base.css\";\n".
-    "body { height:100%; }\n".
-    "div { margin:0; }\n";
+$content = <<<__CSS__
+@charset 'utf-8';
+@import "base.css";
+body {
+    height:100%;
+}
+
+div {
+    margin:0;
+}
+__CSS__;
 $t->is( $parser->run(), $content, 'publish all nodes' );
 
 $t->comment( 'pushd and popd' );

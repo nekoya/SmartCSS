@@ -228,7 +228,8 @@ command
      *
      */
     public function run() {
-        return $this->topNode->publish();
+        $content = $this->topNode->publish();
+        return preg_replace('/'.PHP_EOL.'+$/', PHP_EOL, $content);
     }
 
     /**
