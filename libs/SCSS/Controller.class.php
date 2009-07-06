@@ -9,14 +9,6 @@ abstract class SCSS_Controller {
     /**
      *
      */
-    public function __construct() {
-        $this->parser = new SCSS_Parser();
-        $this->lexer  = new SCSS_Lexer($this->parser);
-    }
-
-    /**
-     *
-     */
     public function run() {
         $filename = $this->getParams();
         try {
@@ -34,6 +26,8 @@ abstract class SCSS_Controller {
      *
      */
     protected function parseSCSS($buffer) {
+        $this->parser = new SCSS_Parser();
+        $this->lexer  = new SCSS_Lexer($this->parser);
         $this->lexer->setBuffer($buffer);
         if (SmartCSS::$debug) {
             //$this->lexer->debug = true;

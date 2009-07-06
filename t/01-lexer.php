@@ -9,7 +9,8 @@ $t->isa_ok( $lexer, 'SCSS_Lexer', 'parser instance isa SCSS_Lexer' );
  * lexical analyze
  */
 function isToken($buffer, $tokenstr, $diag = null) {
-    global $t, $lexer;
+    global $t;
+    $lexer = new SCSS_Lexer();
     $lexer->setBuffer($buffer);
     $results = array();
     $tokens = array();
@@ -50,6 +51,11 @@ $t->comment( 'rulesets' );
 isToken( '* { margin:0; }',
     'SELECTOR LBRACE SPACE IDENT : NUMBER ; SPACE }',
     'star selector'
+);
+
+isToken( '* { _margin:0; }',
+    'SELECTOR LBRACE SPACE IDENT : NUMBER ; SPACE }',
+    'under score hack'
 );
 
 isToken( 'div{margin:5px 10px}',
@@ -154,4 +160,15 @@ isToken( '[% IMPORT "hoge.scss" %][% IMPORT \'fuga.scss\' %]',
     'cLDELIM SPACE cCOMMAND SPACE cVALUE SPACE cRDELIM '.
     'cLDELIM SPACE cCOMMAND SPACE cVALUE SPACE cRDELIM',
     'IMPORT command'
+);
+
+$t->comment( 'loose property' );
+isToken( 'body { *font-size:small }',
+    'SELECTOR LBRACE SPACE LOOSE_PROP : IDENT SPACE }',
+    'Loose property'
+);
+SmartCSS::$strict = true;
+isToken( 'body { *font-size:small }',
+    'SELECTOR LBRACE SPACE * IDENT : IDENT SPACE }',
+    'Loose property had not parsed in strict mode'
 );

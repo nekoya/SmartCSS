@@ -4,8 +4,8 @@ class SCSS_Controller_CLI extends SCSS_Controller {
      *
      */
     public function getParams() {
-        $short_opts = 'hdc';
-        $long_opts  = array('help', 'debug', 'compress');
+        $short_opts = 'hdcs';
+        $long_opts  = array('help', 'debug', 'compress', 'strict');
 
         $console = new Console_Getopt;
         $args = $console->readPHPArgv();
@@ -24,6 +24,9 @@ class SCSS_Controller_CLI extends SCSS_Controller {
             }
             if ($opt[0] === '--compress' || $opt[0] === 'c') {
                 SmartCSS::$compress = true;
+            }
+            if ($opt[0] === '--strict' || $opt[0] === 's') {
+                SmartCSS::$strict = true;
             }
         }
 

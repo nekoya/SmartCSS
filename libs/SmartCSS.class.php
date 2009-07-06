@@ -4,6 +4,7 @@ require 'SCSS/AutoLoader.class.php';
 class SmartCSS {
     static public $debug;
     static public $compress;
+    static public $strict;
 
     public function run() {
         $c = $this->getController();

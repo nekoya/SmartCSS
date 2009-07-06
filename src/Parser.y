@@ -15,6 +15,7 @@
 %token '-' ':' ';'
 %token COMMA
 %token cLDELIM cRDELIM cCOMMAND cIDENT cEQUAL cVALUE
+%token LOOSE_PROP
 
 %%
 root : stylesheet { $$ = $this->setTopNode($1); }
@@ -44,7 +45,8 @@ unary_operator
     | '+' { $$ = $1; }
 
 property
-    : IDENT s { $$ = $1; }
+    : IDENT s      { $$ = $1; }
+    | LOOSE_PROP s { $$ = $1; }
 
 rulesets
     : s                { $$ = $this->genEmpty(); }

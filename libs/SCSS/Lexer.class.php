@@ -148,6 +148,7 @@ class SCSS_Lexer {
             'LBRACE'        => '\s*{',
 
             'SELECTOR'      => '{{selector}}(\s*,\s*{{selector}})*(?=\s*{)',
+            'LOOSE_PROP'    => '\*{{ident}}',
 
             'STRING'        => '{{string}}',
             'URI'           => 'url\(\s*{{string}}\s*\)',
@@ -172,6 +173,9 @@ class SCSS_Lexer {
             'COMMA'         => '\s*,',
             'SPACE'         => '\s+',
         );
+        if (SmartCSS::$strict) {
+            unset($regexs['LOOSE_PROP']);
+        }
         $rules = array(
             'h'               => '[0-9a-f]',
             'ident'           => '-?{{nmstart}}{{nmchar}}*',
