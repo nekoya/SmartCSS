@@ -12,7 +12,7 @@
 %token CHARSET IMPORT
 %token SELECTOR
 %token TERM
-%token '-' ':' ';'
+%token PLUS '-' '/' ':' ';'
 %token COMMA
 %token cLDELIM cRDELIM cCOMMAND cIDENT cEQUAL cVALUE
 %token LOOSE_PROP
@@ -36,13 +36,13 @@ import
 
 operator
     : { $$ = ' '; }
-    | '/' s   { $$ = $1; }
-    | COMMA s { $$ = $1; }
+    | '/' s   { $$ = '/'; }
+    | COMMA s { $$ = ','; }
 
 unary_operator
     : { $$ = ''; }
-    | '-' { $$ = $1; }
-    | '+' { $$ = $1; }
+    | '-'  { $$ = '-'; }
+    | PLUS { $$ = '+'; }
 
 property
     : IDENT s      { $$ = $1; }

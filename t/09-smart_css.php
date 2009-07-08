@@ -36,8 +36,8 @@ $t->comment('rulesets');
 $content = <<<__CSS__
 *{font-size:100%;}
 div { margin : 0; }
-p{padding:10px;}
-a { color:#fff; }
+p{padding:-10px +2em; font-family:'Arial',Verdana}
+a { color:#fff }
 __CSS__;
 // ------------------------------------------------------------
 $expected = <<<__CSS__
@@ -50,7 +50,8 @@ div {
 }
 
 p {
-    padding:10px;
+    padding:-10px +2em;
+    font-family:'Arial',Verdana;
 }
 
 a {
