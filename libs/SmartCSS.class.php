@@ -3,6 +3,7 @@ require 'SCSS/AutoLoader.class.php';
 
 class SmartCSS {
     static public $debug;
+    static public $lexdebug;
     static public $compress;
     static public $strict;
 

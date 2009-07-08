@@ -4,8 +4,8 @@ class SCSS_Controller_CLI extends SCSS_Controller {
      *
      */
     public function getParams() {
-        $short_opts = 'hdcs';
-        $long_opts  = array('help', 'debug', 'compress', 'strict');
+        $short_opts = 'hdcsl';
+        $long_opts  = array('help', 'debug', 'compress', 'strict', 'lexdebug');
 
         $console = new Console_Getopt;
         $args = $console->readPHPArgv();
@@ -27,6 +27,9 @@ class SCSS_Controller_CLI extends SCSS_Controller {
             }
             if ($opt[0] === '--strict' || $opt[0] === 's') {
                 SmartCSS::$strict = true;
+            }
+            if ($opt[0] === '--lexdebug' || $opt[0] === 'l') {
+                SmartCSS::$lexdebug = true;
             }
         }
 
@@ -78,9 +81,10 @@ class SCSS_Controller_CLI extends SCSS_Controller {
      *
      */
     protected function usage($code = 0) {
-        echo 'smart_css.php [-c|--compress][-d|--debug][-h|--help] filename' . PHP_EOL;
+        echo 'smart_css.php [-c|--compress][-d|--debug][-l|--lexdebug][-h|--help] filename' . PHP_EOL;
         echo '  -c|--compress  output compressed css.' . PHP_EOL;
         echo '  -d|--debug     show parser debug messages.' . PHP_EOL;
+        echo '  -l|--lexdebug  show lexer debug messages.' . PHP_EOL;
         echo '  -h|--help      show this usage.' . PHP_EOL;
         exit($code);
     }

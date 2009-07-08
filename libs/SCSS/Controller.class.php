@@ -30,8 +30,10 @@ abstract class SCSS_Controller {
         $this->lexer  = new SCSS_Lexer($this->parser);
         $this->lexer->setBuffer($buffer);
         if (SmartCSS::$debug) {
-            //$this->lexer->debug = true;
             $this->parser->debug = true;
+        }
+        if (SmartCSS::$lexdebug) {
+            $this->lexer->debug = true;
         }
         try {
             $this->parser->yyparse($this->lexer);
