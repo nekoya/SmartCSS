@@ -184,7 +184,6 @@ class SCSS_Lexer {
             'name'            => '{{nmchar}}+',
             'num'             => '\d*\.{0,1}\d+',
             'string'          => '(?:".*?"|' . "'.*?')",
-            'unary_operator'  => '(?:\+|\-)?',
 
             'media_types'     => '(?:{{ident}}\s*(?:,\s*{{ident}}\s*)*){0,1}',
 
