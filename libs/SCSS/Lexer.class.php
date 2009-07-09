@@ -192,7 +192,8 @@ class SCSS_Lexer {
             'hash'            => '#{{name}}',
             'pseudo'          => ':{{ident}}',
             'class'           => '\.{{ident}}',
-            'selector_suffix' => '(?:{{hash}}|{{class}}|{{pseudo}})'
+            'attrib'          => '\[\s*{{ident}}\s*(?:(?:=|~=|\|=)\s*(?:{{ident}}|{{string}})\s*)?\]',
+            'selector_suffix' => '(?:{{hash}}|{{class}}|{{pseudo}}|{{attrib}})'
         );
         foreach ($rules as $token => &$regex) {
             while (preg_match('/({{(.+?)}})/', $regex, $matches)) {

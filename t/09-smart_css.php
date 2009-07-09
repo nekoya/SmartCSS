@@ -326,3 +326,24 @@ parse($content, $expected, 'omited semicolon');
 
 parse("", '', 'empty scss' );
 parse("\n", '', 'empty scss' );
+
+// ============================================================
+$content = <<<__CSS__
+input[type="checkbox"],
+input[type=radio],
+input[type~="reset"],
+input[type|="submit"]
+{ padding:1px }
+input[type], input[ type = "radio" ] { margin:0 }
+__CSS__;
+// ------------------------------------------------------------
+$expected = <<<__CSS__
+input[type="checkbox"], input[type=radio], input[type~="reset"], input[type|="submit"] {
+    padding:1px;
+}
+
+input[type], input[ type = "radio" ] {
+    margin:0;
+}
+__CSS__;
+parse($content, $expected, 'selectors with attributes');
