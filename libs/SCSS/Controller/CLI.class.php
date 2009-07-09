@@ -81,8 +81,9 @@ class SCSS_Controller_CLI extends SCSS_Controller {
      *
      */
     protected function usage($code = 0) {
-        echo 'smart_css.php [-c|--compress][-d|--debug][-l|--lexdebug][-h|--help] filename' . PHP_EOL;
+        echo 'smart_css.php [-c|--compress][-s|strict][-d|--debug][-l|--lexdebug][-h|--help] filename' . PHP_EOL;
         echo '  -c|--compress  output compressed css.' . PHP_EOL;
+        echo '  -s|--strict    analyze properties as strict.' . PHP_EOL;
         echo '  -d|--debug     show parser debug messages.' . PHP_EOL;
         echo '  -l|--lexdebug  show lexer debug messages.' . PHP_EOL;
         echo '  -h|--help      show this usage.' . PHP_EOL;
