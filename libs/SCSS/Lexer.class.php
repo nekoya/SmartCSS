@@ -218,7 +218,7 @@ class SCSS_Lexer {
         $this->commands = array(
             'cRDELIM'  => '%\]',
             'cCOMMAND' => '[A-Z\-_]+',
-            'cIDENT'   => '[a-z\-_]+',
+            'cIDENT'   => '[a-z\-_][a-z\-_0-9]*',
             'cEQUAL'   => '\s*=',
             'cVALUE'   => '(?:".*?"|' . "'.*?')",
             'SPACE'    => '\s+',

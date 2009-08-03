@@ -2,13 +2,14 @@
 @import 'width.scss';
 @import 'footer.scss' print;
 
+[% mp0 = 'margin:0;padding:0;' %]
+
 /**
  * sample scss
  */
 
 * {
-    margin:0;
-    padding:0;
+    [% mp0 %]
     font-size:100%;
 }
 
