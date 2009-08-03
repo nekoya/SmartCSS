@@ -28,8 +28,8 @@ charset
     | CHARSET STRING ';' { $$ = $this->genCharset($2); }
 
 imports
-    : /* empty */    { $$ = $this->genEmpty(); }
-    | imports import { $$ = $this->catNode($1, $2); }
+    : /* empty */      { $$ = $this->genEmpty(); }
+    | imports s import { $$ = $this->catNode($1, $3); }
 
 import
     : IMPORT { $$ = $this->genImport($1); }
