@@ -24,8 +24,8 @@ stylesheet
     : charset imports rulesets { $$ = $this->catNode($1, array($2, $3)); }
 
 charset
-    : /* empty */ { $$ = $this->genEmpty(); }
-    | CHARSET     { $$ = $this->genCharset($1); }
+    : /* empty */        { $$ = $this->genEmpty(); }
+    | CHARSET STRING ';' { $$ = $this->genCharset($2); }
 
 imports
     : /* empty */    { $$ = $this->genEmpty(); }

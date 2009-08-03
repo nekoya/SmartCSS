@@ -153,7 +153,7 @@ class SCSS_Lexer {
             'STRING'        => '{{string}}',
             'URI'           => 'url\(\s*{{string}}\s*\)',
             'IMPORTANT_SYM' => '!important\s*',
-            'CHARSET'       => '@charset {{string}};',
+            'CHARSET'       => '@charset ',
             'IMPORT'        => '@import\s*(?:{{string}}|{{URI}})\s*{{media_types}};',
 
             'EMS'           => '{{num}}em',

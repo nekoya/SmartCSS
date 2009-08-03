@@ -35,8 +35,8 @@ $lexer->setBuffer("/**\n * comment\n **/\n");
 $t->is( $lexer->analyze($yylval), null, 'skip multi lines comment' );
 
 $t->comment( 'charset' );
-isToken('@charset "utf-8";', 'CHARSET', 'CHARSET (lower case)');
-isToken('@CHARSET "UTF-8";', 'CHARSET', 'CHARSET (upper case)');
+isToken('@charset "utf-8";', 'CHARSET STRING ;', 'CHARSET (lower case)');
+isToken('@CHARSET "UTF-8";', 'CHARSET STRING ;', 'CHARSET (upper case)');
 
 $t->comment( 'import' );
 $lexbuf = <<<__CSS__
