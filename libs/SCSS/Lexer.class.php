@@ -76,7 +76,7 @@ class SCSS_Lexer {
 
             case 'command':
                 $regexs  = $this->commands;
-                $options = '';
+                $options = 's';
                 break;
 
             default:
