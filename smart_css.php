@@ -4,4 +4,3 @@ require 'libs/SmartCSS.class.php';
 
 $scss = new SmartCSS();
 $scss->run();
-
